@@ -442,3 +442,19 @@ the previous push's k1CN identification, the first-order term is fully accounted
 k1CN = L1[8], switching globals hardcoded, offsite genuinely tiny). Method note: when an
 extracted equation resists sense-making, render the page and READ it — the text layer and even
 the print can lie in different ways.
+
+### 2026-07-16 (sixteenth push) — Eqs. 85/86 CANONICAL (user's screenshots); stretch tail VERIFIED with file values
+
+- Richard supplied zoomed screenshots of Eqs. 85/86 (ChemRoutes reference/SI_Equation85.png,
+  SI_Equation86.png) — now the canonical reference. Confirmed: the subscript typo is in the
+  paper; Δρ = aufbau − refocc per shell; Eq. 86 exactly as implemented; the parameter census
+  (µ shell-resolved, k1CN element-wise, three switching globals) verbatim.
+- **The verification forward model (FILE values only)**: HCl stretch, both observables. TAIL
+  (R ≥ 4) VERIFIED — ES2+3 within 4–9e-4, ES1 within 3e-4: the offsite kernel, the static Δρ,
+  and the asymptotics are all correct as decoded. SHORT RANGE carries a smooth CN-shaped
+  residual (~1e-2 at R=2 on both observables) and an FD cross-check quantifies the miss:
+  measured dES1/dk1CN(H) = −0.0445/unit vs the model's −0.0179 — factor 2.5 — so the µ-CN
+  coupling's STRUCTURE (which CN convention / what it multiplies) needs one more decode round;
+  the slot itself (L1[8]) stands. Same suspicion applies to kU (L1[6]; H's value 0.81 is odd
+  against the SI's 'typically <0.2'). Next: FD-shape decode of the CN-term structure (rc
+  sum-vs-mean, per-shell vs summed, f-coupling) at fixed geometry.
