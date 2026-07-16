@@ -324,3 +324,30 @@ load-bearing for G4.
 - **Next experiment (designed)**: charged atoms (.CHRG −1/+1/+2) sweep q_l systematically at
   fixed U → chart s(q) and C0(q) → identify the damping's closed form and the higher-order
   onsite polynomial; then molecules (offsite kernel with its exp(−k(2),x·R) screening).
+
+### 2026-07-16 (ninth push) — the charge scans: f(q) charted, E3 measured cubic, hardcoded-constants PROVEN
+
+- **The first-order switching f(q) is measured and matches the SI's form** — as an ODD deviation
+  (my earlier even-parity reading of Eq. 83b was wrong; the erf-pair SUM is odd): FD products on
+  the L7 potentials across O charge states −2..+2 give f = (0.9764, 0.9831, 1, 1.0165, 1.0234),
+  saturating erf-pair shape; constants k_dis ≈ 0.012–0.013 with saturation near |q|~2 (exact fit
+  deferred to molecular fractional-charge data). The FD also re-measured q_l per ion, confirming
+  aufbau populations and fractional references throughout.
+- **The onsite third-order is ALIVE and exactly cubic in the ATOMIC charge**: equal-U ion data
+  splits into even/odd parts; the odd part is 0.0418·q_A³ (±1 vs ±2 coefficients agree to 1%) —
+  at U=1 this pins the Γ·τ combination at ≈ 0.251 for O. The even part at ±1/±2 scales as q_A²
+  (ratio 4.21 ≈ 4), i.e. genuine second-order of the now-charged atom with s ≈ 0.60–0.64 —
+  consistent with the neutral measurement's s(O) = 0.582 drifting with charge.
+- **PROOF: all onsite-electronic constants are hardcoded in the binary.** Two null sweeps at
+  O²⁺ — all 20 globals, then all 50 O-block slots — moved ES1/ES23/Ex/spin through NOTHING but
+  L5 (exchange), L6 (Hubbards), L7 (chemical potentials), L1[9] (spin W). The f-constants, the
+  third-order rule, the s(q) damping, and the fourth-order onsite all live in code, not in the
+  parameter file (as avg_cn did). The 20 file globals serve MOLECULAR physics only (repulsion
+  penetration, CN steepness, dispersion, multipole, and the yet-unassigned offsite
+  kernel/exchange ranges).
+- **Consequence for strategy**: the onsite functional forms must be charted (more charge states,
+  more elements, fractional charges via molecules) or lifted from procedure signatures — the
+  private tblite .mod files do NOT ship (checked; only xtb-side delegation interfaces), so
+  charting remains the instrument. The offsite/molecular terms, by contrast, have their
+  parameters IN THE FILE and are the natural next implementation targets alongside the
+  remaining onsite charting.
