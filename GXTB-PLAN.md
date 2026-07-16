@@ -489,3 +489,16 @@ the print can lie in different ways.
   via our gated overlap (machine precision) for all FD work — serves every future round.
 - Data: this round's slopes recorded here; raw in the transcript. Next: restart-precision FD
   repeat + shape-test against per-element-steepness variants and µ-independent couplings.
+
+### 2026-07-16 (nineteenth push) — the µ-CN coupling is √CN (machine-precision confirmation)
+
+- The restart-density charge upgrade went live (machine-precision dq under FD; the printed-pops
+  4-decimal floor bypassed). With it, direct/(µ·q) tracks **√CN(mean-rc)** at ratio 1.07–1.21
+  over R = 2..4 — every alternative (plain CN in either rc convention, single-erf refits) varies
+  by FACTORS. The µ CN-dependence is √CN-structured, the same family as repulsion's Eq. 56;
+  the SI's Eq. 84 prints plain CN_A — the third confirmed paper-vs-binary divergence (Eq. 55
+  factor 2; Eq. 84 √; the onsite third-order kernel's degree-2 form).
+- OPEN, quantified: amplitude ≈ 1.49× the file's k1 slot value, and a smooth 6% residual drift
+  (slightly different counting radii suspected). Separation experiment designed: stretch H
+  against DIFFERENT partners (HF, HBr) — different rc, same H constants — isolating rc from
+  amplitude cleanly.
