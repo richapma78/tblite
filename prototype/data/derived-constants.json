@@ -347,5 +347,12 @@
     "G2[1]": "offsite ES kernel global (k2x candidate; ES23 response ~constant R=3..5)",
     "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values",
     "_eq85_resolved": "VISUAL read of SI p.47-48 (rendered PNG): Eq.85 as PRINTED carries a subscript typo (l_B left, l_A right); intent per prose: drho_l = aufbau_l - refocc_l, static and per-shell small (near-cancelling atom sums). The fast-decaying stretch signal was the k1CN onsite term (L1[8]); the true offsite E1 is tiny. First-order term fully accounted for: mu=L7, k1CN=L1[8], f-switching globals hardcoded."
+  },
+  "si_text_findings": {
+    "_source": "ChemRoutes reference/Supplement_Information_TextCopyOnly.txt (Richard's direct copy-paste extraction, 2026-07-16) + rendered-page reads",
+    "one_internal_cn": "SI 1.4 verbatim: the Eq.47 CN serves repulsion + Hamiltonian + 1st/2nd-order TB + exchange (one parameterization -- the L1[5] radii + G2[0] steepness verified by the repulsion gate); basis/EEQBC/revD4 carry their own three",
+    "exchange_kernel_form": "SI Eq. 149: gamma_MFX = [eta + (1-eta)*erf(omega*R_AB)] / ... -- textbook range separation; matches G1[5]'s R-independent FD signature (omega/eta candidates G1[0]/G1[5])",
+    "eq55_print_vs_binary": "BOTH extractions print alpha_AB = aA*aB/(aA+aB); the binary implements 2x that (harmonic) -- measured by the repulsion gate (4.75e-9; the halved form refuted 150x by the H2 tail). Paper-vs-binary discrepancy, binary is authority.",
+    "mu_cn_slope_gap": "measured dES1/dk1CN = 2.5x direct-term model: density relaxation (SCF q-response to the perturbation) is the prime suspect; testable by FD with population readout; second suspect: CN-dependence inside the hardcoded onsite s/c1 (charted at CN=0 only)"
   }
 }

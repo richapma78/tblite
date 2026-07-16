@@ -458,3 +458,19 @@ the print can lie in different ways.
   the slot itself (L1[8]) stands. Same suspicion applies to kU (L1[6]; H's value 0.81 is odd
   against the SI's 'typically <0.2'). Next: FD-shape decode of the CN-term structure (rc
   sum-vs-mean, per-shell vs summed, f-coupling) at fixed geometry.
+
+### 2026-07-16 (seventeenth push) — Richard's text extraction: three finds
+
+- `ChemRoutes reference/Supplement_Information_TextCopyOnly.txt` (direct copy-paste, passes the
+  no-biology gate, stays in place). Three yields: (1) **one internal CN** for
+  repulsion/Hamiltonian/TB1+2/exchange (SI 1.4 verbatim — the convention our repulsion gate
+  already verified; Eq. 84's CN is settled); (2) **the exchange kernel's form surfaced**
+  (Eq. 149: η + (1−η)·erf(ωR) — textbook range separation, matching G1[5]'s R-independent FD
+  signature); (3) **Eq. 55 prints the unhalved combination in BOTH extractions** — the paper and
+  the v1.1 binary genuinely differ by the factor 2 our gate measured; the binary is the
+  authority for this build.
+- The 2.5× µ-CN slope gap now has a prime suspect: DENSITY RELAXATION in the FD response
+  (the printed-term derivative includes the SCF charge shift; the direct term doesn't) — next
+  round measures dq/dslot from the printed populations under FD to separate direct from
+  relaxation, and probes whether the hardcoded onsite s/c1 carry CN-dependence (charted at
+  CN=0 only so far).
