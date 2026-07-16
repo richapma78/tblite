@@ -432,3 +432,13 @@ configurable than the binary it reproduces.
 - Next: the VERIFICATION forward model — onsite(charted) + CN terms with FILE values + offsite
   kernel — against the full stretch; the remaining structural unknown is Eq. 86's Δρ (the
   garbled extraction; aufbau−refocc gives a near-cancelling sum that undershoots 30×).
+
+### 2026-07-16 (fifteenth push) — Eq. 85 read VISUALLY: the paper itself has the typo; first order CLOSED
+
+Rendered SI pages 47–48 to images (pdftoppm) and read the typeset math directly: Eq. 85 is
+printed with inconsistent subscripts (Δρ⁽¹⁾_{0,l_B} = ρ_{0,l_A} + Z_{l_A}) — a typo IN THE
+PAPER, resolved by its prose: Δρ = aufbau − refocc per shell, static and small. Combined with
+the previous push's k1CN identification, the first-order term is fully accounted for (µ = L7,
+k1CN = L1[8], switching globals hardcoded, offsite genuinely tiny). Method note: when an
+extracted equation resists sense-making, render the page and READ it — the text layer and even
+the print can lie in different ways.

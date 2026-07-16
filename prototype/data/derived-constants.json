@@ -345,6 +345,7 @@
     "G1[0]": "exchange global, short-range-heavy (largest Ex mover)",
     "G1[5]": "exchange global, R-independent component (range-separation signature)",
     "G2[1]": "offsite ES kernel global (k2x candidate; ES23 response ~constant R=3..5)",
-    "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values"
+    "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values",
+    "_eq85_resolved": "VISUAL read of SI p.47-48 (rendered PNG): Eq.85 as PRINTED carries a subscript typo (l_B left, l_A right); intent per prose: drho_l = aufbau_l - refocc_l, static and per-shell small (near-cancelling atom sums). The fast-decaying stretch signal was the k1CN onsite term (L1[8]); the true offsite E1 is tiny. First-order term fully accounted for: mu=L7, k1CN=L1[8], f-switching globals hardcoded."
   }
 }
