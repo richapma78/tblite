@@ -214,3 +214,34 @@ load-bearing for G4.
   k0/k2/k3 from the main parameter file — SI Sec. 1.2 end), the diatomic-frame scaled overlap
   (SI 1.3; machinery exists in this fork), then H0 (SI 1.7) with eigenvalue gates. That stage
   requires decoding the main `gxtb_parameters` file layout — the largest remaining decode.
+
+### 2026-07-16 (fifth push) — Term 5 GATED (repulsion); the parameter file is CRACKED OPEN
+
+- **The decisive new instrument: perturbation mapping** (`prototype/perturb_map.py`). The oracle
+  re-reads `~/.gxtb` every run and prints every term — so nudge ONE float, rerun fixed probes,
+  record which observables moved. One sweep named ~40 slots mechanically
+  (`data/perturb_map.json`): repulsion element params (α0, R0, Zeff0, kCN, kq | L1[0..4]), the
+  shared Eq.47 CN radius (L1[5] — moves electronic AND repulsion together), penetration globals
+  (G1[3]=kpen1, G1[8]=kpen1_H/He, G2[2,3,4]=kpen2..4 — sensitivity decaying with power,
+  textbook), the Eq.47 steepness (G2[0], stored NEGATIVE — resolving the SI's apparent sign
+  typo), dispersion globals (G1[9], G2[9]), multipole globals (G2[6,7]), per-shell rows
+  L2..L7 = levels / kCN-level / ζ-scale-ish / exchange / Hubbard γ / first-order, L9 = ACPs.
+  Two long-range/charged discriminator probes split α0 from kCN (kCN goes dark at CN→0) and
+  located kq2 at L8[6]. **L8[5] moved the increments line by exactly N·δ — Term 1's parameter
+  found in situ**, and the file's 79 increments match Term 1's oracle measurements at 4.5e-9
+  (`params.py` selftest re-proves it).
+- **File map**: 20 globals + 79 element blocks (H..U; 4f/5f gaps: 59–69, 90–91, 93–103 absent),
+  each block L1(10 scalars) + L2..L7(4-wide per-shell) + L8,L9(8-wide). `prototype/params.py`
+  parses it with names where pinned.
+- **Term 5 — repulsion (SI 1.6) implemented and GATED** (`prototype/repulsion.py`): worst
+  |dE| = 4.75e-9 Eh over 13 cases (full H2 curve, HCl, NH4+ charged, water, AcCl, PdCl2).
+  Three SI-extraction ambiguities settled EMPIRICALLY, each recorded in the code: (1) the
+  exponent offset is (R + R0)^1.5; (2) rc in Eq.47 is the arithmetic MEAN (as the SI says in
+  words); (3) α_AB is the HARMONIC mean 2αAαB/(αA+αB) — Eq. 55's extraction lost a factor 2
+  (the H2 tail refuted the halved form by 150×); (4) BONUS: Zeff = zeff0·(1 − kq·q − kq2·q²) —
+  the quadratic sign was measured by FD probing (oracle/model ratio −1.000 exactly), and the
+  linear term validated at ratio 1.000 with q = the EEQ(BC) charge.
+- Chain now: increments ✓ charges ✓ adaptive basis ✓ overlap ✓ repulsion ✓. Classical energy
+  complete except dispersion (revD4 — a parameter selection on the dftd4 library, its two
+  globals already located). **Next: the EHT Hamiltonian** — levels/CN shifts (L2, L3 named by
+  the map), the Ham-basis scalings, diatomic-frame overlap, eigenvalue gates.
