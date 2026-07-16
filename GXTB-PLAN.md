@@ -140,3 +140,28 @@ DFT+SMD labels) and the pre-declared charged-species gate, not plumbing.
 **No numerical-gradient fallback exists in the library core** — every term ships analytic
 gradients (FD lives only in unit tests as verification). The SI's gradient derivations are
 load-bearing for G4.
+
+### 2026-07-16 (second push) — Term 2 GATED: the EEQ(BC) charges are OURS now
+
+- **Identification, exhaustive**: the v1 `eeq` file is the PUBLISHED eeqbc2025 parameter set
+  (Froitzheim/Mueller/Hansen/Grimme, J. Chem. Phys. 2025, 162, 214109) — byte-identical across
+  all 103 elements × 8 columns (`prototype/extract_tables.py` re-proves it on every run; column
+  order chi, eta, rad, kcnchi, cov_radii(raw; working radius = half), kqeta, kqchi, cap). The
+  reference implementation is multicharge's `model/eeqbc.f90` + factory `new_eeqbc2025_model`
+  (constants: kcn 2.0, norm_exp 0.75, kbc 0.60, kcnrad 0.14, cutoff 25 Bohr; EN = Pauling/3.98
+  with actinide patches; avg_cn from the published array — not in the v1 file).
+- **Implementation**: `prototype/eeqbc.py` — erf-CN, EN-weighted local charge, bond-capacitance
+  Maxwell matrix, CN-scaled Gaussian widths, bordered constrained solve. One faithful quirk:
+  the pair vdW radii enter as their ÅNGSTRÖM literals against distances in BOHR (multicharge
+  converts to au at declaration and back at use) — reproduced as the code runs, and the gate
+  confirms the oracle's binary does the same.
+- **GATE PASSED on the full probe set**: water, HCl, CO, NH4+ (charged), AcCl, PdCl2 (transition
+  metal) — CN, q_loc (the oracle's q_CN column) and final q all within the oracle's 4-decimal
+  print precision (max |diff| ≈ 5e-5).
+- New sibling reference clones: `C:\Projects\multicharge` (eeqbc reference + published params)
+  and `C:\Projects\mctc-lib` (CN counting functions + vdW/EN data tables), both read into
+  `prototype/data/mctc-tables.json`.
+- **Next in the chain**: CN(basis) — the q-vSZP CN parameterization (the SI's "four different CN
+  parametrizations"; the oracle prints CN(basis) per atom = direct gate) → q_eff assembly
+  (`q + a·q² + b·CN^0.5 + c·q·CN`; the oracle's AO-setup block prints every piece per atom) →
+  overlap integrals in the adapted basis.
