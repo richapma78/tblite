@@ -323,6 +323,18 @@
       "8": 0.00012001,
       "16": 2.132e-05,
       "17": 1.42e-06
+    },
+    "third_order_shape": {
+      "_form": "E3_onsite = c1_el * q_A * sum_ll' q_l q_l' (U_l+U_l')^2/4  (the Eq.132 DEGREE-2 kernel applied onsite -- NOT the harmonic the garbled SI line suggested; explains the u^2 rule)",
+      "_evidence": "chart_onsite2.py: per-point populations + s-rule subtracted; c1 consistent across +- states (F: 0.01628/0.01627; C-1 captures 99.4% of a 0.17 Eh signal at 1e-3)",
+      "c1": {
+        "6": 0.0197,
+        "8": 0.0318,
+        "9": 0.0163,
+        "16": 0.0075
+      },
+      "_resolved": "v1's 'F k3 anomaly' dissolved -- F was right; the row-2 linear k3 trend was the artifact of the wrong (u^2-only) shape",
+      "_open": "C+1 and O+2 carry unmodeled structure (shell-resolved quartic candidate); c1's element rule not yet identified; d-block extraction needs population tracking"
     }
   }
 }

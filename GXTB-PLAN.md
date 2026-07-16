@@ -383,3 +383,19 @@ configurable than the binary it reproduces.
   0.28 vs 0.40 through shell shuffling).
 - All banked in `data/derived-constants.json` (s_rule, third_order_u2_rule, raw scans in
   `data/onsite-charts.json`); constants loader green.
+
+### 2026-07-16 (twelfth push) — campaign v2: the third-order SHAPE identified; F anomaly dissolved
+
+- Per-point POPULATIONS (v1's missing ingredient) + the s-rule subtracted pointwise isolate the
+  third-plus-higher-order residual on a 9-point (U_s,U_p) grid per ion state.
+- **The onsite third-order kernel is the DEGREE-2 form**: E3 = c1·q_A·Σ_ll' q_l q_l'(U_l+U_l')²/4
+  — the Eq. 132 (U+U')²/4 structure applied onsite (the SI's onsite line reads 'harmonic' but its
+  extraction was garbled; the measured u² law and now the full 2-D shape both say degree 2).
+  c1 per element: C 0.0197, O 0.0318, F 0.0163, S 0.0075 — consistent across ± ion states
+  (F: 4-digit agreement), C⁻ captured at 1e-3 over a 0.17 Eh range.
+- **The F 'anomaly' dissolved**: with the right shape, fluorine was correct all along; the
+  apparent row-2 linear k3 trend was the artifact.
+- Open: C⁺/O²⁺ carry unmodeled (shell-resolved quartic?) structure; c1's element rule unknown;
+  raw grids in data/onsite-charts2.json. NOTE the strategic unlock: for NEUTRAL molecules the
+  atomic q_A are small (|q|≲0.3 → E3 ~ 1e-3, E4 smaller), so the molecular OFFSITE gate can
+  proceed with the charted onsite pieces before the ion-regime forms fully close.
