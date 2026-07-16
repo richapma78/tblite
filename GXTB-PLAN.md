@@ -191,3 +191,26 @@ load-bearing for G4.
 - **Next in the chain**: overlap integrals in the adapted basis (oracle gates: nsao dims ✓
   already, then eigenvalue/population checks once H0 exists); the diatomic-frame scaled overlap
   (SI Sec. 1.3) machinery already exists in this fork (`integral/diat_trafo.f90`).
+
+### 2026-07-16 (fourth push) — Term 4 GATED: the overlap engine, machine-exact vs PySCF
+
+- **`prototype/overlap.py`**: Obara–Saika cartesian primitive overlaps (general l), a
+  cartesian→real-spherical transform CONSTRUCTED NUMERICALLY (least-squares against scipy's
+  spherical harmonics on random unit vectors — exact for pure-l polynomials, no transcribed
+  tables to mistype; handles both scipy generations' sph_harm APIs), PySCF's normalization
+  convention mirrored (axis-normalized primitives + unit-norm contracted shells).
+- **The one real bug found by the gate**: PySCF orders p shells (x, y, z), not m = −1..+1 —
+  a permutation worth 0.64 in max|dS| until diagnosed against `gto.mole.cart2sph` directly
+  (which also revealed pyscf's per-l scalar, irrelevant post-normalization). One row reorder
+  → machine precision.
+- **GATE PASSED**: max|dS| ≤ 5.5e-15 on water (s/p), AcCl (d), PdCl2 (d on a TM), and CeO
+  (**f(7) on cerium — lmax 3 covered**), all in the ADAPTED basis built by the gated chain
+  (eeqbc charges → basis CN → q_eff → c = c0 + c1·q_eff).
+- Note: the ORACLE's own AO normalization convention is deliberately not asserted by this gate
+  (nothing printed exposes S directly); it gets pinned at the H0 stage where eigenvalues and
+  Mulliken shell populations become observables. The gxtbrestart file (binary MOs?) remains an
+  unexplored shortcut if eigenvalue-stage debugging ever needs the density directly.
+- **Next in the chain**: the SECOND basis variant (Hamiltonian-scaled exponents + scaled
+  k0/k2/k3 from the main parameter file — SI Sec. 1.2 end), the diatomic-frame scaled overlap
+  (SI 1.3; machinery exists in this fork), then H0 (SI 1.7) with eigenvalue gates. That stage
+  requires decoding the main `gxtb_parameters` file layout — the largest remaining decode.
