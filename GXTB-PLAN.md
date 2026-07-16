@@ -245,3 +245,28 @@ load-bearing for G4.
   complete except dispersion (revD4 — a parameter selection on the dftd4 library, its two
   globals already located). **Next: the EHT Hamiltonian** — levels/CN shifts (L2, L3 named by
   the map), the Ham-basis scalings, diatomic-frame overlap, eigenvalue gates.
+
+### 2026-07-16 (sixth push) — the restart file cracked: the converged state is now an INPUT
+
+- **Why it matters**: with the oracle's converged density matrix P in hand, every electronic
+  term (ES1, ES2+3, multipole ES, Mulliken exchange, spin) can be gated INDEPENDENTLY against
+  the printed per-term decomposition — before our own SCF loop exists. The SCF then becomes
+  fixed-point iteration around already-gated pieces. `prototype/restart.py`.
+- **Format** (measured): Fortran sequential records — record 1 = packed-triangular symmetric
+  DENSITY (row-lower packing), record 2 = the MO matrix (column-major; big systems store only
+  occupied columns — the matrix goes singular, expected).
+- **The S-extraction trick**: MO orthonormality CᵀSC = 1 means S_oracle = C⁻ᵀC⁻¹ — the oracle's
+  TRUE overlap matrix recovered from the restart alone. Water: S_oracle equals OUR overlap to
+  1.9e-8 — the oracle's s/p basis, normalization and ordering are exactly ours.
+- **The d-ordering measured**: HCl showed a pure two-entry swap; a tilted-HCl probe (all five
+  d-components lit) solved the full signed permutation at residual 1.1e-8, signs all +1:
+  **oracle d order = (x²−y², z², xy, xz, yz)** vs PySCF's m = −2..+2. Wired into
+  `overlap.py` as ao_order="oracle" (f ordering unmeasured — refuses, by design, until a
+  lanthanide probe measures it).
+- **RESTART GATE PASSED**: parsed P + our oracle-ordered S reproduce the printed Mulliken shell
+  populations on water/HCl/AcCl (worst 4.9e-4 = print precision; Tr(PS) = nel to 1e-4). The
+  PySCF machine-precision overlap gate is untouched and still passes.
+- **Next**: with P as input, implement + gate the electronic terms one at a time against the
+  printed decomposition — ES2+3 (isotropic 2nd/3rd order; Hubbard γ slots already named at L6),
+  ES1 (first-order, L7), multipole ES (globals G2[6,7]), Mulliken exchange (L5 + G1 slots),
+  spin (Espinpol); then H0 closes the electronic energy via Tr(PH0) and the SCF loop follows.

@@ -143,12 +143,26 @@ def build_shells(zs, xyz_bohr, charge=0):
     return shells, qe
 
 
-def overlap(zs, xyz_bohr, charge=0, shells=None):
-    """Spherical-AO overlap matrix in PySCF ordering/normalization for the adapted basis."""
+# the ORACLE's d-component ordering, measured from tilted-HCl restart MOs (residual 1.1e-8,
+# all signs +1): oracle positions = (x2-y2, z2, xy, xz, yz) = our m rows (+2, 0, -2, +1, -1).
+_ORACLE_D_PERM = (2, 4, 1, 3, 0)        # our m=-2..+2 index -> oracle position
+
+
+def overlap(zs, xyz_bohr, charge=0, shells=None, ao_order="pyscf"):
+    """Spherical-AO overlap matrix for the adapted basis. ao_order: 'pyscf' (default) or
+    'oracle' (the v1 binary's measured d ordering; f untested -> refuses if f present)."""
     xyz = np.asarray(xyz_bohr, float)
     if shells is None:
         shells, _ = build_shells(zs, xyz, charge=charge)
     mats = {l: _c2s(l) for l in sorted({sh["l"] for sh in shells})}
+    if ao_order == "oracle":
+        if any(sh["l"] >= 3 for sh in shells):
+            raise NotImplementedError("oracle f-shell ordering not measured yet")
+        if 2 in mats:
+            T = np.zeros((5, 5))
+            for o, p in enumerate(_ORACLE_D_PERM):
+                T[p, o] = 1.0
+            mats[2] = T @ mats[2]
     # normalized-primitive coefficients, then contracted self-overlap normalization
     for sh in shells:
         c = sh["coef"] * np.array([prim_norm(a, sh["l"]) for a in sh["exp"]])
