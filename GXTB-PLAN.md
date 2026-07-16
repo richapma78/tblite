@@ -365,3 +365,21 @@ gate suite re-run and green (eeqbc, adapt, repulsion 4.75e-9, overlap machine-pr
 restart Mulliken) — the refactor is proven behavior-identical. The Fortran port inherits this:
 our tblite implementation will LOAD what upstream hardcodes, making the fork strictly more
 configurable than the binary it reproduces.
+
+### 2026-07-16 (eleventh push) — the onsite charting campaign: the s-RULE FOUND
+
+- **The clean channel**: fitting each ion's equal-U scan as A + B·u + C·u² decomposes the onsite
+  electronics exactly — B = (s/2)·q_A² (even, quadratic to 5 digits across ±1/±2), C = k3·q_A³·u²
+  (cubic to 4 digits) — while A absorbs the ion shell-redistribution mess, which is why earlier
+  neutral-only estimates of s were contaminated.
+- **s HAS A FORMULA**: s = a_p·Nval + b_p, LINEAR in the valence-electron count within a period
+  (9 elements, max deviation 2e-4): period 2 (a 0.08247, b 0.0920 — Li at Nval=1 lands EXACTLY on
+  the line through C/N/O/F), period 3 (a 0.04193, b 0.1378 — Si/P/S/Cl), H 0.4726, Br ~0.437
+  (period-4 anchor). The slope HALVES from period 2 to 3. A hardcoded closed form, now charted;
+  period 4/5 completion + the (a_p, b_p) generating rule remain.
+- **The third-order carries a U² rule**: the equal-U u² coefficient = k3·q_A³ exactly (C, O all
+  four ion states); k3 measured for 8 elements — row-2 C→N→O linear, F anomalous (needs the
+  per-state check; d-block extraction needs population tracking — Ge showed ±1 states disagreeing
+  0.28 vs 0.40 through shell shuffling).
+- All banked in `data/derived-constants.json` (s_rule, third_order_u2_rule, raw scans in
+  `data/onsite-charts.json`); constants loader green.

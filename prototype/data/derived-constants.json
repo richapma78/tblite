@@ -1,47 +1,154 @@
 {
   "_what": "EVERY constant of the g-xTB v1.1 method that does NOT live in the official parameter files (gxtb_parameters / basisq / eeq) -- decoded from reference sources or MEASURED from the oracle, one table each, loaded once at start (constants.py). Nothing in the prototype may hardcode a method constant; this file is the single home. Provenance per entry.",
   "_rule": "If a value here disagrees with a new measurement, the MEASUREMENT wins and this file gets the update + a provenance note. Values marked 'measured' carry the experiment that produced them.",
-
   "basis_cn": {
     "_source": "grimme-lab/qvSZP src/chargscfcts.f90 ncoord_basq + app/main.f90 (kn); gate: adapt.py (CN(basis) <= 4e-5 vs oracle on 6 probes incl. PdCl2)",
     "kn": -3.75,
     "rcov_angstrom_pyykko_atsumi_2009_metals_minus_10pct": [
-      0.29, 0.46,
-      1.20, 0.94, 0.77, 0.75, 0.71, 0.63, 0.64, 0.67,
-      1.40, 1.25, 1.13, 1.04, 1.10, 1.02, 0.99, 0.96,
-      1.76, 1.54,
-      1.33, 1.22, 1.21, 1.10, 1.07, 1.04, 1.00, 0.99, 1.01, 1.09,
-      1.12, 1.09, 1.15, 1.10, 1.14, 1.17,
-      1.89, 1.67,
-      1.47, 1.39, 1.32, 1.24, 1.15, 1.13, 1.13, 1.08, 1.15, 1.23,
-      1.28, 1.26, 1.26, 1.23, 1.32, 1.31,
-      2.09, 1.76,
-      1.62, 1.47, 1.58, 1.57, 1.56, 1.55, 1.51,
-      1.52, 1.51, 1.50, 1.49, 1.49, 1.48, 1.53,
-      1.46, 1.37, 1.31, 1.23, 1.18, 1.16, 1.11, 1.12, 1.13, 1.32,
-      1.30, 1.30, 1.36, 1.31, 1.38, 1.42,
-      2.01, 1.81,
-      1.67, 1.58, 1.52, 1.53, 1.54, 1.55, 1.49,
-      1.49, 1.51, 1.51, 1.48, 1.50, 1.56, 1.58,
-      1.45, 1.41, 1.34, 1.29, 1.27, 1.21, 1.16, 1.15, 1.09, 1.22,
-      1.36, 1.43, 1.46, 1.58, 1.48, 1.57
+      0.29,
+      0.46,
+      1.2,
+      0.94,
+      0.77,
+      0.75,
+      0.71,
+      0.63,
+      0.64,
+      0.67,
+      1.4,
+      1.25,
+      1.13,
+      1.04,
+      1.1,
+      1.02,
+      0.99,
+      0.96,
+      1.76,
+      1.54,
+      1.33,
+      1.22,
+      1.21,
+      1.1,
+      1.07,
+      1.04,
+      1.0,
+      0.99,
+      1.01,
+      1.09,
+      1.12,
+      1.09,
+      1.15,
+      1.1,
+      1.14,
+      1.17,
+      1.89,
+      1.67,
+      1.47,
+      1.39,
+      1.32,
+      1.24,
+      1.15,
+      1.13,
+      1.13,
+      1.08,
+      1.15,
+      1.23,
+      1.28,
+      1.26,
+      1.26,
+      1.23,
+      1.32,
+      1.31,
+      2.09,
+      1.76,
+      1.62,
+      1.47,
+      1.58,
+      1.57,
+      1.56,
+      1.55,
+      1.51,
+      1.52,
+      1.51,
+      1.5,
+      1.49,
+      1.49,
+      1.48,
+      1.53,
+      1.46,
+      1.37,
+      1.31,
+      1.23,
+      1.18,
+      1.16,
+      1.11,
+      1.12,
+      1.13,
+      1.32,
+      1.3,
+      1.3,
+      1.36,
+      1.31,
+      1.38,
+      1.42,
+      2.01,
+      1.81,
+      1.67,
+      1.58,
+      1.52,
+      1.53,
+      1.54,
+      1.55,
+      1.49,
+      1.49,
+      1.51,
+      1.51,
+      1.48,
+      1.5,
+      1.56,
+      1.58,
+      1.45,
+      1.41,
+      1.34,
+      1.29,
+      1.27,
+      1.21,
+      1.16,
+      1.15,
+      1.09,
+      1.22,
+      1.36,
+      1.43,
+      1.46,
+      1.58,
+      1.48,
+      1.57
     ]
   },
-
   "eeqbc": {
     "_source": "multicharge param.f90 new_eeqbc2025_model (arrays byte-identical to param/gxtb/eeq, proven all 103x8 by extract_tables.py); gate: eeqbc.py (q <= 5e-5 vs oracle, 6 probes)",
     "kcn": 2.0,
     "norm_exp": 0.75,
-    "kbc": 0.60,
+    "kbc": 0.6,
     "kcnrad": 0.14,
     "cutoff_bohr": 25.0,
     "en_normalization": 3.98,
-    "en_patches": {"_note": "applied BEFORE /3.98", "ge_90_default": 1.30, "87": 0.80,
-                   "89": 1.00, "90": 1.10, "91": 1.10, "92": 1.10, "95": 1.10,
-                   "93": 1.20, "94": 1.20, "97": 1.20, "103": 1.20},
+    "en_patches": {
+      "_note": "applied BEFORE /3.98",
+      "ge_90_default": 1.3,
+      "87": 0.8,
+      "89": 1.0,
+      "90": 1.1,
+      "91": 1.1,
+      "92": 1.1,
+      "95": 1.1,
+      "93": 1.2,
+      "94": 1.2,
+      "97": 1.2,
+      "103": 1.2
+    },
     "rvdw_unit_quirk": "pair vdW radii enter as ANGSTROM literals against Bohr distances (multicharge converts au at declaration, back at use); gate-confirmed the oracle does the same"
   },
-
   "repulsion": {
     "_source": "SI Sec 1.6 (kexp); structural readings MEASURED by repulsion.py gate (worst 4.75e-9 over 13 cases)",
     "kexp": 1.5,
@@ -50,44 +157,172 @@
     "alpha_combination": "harmonic  (2*aA*aB/(aA+aB); SI Eq. 55 as extracted lost the factor 2 -- refuted 150x by the H2 tail)",
     "zeff_charge_signs": "Zeff = zeff0*(1 - kq*q - kq2*q^2)  (quadratic MINUS measured by FD ratio -1.000)"
   },
-
   "reference_occupations": {
     "_source": "SI Tab. 1 (Z<=18, 3 decimals) CONFIRMED by FD on L7 chemical potentials (exact: ES1 linear in mu); convention q_l = refocc - pop; heavier elements get FD-measured and appended here",
     "_gate": "es_atoms.py cross-check <= 5e-4 per shell",
     "by_z": {
-      "1": {"s": 1.000}, "2": {"s": 2.000},
-      "3": {"s": 0.389, "p": 0.610}, "4": {"s": 0.866, "p": 1.133},
-      "5": {"s": 1.034, "p": 1.965}, "6": {"s": 1.035, "p": 2.964},
-      "7": {"s": 1.374, "p": 3.625}, "8": {"s": 1.673, "p": 4.326},
-      "9": {"s": 1.855, "p": 5.144}, "10": {"s": 2.024, "p": 5.975},
-      "11": {"s": 0.449, "p": 0.550}, "12": {"s": 0.905, "p": 0.747},
-      "13": {"s": 1.189, "p": 1.401, "d": 0.346}, "14": {"s": 1.387, "p": 2.324, "d": 0.287},
-      "15": {"s": 1.569, "p": 2.991, "d": 0.438}, "16": {"s": 1.757, "p": 4.089, "d": 0.152},
-      "17": {"s": 1.875, "p": 5.067, "d": 0.057}, "18": {"s": 2.032, "p": 5.927, "d": 0.039}
+      "1": {
+        "s": 1.0
+      },
+      "2": {
+        "s": 2.0
+      },
+      "3": {
+        "s": 0.389,
+        "p": 0.61
+      },
+      "4": {
+        "s": 0.866,
+        "p": 1.133
+      },
+      "5": {
+        "s": 1.034,
+        "p": 1.965
+      },
+      "6": {
+        "s": 1.035,
+        "p": 2.964
+      },
+      "7": {
+        "s": 1.374,
+        "p": 3.625
+      },
+      "8": {
+        "s": 1.673,
+        "p": 4.326
+      },
+      "9": {
+        "s": 1.855,
+        "p": 5.144
+      },
+      "10": {
+        "s": 2.024,
+        "p": 5.975
+      },
+      "11": {
+        "s": 0.449,
+        "p": 0.55
+      },
+      "12": {
+        "s": 0.905,
+        "p": 0.747
+      },
+      "13": {
+        "s": 1.189,
+        "p": 1.401,
+        "d": 0.346
+      },
+      "14": {
+        "s": 1.387,
+        "p": 2.324,
+        "d": 0.287
+      },
+      "15": {
+        "s": 1.569,
+        "p": 2.991,
+        "d": 0.438
+      },
+      "16": {
+        "s": 1.757,
+        "p": 4.089,
+        "d": 0.152
+      },
+      "17": {
+        "s": 1.875,
+        "p": 5.067,
+        "d": 0.057
+      },
+      "18": {
+        "s": 2.032,
+        "p": 5.927,
+        "d": 0.039
+      }
     },
     "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far)."
   },
-
   "oracle_conventions": {
     "_source": "restart.py measurements",
-    "d_component_order": ["x2-y2", "z2", "xy", "xz", "yz"],
-    "d_perm_from_pyscf_m_order": [2, 4, 1, 3, 0],
-    "d_signs": [1, 1, 1, 1, 1],
+    "d_component_order": [
+      "x2-y2",
+      "z2",
+      "xy",
+      "xz",
+      "yz"
+    ],
+    "d_perm_from_pyscf_m_order": [
+      2,
+      4,
+      1,
+      3,
+      0
+    ],
+    "d_signs": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
     "f_component_order": "UNMEASURED -- overlap.py refuses oracle-order f shells by design",
     "restart_format": "Fortran sequential: rec1 = packed row-lower symmetric density; rec2 = MO matrix column-major (big systems: only occupied columns)",
     "coord_format": "Turbomole $coord, Bohr; .CHRG/.UHF files; fresh dir per run (stale gxtbrestart crashes)"
   },
-
   "onsite_electronic_measured": {
-    "_note": "charted from the oracle; closed forms NOT yet identified -- these are calibration targets, not final constants. All PROVEN hardcoded in the binary (null sweeps of all 20 globals + all 50 O-block slots at O2+).",
-    "second_order_onsite_form": "E2 = s * [1/2 sum q_l q_l' gamma_harm(U_l,U_l')] with gamma_harm = 2UU'/(U+U'); shape (dU)^2/(sum U) exact to 4 digits, even in dU to <0.2% (O scans)",
-    "s_by_element_neutral": {"6": 0.41730, "7": 0.49551, "8": 0.58212, "16": 0.36385, "17": 0.37991},
-    "C0_by_element_neutral_equalU1": {"6": 0.00909053, "7": 0.00160619, "8": 0.00012001,
-                                      "16": 0.00002132, "17": 0.00000142},
-    "third_order_onsite_cubic": {"element": 8, "coeff_at_equalU1": 0.0418,
-                                 "_evidence": "odd part of equal-U ion scan; +-1 vs +-2 agree to 1%"},
-    "f_switching_samples": {"_form": "f = 1 + k_dis*[erf(kx*(q-ks)) + erf(kx*(q+ks))] (ODD deviation, SI Eq. 83b)",
-                            "q": [-2, -1, 0, 1, 2],
-                            "f": [0.9764, 0.9831, 1.0, 1.0165, 1.0234]}
+    "_note": "charted from the oracle (chart_onsite.py + ion-channel scans); closed forms partly identified. All PROVEN hardcoded in the binary.",
+    "equal_U_decomposition": "ES23(ion; U=u,u) = A + B*u + C*u^2 fits EXACTLY (3-point); B = (s/2)*q_A^2 (even, quadratic to 5 digits); C = k3*q_A^3*u^2-coefficient (cubic to 4 digits); A = u-independent remainder entangled with ion shell redistribution",
+    "s_rule": {
+      "_form": "s = a_p * Nval + b_p  (linear in valence-electron count WITHIN a period; 9 elements, max dev 2e-4)",
+      "period2": {
+        "a": 0.08247,
+        "b": 0.092,
+        "confirmed": "Li(1) 0.1745 EXACT, C(4) 0.4220, N(5) 0.5044, O(6) 0.5869, F(7) 0.6693"
+      },
+      "period3": {
+        "a": 0.04193,
+        "b": 0.1378,
+        "confirmed": "Si 0.3054, P 0.3473, S 0.3892, Cl 0.4312"
+      },
+      "period1_H": 0.4726,
+      "period4_anchor_Br": 0.437,
+      "_caveat": "d-block/heavy ions (Ge test) show shell-redistribution contamination -- extraction needs population tracking there"
+    },
+    "third_order_u2_rule": {
+      "_form": "the u^2 coefficient = k3 * q_A^3 (exact for C and O across +-1, +-2)",
+      "k3": {
+        "6": 0.01988,
+        "7": 0.02714,
+        "8": 0.03445,
+        "9": 0.01643,
+        "14": 0.00544,
+        "15": 0.01206,
+        "16": 0.01717,
+        "17": 0.01239
+      },
+      "_caveat": "row-2 C..O linear (+0.0073/Z) but F breaks it -- F/heavier extractions need the per-state check; refine next"
+    },
+    "f_switching_samples": {
+      "_form": "f = 1 + k_dis*[erf(kx*(q-ks)) + erf(kx*(q+ks))] (ODD, SI Eq. 83b)",
+      "q": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "f": [
+        0.9764,
+        0.9831,
+        1.0,
+        1.0165,
+        1.0234
+      ]
+    },
+    "C0_by_element_neutral_equalU1": {
+      "6": 0.00909053,
+      "7": 0.00160619,
+      "8": 0.00012001,
+      "16": 2.132e-05,
+      "17": 1.42e-06
+    }
   }
 }
