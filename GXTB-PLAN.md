@@ -474,3 +474,18 @@ the print can lie in different ways.
   round measures dq/dslot from the printed populations under FD to separate direct from
   relaxation, and probes whether the hardcoded onsite s/c1 carry CN-dependence (charted at
   CN=0 only so far).
+
+### 2026-07-16 (eighteenth push) — relaxation RULED OUT; the µ-CN coupling shape is nonstandard
+
+- FD on k1CN(H) at five distances WITH population readout: the density-relaxation contribution
+  to dES1/dk1 is ~3% at R=2 (computed from the measured dq under perturbation) — **the 2.5×
+  slope gap is NOT relaxation; it is the direct coupling's structure.**
+- The extracted direct shape, direct/(µ·q) over R = (0.557, 0.282, 0.097, 0.022), follows
+  NEITHER Eq.47-CN convention (mean-rc decays too fast: 0.219→0.0005; sum-rc too slow:
+  0.816→0.361) and is not a single erf of any (k, rc) (fits miss by ~25%). Either the µ-CN
+  uses its own counting parameters, or the coupling multiplies something beyond µ⁰·q.
+- Instrument limitation identified: printed populations carry 4 decimals → dq under FD is
+  noise-limited (the R=4 row is unusable). UPGRADE DESIGNED: charges from the restart DENSITY
+  via our gated overlap (machine precision) for all FD work — serves every future round.
+- Data: this round's slopes recorded here; raw in the transcript. Next: restart-precision FD
+  repeat + shape-test against per-element-steepness variants and µ-independent couplings.
