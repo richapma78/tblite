@@ -58,3 +58,54 @@ binary reveals in its strings (`src/tblite/basis/q-vszp.f90`):
   fork yields a full xtb binary carrying our g-xTB, exactly how the authors' distribution works.
 - A later GPU port (PySCF/CuPy batch-across-candidates) validates against this implementation via
   the same harness.
+
+## Status log
+
+### 2026-07-16 — G1 groundwork: the oracle is decoded end-to-end, three instruments live
+
+- **`prototype/` is the build's first stage** (decided): the physics is proven in transparent
+  Python against the oracle FIRST; the Fortran port into `src/tblite/` happens once G2 passes.
+  Porting proven physics is mechanical; debugging physics in Fortran is not.
+- **`prototype/oracle.py`** — drives the v1.1 binary and parses EVERY printed intermediate:
+  EEQ(BC) charges/CNs, the q-vSZP per-atom adaptation, basis dims, SCF trace, eigenvalues, shell
+  populations, WBO, Janak IP/EA, and the full TERM DECOMPOSITION. `-grad` gives numerical forces
+  (the reference for G4). Selftest: water, 10 terms parsed.
+- **Term 1 DONE — atomic core increments**: pure per-element constants, read off single-atom
+  runs (`prototype/data/increments-v1.json`, 13 elements). incr(H) = 0 (no core). **Additivity
+  VERIFIED to 1e-7** on water/HCl/CO. The values mirror def2-ECP conventions (Br all-electron
+  −2569.3; I effective-core −293.6; Pd −123.9) — as expected for a method targeting def2-TZVPPD.
+- **`prototype/basisq.py`** — the q-vSZP file layout is decoded and pinned: per element, a header
+  (Z + the three adaptation coefficients of `q + a·q² + b·CN^0.5 + c·q·CN`) then shells of
+  primitives with TWO contraction columns (static c0, charge-scaling c1). All 103 elements parse.
+  Conventions measured on lone atoms: the oracle's `npr` counts primitives × Cartesian components
+  (O: 24 = 6s + 6p×3); `acpsao` is 16 PER ATOM = 1+3+5+7 — **the ACPs carry s,p,d,f projectors on
+  every element**.
+- **`prototype/eeq.py`** — EEQ(BC) file layout decoded: a date-stamp header (same vintage stamp
+  the binary prints) + 103 rows × 10 floats (8 meaningful, 2 zero-padded). No globals in the file.
+- **42 harness-probe labels banked** from the v1 oracle (ChemRoutes `sandbox/harness.py --teach
+  gxtb-v1`, 0 failures incl. charged/open-shell probes via `.CHRG`/`.UHF`) — gate G2's target set
+  now exists as data.
+
+### Gate G4 (added): analytic gradients
+
+The v1 binary is numerical-only; the SI derives the ANALYTIC gradients completely; the v2 binary
+ships them. Our build implements the SI's analytic derivatives after G2, gated three ways: match
+our own finite differences (internal consistency), match the v1 oracle's `-grad` numerical forces
+on the probe set (external truth at v1 parameters), and only then time against the v2 binary.
+This also restores what the ecosystem note observed ("initial releases lack analytical gradients,
+making optimizations slow") — with gradients, optimization/frequencies at g-xTB cost stop being
+the bottleneck.
+
+### Solvation strategy (the layer upstream will not ship soon)
+
+- **Borrowed-cavity ansatz — GATE FAILED, recorded, not tuned** (ChemRoutes
+  `sandbox/validate_solvation.py`): E_gxtb(gas) + [GFN2-ALPB shift] reproduced the wB97M-V+SMD
+  acetonitrile ladder's separated structure (acetate ≫ chloride > heavy cluster) but inverted two
+  rungs INSIDE the referee's 0.2 kcal/mol degeneracy. Strict full-ordering gate: FAIL → solvated
+  questions stay with the DFT referee. Post-mortem: the neutral-neutral acyl set is a WEAK
+  solvation test (rung effects −1.9..+0.5 kcal/mol).
+- **The native plan**: parameterize ALPB (tblite already carries the solvation machinery) for
+  g-xTB's charges, trained against the GPU-DFT+SMD labels the ChemRoutes escalation tier banks as
+  a side effect of normal work. Gate to declare before fitting: ordering + magnitudes on a
+  **charged-species** set (acylpyridinium-type adducts — where solvation is tens of kcal/mol and
+  the engine's catalysis screen actually lives), not the neutral set that just failed weakly.

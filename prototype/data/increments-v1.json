@@ -1,0 +1,20 @@
+{
+ "_what": "g-xTB v1.1 atomic core increments (Eh), read off single-atom oracle runs; additivity verified on molecules. incr(H)=0: hydrogen has no core.",
+ "_source": "grimme-lab/g-xtb v1.1.0 public release binary + parameter files",
+ "increments_eh": {
+  "H": 0.0,
+  "B": -23.05136621,
+  "C": -34.93782269,
+  "N": -50.30027116,
+  "O": -69.0180177,
+  "F": -92.31589075,
+  "Si": -287.02012336,
+  "P": -338.16719101,
+  "S": -394.01949482,
+  "Cl": -454.75543874,
+  "Br": -2569.30072718,
+  "I": -293.5745853,
+  "Pd": -123.89646952
+ },
+ "additivity_verified": true
+}
