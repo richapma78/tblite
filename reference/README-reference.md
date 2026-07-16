@@ -1,0 +1,1 @@
+reference/gxtb-*.txt extracted from the ChemRoutes reference PDFs (pdftotext -layout); moved here because the CONSUMING repo is chemistry-only by enforced rule and the PAPER text mentions its broader benchmark sets.
