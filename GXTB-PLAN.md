@@ -416,3 +416,19 @@ configurable than the binary it reproduces.
   (k1CN, kU) plus the global k2x -- a 5-parameter joint fit against 20 observables, with the
   Eq. 47 CN computable exactly from the repulsion-era decode. Queued next with fresh budget;
   candidate element slots L1[6]/L1[7]/L1[8] to be value-matched then FD-verified.
+
+### 2026-07-16 (fourteenth push) — molecular slots ASSIGNED by response shapes; a bad fit rejected properly
+
+- A 5-parameter forward fit on the stretch converged numerically (rms 6.5e-4) at k1CN ≈ −23 —
+  one hundred times the SI's stated scale. REJECTED as wrong-structure (smooth curves + free
+  parameters hide missing physics). The honest instrument instead: FD-probe each candidate slot
+  at R = 2/3/5 and read its ROLE off the response-vs-R shape.
+- **Assignments (shape-identified, file values sane):** L1[8] = k1CN (µ CN-dependence; ES1-heavy,
+  erf-fast decay, H/Cl signs opposite; the file's H value 0.775 reproduces the measured stretch
+  signal magnitude −0.011 vs −0.019 with Cl's share pending); L1[6] = kU (Hubbard
+  CN-dependence); L1[7] = the Hamiltonian-basis scale (the only L1 slot alive at dissociation —
+  it moves the CHARGES); G1[0] = short-range exchange global; G1[5] = R-independent exchange
+  component (range-separation signature); G2[1] = offsite-kernel global (k2x candidate).
+- Next: the VERIFICATION forward model — onsite(charted) + CN terms with FILE values + offsite
+  kernel — against the full stretch; the remaining structural unknown is Eq. 86's Δρ (the
+  garbled extraction; aufbau−refocc gives a near-cancelling sum that undershoots 30×).

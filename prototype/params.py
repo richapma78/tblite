@@ -13,6 +13,13 @@ Named so far (slot -> role; evidence = which oracle observable moved when ONLY t
   L1[4] kq_rep    charge-dependence of Zeff (rep-only, dead for q=0 pairs)
   L1[5] rcov_cn   Eq.47 covalent radius (the INTERNAL/Hamiltonian CN: moves electronic terms
                   AND repulsion-via-alpha(CN) together)
+  L1[6] ku_cn    Hubbard CN-dependence U = U0*(1+ku*CN) (SI Eq. 102; shape-identified on the
+                  HCl stretch: small ES23+ES1 response, erf-fast decay, dead by R=5)
+  L1[7] hbasis   Hamiltonian-basis scale (persists at dissociation BY MOVING THE CHARGES --
+                  the one L1 slot whose response never dies with R; Ex-heavy at short range)
+  L1[8] k1_cn    chemical-potential CN-dependence mu = mu0*(1+k1cn*CN) (SI Eq. 84;
+                  ES1-dominant, erf-fast decay, H/Cl signs opposite matching mu signs;
+                  file value H 0.775 reproduces the measured stretch signal magnitude)
   L8[5] increment atomic core increment (moved the printed increments by exactly N_A*delta;
                   H's stored value is 0.0, matching Term 1's measurement)
   L8[6] kq2_rep   quadratic charge-dependence of Zeff (rep-only, q^2-scaled: big in NH4+)
