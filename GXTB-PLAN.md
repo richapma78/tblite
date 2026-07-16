@@ -109,3 +109,34 @@ the bottleneck.
   a side effect of normal work. Gate to declare before fitting: ordering + magnitudes on a
   **charged-species** set (acylpyridinium-type adducts — where solvation is tens of kcal/mol and
   the engine's catalysis screen actually lives), not the neutral set that just failed weakly.
+
+### Codebase audit verdicts (2026-07-16, full read of this fork — details in ChemRoutes docs/engine-map.md)
+
+**Eases (much of the scaffolding already exists upstream):** h0spec hooks `get_q1shift/get_q2shift`
+(+`kq1/kq2` storage, `dsedq`), diatomic-frame σ/π/δ scaling end-to-end (`get_diat_scale`,
+`integral/diat_trafo.f90`, `overlap_diat`, working consumer in CEH), EN-weighted CN, complete spin
+polarization (needs only g-xTB W constants), `multicharge::get_eeqbc_charges` (the exact EEQ(BC)
+q-vSZP needs, already a guess), CEH proves f-shells + Z≤103 through basis/integrals,
+self-consistent D4 via the dftd4 subproject, and a generic `interactions` container for bolt-on
+terms. 4th-order charges = copy `coulomb/thirdorder.f90`. Atomic increments = trivial classical
+container (data in prototype/data/).
+
+**Hard parts (the real work, in order):** (1) q-vSZP — per-ATOM charge-adaptive contractions
+rebuilt each geometry (+ ∂c/∂q), no existing path; (2) charge-dependent H diagonal into the SCC
+loop (self-energy currently computed once pre-SCF); (3) Mulliken range-separated exchange — needs
+a new off-diagonal Fock pathway, nothing similar exists; (4) ACP projectors — absent; (5) custom
+parameter parser (the TOML `element_record` lacks every g-xTB field — mirror gfn2.f90's
+module-owned parameters instead).
+
+**Method registration** touches ~5 dispatch sites: `app/driver_run.f90`, `app/driver_param.f90`,
+`src/tblite/api/calculator.f90` (+ header), `python/tblite/interface.py::_loader`, plus
+meson/CMake lists.
+
+**Solvation layer seam confirmed LOW-RISK:** ALPB/GBSA/CDS parameters are selected BY METHOD
+STRING (`solvation/data/*` + `get_alpb_param(..., method, ...)`) and consume `wfn%qat`, which
+g-xTB produces — the work is new `"gxtb"` parameter tables (fit against ChemRoutes' banked
+DFT+SMD labels) and the pre-declared charged-species gate, not plumbing.
+
+**No numerical-gradient fallback exists in the library core** — every term ships analytic
+gradients (FD lives only in unit tests as verification). The SI's gradient derivations are
+load-bearing for G4.
