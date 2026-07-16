@@ -399,3 +399,20 @@ configurable than the binary it reproduces.
   raw grids in data/onsite-charts2.json. NOTE the strategic unlock: for NEUTRAL molecules the
   atomic q_A are small (|q|≲0.3 → E3 ~ 1e-3, E4 smaller), so the molecular OFFSITE gate can
   proceed with the charted onsite pieces before the ion-regime forms fully close.
+
+### 2026-07-16 (thirteenth push) — the offsite front opened: kernel Coulombic tail confirmed; the CN-slots channel found
+
+- **HCl stretch (10 points, populations per point)** with the charted onsite pieces subtracted:
+  the offsite ES2+3 tail is CLEAN Coulomb (q·q'/R to ~10% at R=8) and the Klopman-Ohno form is
+  roughly right unscreened; the short-range mismatch is the U CN-dependence (kU slots), not yet
+  fitted. Data in `data/offsite-hcl.json`.
+- **A hypothesis executed and killed properly**: the offsite ES1's overlap-like fast decay
+  (factor 28 over R=2..3.5 while the kernel drops 1.7x) suggested an overlap-induced reference
+  shift -- computed with our gated overlap engine, it is IDENTICALLY zero (Mulliken of an
+  atom-diagonal reference density equals refocc regardless of S; the math nulls it). The real
+  source: the CN-dependence of the onsite chemical potentials mu = mu0*(1 + k1CN*CN) -- CN(R)
+  decays erf-fast, exactly the measured shape, and the atom-derived onsite model had CN = 0.
+- **Consequence**: the stretch data IS the measurement channel for the per-element CN slots
+  (k1CN, kU) plus the global k2x -- a 5-parameter joint fit against 20 observables, with the
+  Eq. 47 CN computable exactly from the repulsion-era decode. Queued next with fresh budget;
+  candidate element slots L1[6]/L1[7]/L1[8] to be value-matched then FD-verified.
