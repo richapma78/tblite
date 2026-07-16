@@ -295,3 +295,32 @@ load-bearing for G4.
   asymmetry scan for the mean's form) and chart γ(U_s,U_p) directly — the identification is
   2-D function mapping, the instrument exists (`es_atoms.py` carries the measurement machinery;
   its declared gate currently FAILS and stays failing until the kernel is measured, not tuned).
+
+### 2026-07-16 (eighth push) — the onsite 2nd-order kernel MEASURED; the private fork's file tree read off the library
+
+- **The user's hint paid off — the distributions carry structure**: `ar t libxtb.a` on the Linux
+  install lists ALL 710 object files of the build INCLUDING the private tblite fork's source
+  tree by name: `basis_q-vszp.f90` (as predicted), `classical_increment.f90`,
+  `coulomb_multipole_gxtb.f90` (a g-xTB-specific multipole), and the decisive
+  **`coulomb_thirdorder_onsite.f90` + `_twobody.f90`** — onsite third-order exists as its own
+  container, exactly what the atom anomalies demanded. Also: the "Windows" release asset is a
+  REAL native g-xTB build (`--gxtb` works; inner folder confusingly named xtb-bleed-windows),
+  extracted at ChemRoutes reference/gxtb-win with gcc .mod interface files + libxtb.a.
+- **The survey experiment worked exactly as designed** (SET the L6 Hubbards, don't nudge):
+  equal-U scan → ES2+3(O atom) is DEAD CONSTANT (C0 = 0.00012001, U-independent) — the E2 part
+  vanishes with the near-zero total charge and the leftover is a pure higher-order onsite
+  constant. Asymmetry scan (U_p = 1, U_s ∈ 0.5..3) → the U-dependent part is EXACTLY
+  K·(U_s−U_p)²/(U_s+U_p) (four scan points, ratios constant to 4 digits; even in ΔU to <0.2%,
+  so the odd-in-ΔU third-order shape is ABSENT here) — and that is precisely the
+  harmonic-mean-kernel form: E2 = s·[½ Σ q_l q_l' γ_harm(U_l,U_l')]. The measured K reproduces
+  the earlier FD slopes to 3 digits (dES23/dU_s +0.01493 vs measured +0.0150).
+- **The scale s is per-ELEMENT, not global** (measured: C 0.417, N 0.496, O 0.582, S 0.364,
+  Cl 0.380) and decreases smoothly with |q| for the 2-shell elements — a charge-damping of the
+  second-order onsite, closed form not yet identified (the 20 globals are PROVEN inert for
+  atoms; s is not stored per element in any slot that moves ES23 — likely a hardcoded damping
+  function of the charges, like avg_cn was hardcoded). C0 measured per element (C 0.00909,
+  N 0.00161, O 0.00012, S 2.1e-5, Cl 1.4e-6) — roughly quartic in the shell charges,
+  the fourth-order onsite candidate.
+- **Next experiment (designed)**: charged atoms (.CHRG −1/+1/+2) sweep q_l systematically at
+  fixed U → chart s(q) and C0(q) → identify the damping's closed form and the higher-order
+  onsite polynomial; then molecules (offsite kernel with its exp(−k(2),x·R) screening).
