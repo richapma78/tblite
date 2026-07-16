@@ -32,7 +32,10 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT = os.path.join(HERE, "..", "param", "gxtb", "gxtb_parameters")
 
-KEXP_REP = 1.5          # SI Sec. 1.6: fixed, "intermediate between Slater and Gaussian"
+import sys as _sys
+_sys.path.insert(0, HERE)
+import constants as _K
+KEXP_REP = _K.REPULSION_KEXP    # from data/derived-constants.json (SI Sec. 1.6)
 
 
 def parse(path=DEFAULT):

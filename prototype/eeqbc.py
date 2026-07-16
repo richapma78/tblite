@@ -31,7 +31,12 @@ import sys
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-KCN, NORM_EXP, KBC, KCNRAD, CUTOFF = 2.0, 0.75, 0.60, 0.14, 25.0
+sys.path.insert(0, HERE)
+import constants as _K
+
+KCN, NORM_EXP, KBC, KCNRAD, CUTOFF = (_K.EEQBC["kcn"], _K.EEQBC["norm_exp"],
+                                      _K.EEQBC["kbc"], _K.EEQBC["kcnrad"],
+                                      _K.EEQBC["cutoff_bohr"])
 SQRT2PI = math.sqrt(2.0 / math.pi)
 
 _T = json.load(open(os.path.join(HERE, "data", "mctc-tables.json")))

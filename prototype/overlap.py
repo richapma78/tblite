@@ -143,9 +143,9 @@ def build_shells(zs, xyz_bohr, charge=0):
     return shells, qe
 
 
-# the ORACLE's d-component ordering, measured from tilted-HCl restart MOs (residual 1.1e-8,
-# all signs +1): oracle positions = (x2-y2, z2, xy, xz, yz) = our m rows (+2, 0, -2, +1, -1).
-_ORACLE_D_PERM = (2, 4, 1, 3, 0)        # our m=-2..+2 index -> oracle position
+import constants as _K
+# the ORACLE's d ordering (measured; see data/derived-constants.json oracle_conventions)
+_ORACLE_D_PERM = _K.D_PERM
 
 
 def overlap(zs, xyz_bohr, charge=0, shells=None, ao_order="pyscf"):

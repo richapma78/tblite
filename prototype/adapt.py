@@ -26,33 +26,14 @@ import sys
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BOHR = 1.8897261254578281
-KN = -3.75
+sys.path.insert(0, HERE)
+import constants as K
 
-# Pyykko & Atsumi, Chem. Eur. J. 2009, 15, 188-197; metals decreased by 10%.
-# Copied verbatim from grimme-lab/qvSZP src/chargscfcts.f90 (Angstrom; converted below).
-_PYYKKO_AA = [
-    0.29, 0.46,
-    1.20, 0.94, 0.77, 0.75, 0.71, 0.63, 0.64, 0.67,
-    1.40, 1.25, 1.13, 1.04, 1.10, 1.02, 0.99, 0.96,
-    1.76, 1.54,
-    1.33, 1.22, 1.21, 1.10, 1.07, 1.04, 1.00, 0.99, 1.01, 1.09,
-    1.12, 1.09, 1.15, 1.10, 1.14, 1.17,
-    1.89, 1.67,
-    1.47, 1.39, 1.32, 1.24, 1.15, 1.13, 1.13, 1.08, 1.15, 1.23,
-    1.28, 1.26, 1.26, 1.23, 1.32, 1.31,
-    2.09, 1.76,
-    1.62, 1.47, 1.58, 1.57, 1.56, 1.55, 1.51,
-    1.52, 1.51, 1.50, 1.49, 1.49, 1.48, 1.53,
-    1.46, 1.37, 1.31, 1.23, 1.18, 1.16, 1.11, 1.12, 1.13, 1.32,
-    1.30, 1.30, 1.36, 1.31, 1.38, 1.42,
-    2.01, 1.81,
-    1.67, 1.58, 1.52, 1.53, 1.54, 1.55, 1.49,
-    1.49, 1.51, 1.51, 1.48, 1.50, 1.56, 1.58,
-    1.45, 1.41, 1.34, 1.29, 1.27, 1.21, 1.16, 1.15, 1.09, 1.22,
-    1.36, 1.43, 1.46, 1.58, 1.48, 1.57,
-]
-RCOV_BOHR = [r * BOHR for r in _PYYKKO_AA]
+BOHR = K.BOHR
+KN = K.BASIS_CN_KN
+
+# Pyykko-Atsumi radii and kn now live in data/derived-constants.json (constants.py)
+RCOV_BOHR = K.BASIS_RCOV_BOHR
 
 
 def basis_cn(zs, xyz_bohr):

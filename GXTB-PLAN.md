@@ -351,3 +351,17 @@ load-bearing for G4.
   charting remains the instrument. The offsite/molecular terms, by contrast, have their
   parameters IN THE FILE and are the natural next implementation targets alongside the
   remaining onsite charting.
+
+### 2026-07-16 (tenth push) — HOUSE RULE: no method constant lives in code
+
+Per Richard: everything decoded or measured goes into a TABLE, loaded once at start, like the
+official parameter files. Implemented: `prototype/data/derived-constants.json` (one home for
+every constant NOT in gxtb_parameters/basisq/eeq — basis-CN radii+kn, EEQ(BC) factory constants
+incl. the unit quirk, repulsion structural readings, the fractional reference occupations,
+oracle conventions incl. the d-permutation and restart format, and the measured-but-not-closed
+onsite functions as explicit calibration targets with provenance per entry) +
+`prototype/constants.py` (the single loader). All five consuming modules refactored; the FULL
+gate suite re-run and green (eeqbc, adapt, repulsion 4.75e-9, overlap machine-precision,
+restart Mulliken) — the refactor is proven behavior-identical. The Fortran port inherits this:
+our tblite implementation will LOAD what upstream hardcodes, making the fork strictly more
+configurable than the binary it reproduces.

@@ -29,11 +29,8 @@ import params  # noqa: E402
 HOME = os.path.expanduser("~/.gxtb")
 PRISTINE = os.path.join(HERE, "data", "gxtb_parameters.pristine")
 
-# SI Tab. 1 reference occupations (Z <= 18), for the cross-check
-SI_REFOCC = {6: {0: 1.035, 1: 2.964}, 7: {0: 1.374, 1: 3.625}, 8: {0: 1.673, 1: 4.326},
-             9: {0: 1.855, 1: 5.144}, 14: {0: 1.387, 1: 2.324, 2: 0.287},
-             15: {0: 1.569, 1: 2.991, 2: 0.438}, 16: {0: 1.757, 1: 4.089, 2: 0.152},
-             17: {0: 1.875, 1: 5.067, 2: 0.057}}
+import constants as K
+SI_REFOCC = K.REFOCC            # fractional references now live in data/derived-constants.json
 UHF = {6: 2, 7: 3, 8: 2, 9: 1, 14: 2, 15: 3, 16: 2, 17: 1}
 SYM = {6: "c", 7: "n", 8: "o", 9: "f", 14: "si", 15: "p", 16: "s", 17: "cl"}
 
