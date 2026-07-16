@@ -270,3 +270,28 @@ load-bearing for G4.
   printed decomposition — ES2+3 (isotropic 2nd/3rd order; Hubbard γ slots already named at L6),
   ES1 (first-order, L7), multipole ES (globals G2[6,7]), Mulliken exchange (L5 + G1 slots),
   spin (Espinpol); then H0 closes the electronic energy via Tr(PH0) and the SCF loop follows.
+
+### 2026-07-16 (seventh push) — first-order DECODED (fractional references!); onsite 2nd-order kernel CORNERED
+
+- **The fractional-reference discovery**: lone neutral atoms converge to aufbau shell populations
+  yet print NONZERO ES1/ES2+3. Perturbing oxygen's L7 slots moved ES1 by ±0.325 — equal and
+  opposite for s and p — exposing FRACTIONAL reference occupations. SI Tab. 1 then confirmed:
+  the references are averaged wB97M-V/q-vSZP Mulliken occupations (O: s 1.673 p 4.326; the FD
+  measured 1.675/4.325). Measured for 8 elements incl. Si's three shells — all match the table
+  to ~4e-4, pinning the convention **q_l = refocc − pop** (the sign opposite Eq. 99 as printed).
+  ES1 is exactly LINEAR in the L7 chemical potentials, so the FD extraction is exact — refoccs
+  for elements beyond the table's Z≤18 are measurable the same way (needed: the file does NOT
+  store them; no element slot other than L7/L6/L5/L1[9] moves the atom's terms).
+- **ES1 (atoms) = Σ_l µ⁰_l·q_l with µ⁰ = the L7 row** — structure verified (switching f(0)=1).
+  Molecule pieces still to assign: k^(1),CN (element), k_dis/k_x/k_s (globals), offsite via γ⁽²⁾
+  with Δρ⁰ = aufbau − refocc.
+- **Onsite second-order: the kernel is NOT any standard mean.** With q measured and U = L6, all
+  of harmonic/geometric/arithmetic fail with element-VARYING ratios (0.59–2.5). Three exact
+  constraints for O (energy + two FD slopes, globals PROVEN inert for atoms — a full 20-slot
+  sweep moved nothing) give γ_sp(1.4936, 0.8473) = 0.5321, ∂γ/∂U_s = 0.3608, ∂γ/∂U_p = 0.6814;
+  Euler's test on these says γ_sp is HOMOGENEOUS OF DEGREE ≈ 2.1 in the Hubbards — not the
+  SI's Eq. 101 R→0 limit. Next experiment (designed, not yet run): SET the L6 values to chosen
+  grids (equal-U scan for the diagonal identity, magnitude scan for homogeneity degree,
+  asymmetry scan for the mean's form) and chart γ(U_s,U_p) directly — the identification is
+  2-D function mapping, the instrument exists (`es_atoms.py` carries the measurement machinery;
+  its declared gate currently FAILS and stays failing until the kernel is measured, not tuned).
