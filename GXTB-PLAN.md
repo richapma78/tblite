@@ -165,3 +165,29 @@ load-bearing for G4.
   parametrizations"; the oracle prints CN(basis) per atom = direct gate) → q_eff assembly
   (`q + a·q² + b·CN^0.5 + c·q·CN`; the oracle's AO-setup block prints every piece per atom) →
   overlap integrals in the adapted basis.
+
+### 2026-07-16 (third push) — Term 3 GATED: the basis CN and q_eff; the adaptive basis is ours
+
+- **The basis CN was hiding in plain sight**: not in the SI (Eq. 47 is the HAMILTONIAN CN, a
+  different one of the four) and not CEH's CN (tested and refuted: CEH radii give pair count
+  0.86 where the oracle says 0.41). The authoritative source is the q-vSZP SETUP TOOL
+  (`grimme-lab/qvSZP`, new sibling clone) — `ncoord_basq`: erf count with **kn = −3.75** over
+  rc = SUM of Pyykkö–Atsumi 2009 covalent radii (metals −10%), Å→Bohr. A first pure-fit attempt
+  from oracle diatomic scans (`prototype/fit_basis_cn.py`, kept as the record of the method)
+  bracketed the constants; the tool's source pinned them.
+- **q_eff was decoded directly against the oracle's AO block before reading anything**: with the
+  basisq element-header triple (h1,h2,h3), q_eff = (q − h2·q²) + h1·√CN + h3·q·CN reproduced
+  every printed component (dq/dcn/dqcn/total) to all decimals — then SI Eq. 28 confirmed the
+  form (its `a` is −h2; k0 = 1 default). `prototype/adapt.py` implements both.
+- **GATE PASSED on all six probes** (water, HCl, CO, NH4+, AcCl, PdCl2): CN(basis) ≤ 4e-5,
+  q_eff ≤ 5e-6 vs oracle.
+- Consequence: c = c0 + c1·q_eff per primitive is now fully computable by our code for ANY
+  geometry — the charge-adaptive basis (the audit's "single biggest structural lift" for the
+  Fortran port) has a working, gated reference implementation.
+- Note for the Fortran port: SI Sec. 1.2 also defines a SECOND, scaled basis variant used only
+  for the EHT Hamiltonian (scaled exponents + scaled k0/k2/k3, element-wise, from the main
+  parameter file) — "decouples the overlap from the effective Hamiltonian". Two basis builds
+  per calculation, one q_eff.
+- **Next in the chain**: overlap integrals in the adapted basis (oracle gates: nsao dims ✓
+  already, then eigenvalue/population checks once H0 exists); the diatomic-frame scaled overlap
+  (SI Sec. 1.3) machinery already exists in this fork (`integral/diat_trafo.f90`).
