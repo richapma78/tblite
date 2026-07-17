@@ -1390,3 +1390,22 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   carry ES3 leakage. Order of operations fixed: decode ES3 slots → install from the
   closed form (no fitting) → re-extract clean remainders → re-fit ss and the grand
   diagonal law → the six-system gate.
+
+### 2026-07-17 (seventy-fifth push) — ES3 onsite decoded fit-free; the τ form decided by an anion/cation ratio
+
+- **Γ_A found and confirmed**: the L1[6] element column (H 0.8142, He 5.0001, Li 0.8093,
+  O 0.1454, F 0.5679). Linearity to 0.7% across ±12% on H3+, Euler-consistent with the
+  full target. Every ES3 onsite global is hidden — all 20 file globals are exactly dead
+  on He+.
+- **The τ form was decided by data, not by reading**: pdftotext garbles the SI fraction;
+  the harmonic-mean reading fails the H−/He+ ratio at 2.28×, the average-of-inverse-
+  Hubbards reading (τ = −1/2U²) nails it — H− PREDICTED fit-free to 4% across a sign
+  flip and a 14× magnitude change. k3Gs = −0.05708 (measured once, on He+); k3Gp =
+  −0.0668 (F−, same family).
+- Lab notes that will bite again: He has NO p shell; REFOCC is FRACTIONAL (F: 1.855/
+  5.144); the Li− anomaly is the period-2 s-rule line failing at nval=1 (ES2 input, not
+  ES3), labeled.
+- **Offsite: bounded, not closed.** Bare-Γ beats the dressed form decisively (4-variant
+  solve), (k3 ~ 2–4, k3x ~ 0.4), but the ladder targets carry ~0.01 of impurity from
+  other ion layers. Clean those first (ion ES1/drho), then close, install, re-extract,
+  re-fit ss, six-system gate.
