@@ -952,3 +952,19 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   17 points with its four globals located (α hardcoded); THE PZPZ OBJECT SOLVED (the offsite
   exchange's Euler remainder); the first SCF assembled with the exchange ENERGY gating
   exactly; the Fock placement's leading candidate identified. Every step committed.
+
+### 2026-07-18 (forty-fifth push) — the exchange Fock DECODED to its skeleton: population form, exact atom anchor
+
+- **The manifold-breaking instrument**: H2⁺'s empty β channel makes F^α − F^β = X + spin
+  (the spin part measured by its own W-slot FD) — the exchange Fock measured DIRECTLY, no
+  forward stacking. The energy functional was already three-manifold-confirmed (H2 exact;
+  H2⁺ = −0.125·(γ_on+γ_off) to all digits; H⁻ = −γ_on exactly).
+- **The DISCRIMINATOR**: X11(H2⁺)/X11(H2) = 1.01–1.05 — the Mulliken-POPULATION form
+  (predicts equal), refuting every P-matrix-linear form (predicts one half).
+- **The atom anchor is EXACT**: X^α(H atom) = −0.360142 = −γ_on to five digits — weight 1,
+  m^α = 1. And H2⁺'s dissociation limit puts the diagonal's γ_off weight at 0.003 ≈ ZERO:
+  the Fock diagonal = −γ_on·(own same-spin population), full stop, plus a small S²-shaped
+  short-range correction (ratio ≈ −0.065 (H2⁺) / −0.049 (H2) — the one sub-term left).
+- Off-diagonal first reading: X12 ≈ −½S·γ_on·(m1+m2) within 10–18%. Next: the joint lsq
+  across (atom, H2⁺, H2) pins the S² term and the off-diagonal exactly → rebuild fock_x →
+  re-gate the SCF → F2/HF.

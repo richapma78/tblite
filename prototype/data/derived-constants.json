@@ -657,6 +657,16 @@
    "x_required": "extracted (F_reconstructed - H0 - muS - ACP) at 12 R: X_req_11 flattens to -0.1790 ~ -gamma_on/2 EXACTLY (the spin-restricted atom limit, P^sigma_11 = 1/2); X_req_12 falls -0.137 -> -0.030; my gradient form has the WRONG dissociation limit (keeps falling). The binary's F^X placement is simpler/different -- fit its form against these curves next",
    "_next": "fit X_req(R) against Mulliken-Fock candidates (the gamma*P^sigma family with S-weight variants); then re-gate the SCF; then F2/HF SCF with ES kernels; energy bookkeeping gate",
    "xfock_placement_hunt": "the gamma-o-(P-sandwich) T-family FAILS (3-coef lsq: unphysical (-4.8, +0.3, +9.7), rms 2.7e-2, wrong limits); the MULLIKEN-POTENTIAL form -1/2 S o (v+v) with v = gamma @ (per-spin Mulliken populations) matches BOTH elements at a consistent w = 0.47-0.52 for R <= 3 (the S-suppressed cross element is its signature) with a slower-falling long-range F12 remainder; the 2-term fit plateaus at rms 1.4e-2 = THE STACKED-SYSTEMATICS FLOOR: X_required is extracted through the assembled H0+muS+ACP whose own forward gaps are ~0.01 Eh. VERDICT: refine the underlying pieces to 1e-3 before the placement can be pinned; the S o (v+v) family with w ~ 1/2 is the leading candidate."
+  },
+  "xfock_decode": {
+   "_instruments": "h2plus_fock.py (the 1-electron manifold: beta channel EMPTY -> F^alpha - F^beta = X + spin, spin measured by its own W-slot FD -- NO forward stacking) + the atom's alpha/beta split + h2_channels.py + x_placement.py",
+   "population_form_CONFIRMED": "X11(H2+) / X11_req(H2) = 1.01-1.05 across R = 1..5 -- the Mulliken-POPULATION form (equal, as it predicts), refuting every P-matrix-linear form (which predicts 0.5). The energy functional had already been confirmed on three manifolds (H2 exact, H2+ = -0.125*(gam_on+gam_off) to all digits, H- = -gamma_on exactly)",
+   "atom_anchor_EXACT": "X^alpha(H atom) = -0.360142 = -gamma_on to FIVE digits -> weight w = 1, m^alpha = 1: the Fock diagonal = -gamma_on * (own same-spin Mulliken population), exactly",
+   "diagonal_gamma_off_ZERO": "H2+ dissociation: X11(5.0) = -0.1806 = -gamma_on * (m=1/2) + b*gamma_off/2 with b = 0.003 ~ ZERO -- the diagonal carries NO cross-center kernel term",
+   "s2_correction": "the diagonal's short-range extra = X11 + gamma_on*m: ratio to S12^2 constant ~ -0.065 for R <= 3 (H2+); H2-neutral shows the same structure at ~ -0.049 -- the remaining sub-term to pin (offline joint fit, both systems, atom-constrained)",
+   "off_diagonal_first_reading": "X12(H2+) ~ -1/2*S12*gamma_on*(m1+m2) within 10-18% -- the S-weighted onsite-kernel form; exact sub-structure pending the joint fit",
+   "spin_term": "atom spin part +0.0793 = W-linear (measured); H2+ diagonal spin content +0.0397 R-independent",
+   "_next": "joint lsq (H2+, H2, atom) for the S2 term and the off-diagonal exact form -> rebuild fock_x -> re-gate scf_h2 -> F2/HF"
   }
  }
 }
