@@ -943,6 +943,7 @@
     0.8484
    ]
   },
-  "first_printed_dipole": "g-xTB prints TWO dipoles; the smaller (H2O 0.3107) is NOT the Mulliken point-charge dipole (that is 0.727) -- likely the EEQ/EEQBC charge dipole. The larger (0.9289) is the full density dipole = our checkpoint. Side detail, not needed for AES."
+  "first_printed_dipole": "g-xTB prints TWO dipoles; the smaller (H2O 0.3107) is NOT the Mulliken point-charge dipole (that is 0.727) -- likely the EEQ/EEQBC charge dipole. The larger (0.9289) is the full density dipole = our checkpoint. Side detail, not needed for AES.",
+  "energy_shape": "aniso_electro (decomp 145174+) DECODED = standard multipole interaction energy per atom pair: mu.R_ij (local_188), R_ij.Theta.R_ij quadrupole contraction (dVar74/76 over the 9 components), the factor-3 dipole tensor (dVar70=3*mu), all contracted with precomputed DAMPED kernels (dVar2/dVar3/dVar6/DAT_03b2a788 = the gamma3/5/7 from mmomgaberf, stored in a per-pair table) into charge-dipole + dipole-dipole + charge-quad + dipole-quad + quad-quad accumulators (local_1b8/1c0). Fully confirms the GFN2 AES energy form. REMAINING for the port: the kernel PARAMETERS -- per-pair damping radius R0_AB, erf scales (mmomgaberf param_4/param_5), global scales (DAT_03be6398/63a0/63a8, and the -0.003 in the 1/R^9 term). Three ways to get them: (A) read the aespot setup that builds the R0 table (0x3be6080) from the param file; (B) test the published GFN2 AES params (if g-xTB did not refit AES); (C) fit R0+scales with the FORM fixed and moments exact, gated out-of-sample. Target: printed ES multipole 0.00405221 (H2O), plus hf/ch4/nh3 values."
  }
 }
