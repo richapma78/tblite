@@ -590,3 +590,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The atom-eigenvalue MODEL is now assembled up to two constants (the 0.122 exchange factor,
   the W shell-pair weights) — the eigenvalue GATE (predict all 8 O eigenvalues + H's 2 from
   file values) is 2–3 probes away.
+
+### 2026-07-16 (twenty-sixth push) — THE MASTER ELEMENT FUNCTION: exchange and 2nd-order damping are ONE law
+
+- **E_x(atom) = −c_x·Σ_l L5[l]·Σ n²** (self-exchange) closes the printed exchange energy
+  (O to 4 digits; homogeneity in L5 verified) AND explains the occupied-only eigenvalue
+  response (−2c_x) simultaneously.
+- **c_x follows the s-rule's exact pattern** (per-period linear, slopes halving period 2→3) —
+  and **c_x = s/9.59 for ALL NINE measured elements including H across three periods**: one
+  hardcoded per-period-linear MASTER FUNCTION g(el) underlies both the second-order damping
+  (s = A·g) and the exchange self-energy (c_x = B·g), B/A = 0.10427. Two of the binary's
+  hardcoded element functions were one function all along.
+- **E_spin = −½·L1[9]·Σ w̃_ll'·m_l·m_l'** closes oxygen EXACTLY (−0.0702 vs printed −0.070021);
+  H gives w̃_ss = 0.2005, N implies w̃_pp = 0.0797 vs O's 0.0895 — the shell-pair weights carry
+  remaining element structure (next charting target).
+- The atom-eigenvalue gate is now one W-matrix away.

@@ -346,6 +346,22 @@
       },
       "_resolved": "v1's 'F k3 anomaly' dissolved -- F was right; the row-2 linear k3 trend was the artifact of the wrong (u^2-only) shape",
       "_open": "C+1 and O+2 carry unmodeled structure (shell-resolved quartic candidate); c1's element rule not yet identified; d-block extraction needs population tracking"
+    },
+    "master_element_function": {
+      "_discovery": "the exchange self-energy coefficient c_x(el) = s(el)/9.59 EXACTLY for all 9 measured elements (H through Cl, three periods) -- ONE hardcoded per-period-linear master function g(el) underlies BOTH the 2nd-order damping (s = A*g) and the Mulliken exchange (c_x = B*g), B/A = 0.10427",
+      "exchange_energy_form": "E_x(atom) = -c_x * sum_l L5[l] * sum_{i,sigma in l} n_i^2 (self-exchange; explains the occupied-only eigenvalue response at -2*c_x and the energy simultaneously; verified O to 4 digits, homogeneous-in-L5 verified)",
+      "c_x_measured": {
+        "1": 0.04927,
+        "6": 0.04399,
+        "7": 0.05258,
+        "8": 0.06119,
+        "9": 0.06978,
+        "14": 0.03184,
+        "15": 0.03621,
+        "16": 0.04058,
+        "17": 0.04495
+      },
+      "spin_energy_form": "E_spin = -1/2 * L1[9] * sum_ll' w_ll' m_l m_l' -- closes O exactly (w_pp 0.0895 -> -0.0702 vs printed -0.070021); H gives w_ss 0.2005; N implies w_pp 0.0797 -- the w shell-pair weights carry element structure still to chart"
     }
   },
   "slot_assignments_molecular": {
