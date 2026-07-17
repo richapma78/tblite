@@ -1355,3 +1355,21 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   evaluator is now term-agnostic so the bank, not the code, decides which law ships.
 - Gate re-confirmed 3/4 with v1. Next: the σ/π class-resolved off-diagonal round, which
   is where the OBJ should install cleanly and where the water LUMO likely lives.
+
+### 2026-07-17 (seventy-third push) — the class-resolved off-diagonal round: five exact classes, water closes, the gate holds the line
+
+- **One geometric classifier** (`pair_class`, shared between fit and engine) splits the
+  off-diagonal channel into 7 σ/π classes. Five close essentially exactly: two are ZERO
+  by symmetry (the classifier's own confirmation), pσ-pσ is the OBJ seated at its decode
+  site (−2.11·obj·P, raw 0.093 → 0.0008), sp_m and sp_s close to 0.0004/0.0002.
+- **Installed, water closes completely** — 0.017 worst *including the LUMO* (was 0.104) —
+  and H2/F2 improve. But the HF LUMO regresses 0.026 → 0.053, 0.003 over the
+  pre-declared bar: **banked, NOT installed** (`installed: false`; the engine obeys the
+  bank, not the code). No tuning to pass.
+- **Two rescue hypotheses refuted by measurement**: static restriction of sp_s (HF
+  worse, 0.056) and of ss (0.057). The overshoot is not density feedback — it sits on
+  the **ss channel**, the one class that never closes (rms 0.011, H2-holdout fails).
+  One law short of 4/4.
+- Lab-note: a circularity bug (re-extraction against an engine already carrying the
+  banked laws) announced itself as all-classes-below-noise + gate 0/4; both law sets are
+  now stripped during extraction.

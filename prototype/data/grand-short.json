@@ -4461,5 +4461,85 @@
    -2.0744604115371823
   ],
   "note": "better rms (0.0092) and H2 in-sample, but the HF top virtual crosses the 0.05 bar when installed (gate 2/4 vs 3/4) -- needs the sigma/pi class split before install"
+ },
+ "offdiag_class": {
+  "classes": {
+   "pp_m": {
+    "terms": [],
+    "coefs": [],
+    "rms": 1.3111913762054449e-16,
+    "n": 16
+   },
+   "pp_p": {
+    "terms": [
+     "gb_s3",
+     "gb_p",
+     "obj_p"
+    ],
+    "coefs": [
+     -8.199887146507658,
+     -0.5387799483426476,
+     2.702764246773142
+    ],
+    "rms": 1.797270121262684e-05,
+    "n": 16
+   },
+   "pp_s": {
+    "terms": [
+     "obj_p"
+    ],
+    "coefs": [
+     -2.109945539767748
+    ],
+    "rms": 0.0007592943525549938,
+    "n": 4
+   },
+   "sp_m": {
+    "terms": [
+     "gb_p"
+    ],
+    "coefs": [
+     -1.0153538712193304
+    ],
+    "rms": 0.00041952666653711324,
+    "n": 4
+   },
+   "sp_p": {
+    "terms": [],
+    "coefs": [],
+    "rms": 1.7353041894482898e-16,
+    "n": 26
+   },
+   "sp_s": {
+    "terms": [
+     "gb_s",
+     "gb_s3",
+     "gb_p"
+    ],
+    "coefs": [
+     -0.18775857230009824,
+     -0.07542581465948378,
+     -0.4643280937227152
+    ],
+    "rms": 0.00023977125510551945,
+    "n": 12
+   },
+   "ss": {
+    "terms": [
+     "gb_s",
+     "gb_s3",
+     "gb_s_mm"
+    ],
+    "coefs": [
+     -0.7896645416292158,
+     1.1216901424918015,
+     0.834636111650067
+    ],
+    "rms": 0.010785343297459222,
+    "n": 17
+   }
+  },
+  "installed": false,
+  "note": "sigma/pi class-resolved; ZERO law = class below noise. NOT INSTALLED (pre-declared gate): dominates v1 on H2/F2/H2O (water closes fully, 0.017) but the HF LUMO regresses 0.026->0.053, 0.003 over the bar -- it sits on the unresolved ss channel (rms 0.011, H2-holdout fails). Static-restriction variants of sp_s and ss both REFUTED (HF worse: 0.056/0.057). Next entry ticket: crack ss."
  }
 }

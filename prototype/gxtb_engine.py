@@ -37,8 +37,11 @@ try:
         _G = __import__("json").load(_f)
     GRAND_D = dict(zip(_G["best"]["terms"], _G["best"]["coefs"]))
     GRAND_O = dict(zip(_G["offdiag_best"]["terms"], _G["offdiag_best"]["coefs"]))
+    GRAND_C = ({c: list(zip(v["terms"], v["coefs"]))
+                for c, v in _G["offdiag_class"]["classes"].items()}
+               if _G.get("offdiag_class", {}).get("installed") else None)
 except FileNotFoundError:
-    GRAND_D = GRAND_O = None
+    GRAND_D = GRAND_O = GRAND_C = None
 SRULE_P2 = (0.08247, 0.0920)
 SRULE = {1: 0.4726, 2: 0.9218}
 NVAL = {6: 4, 7: 5, 8: 6, 9: 7}
@@ -55,6 +58,32 @@ def elem(z):
             "cx": SRULE[z] / 9.59, "k": [e["shells"][2][l] for l in range(nsh)],
             "kb": 0.4223 * e["l8"][3], "kd_sg": e["l8"][0], "kd_pi": e["l8"][1],
             "ref": K.REFOCC[z], "nsh": nsh}
+
+
+_PDIR = {0: (1.0, 0.0, 0.0), 1: (0.0, 1.0, 0.0), 2: (0.0, 0.0, 1.0)}
+
+
+def pair_class(mi, mj, xyz):
+    """sigma/pi class of a cross-atom AO pair. mi/mj = (at, z, l, m); oracle p-order
+    is (x, y, z). Returns one of ss, sp_s, sp_p, sp_m, pp_s, pp_p, pp_m."""
+    ai, _, li, qi = mi
+    aj, _, lj, qj = mj
+    u = np.array(xyz[aj], float) - np.array(xyz[ai], float)
+    u /= np.linalg.norm(u)
+
+    def cont(l, q):
+        return None if l == 0 else abs(float(np.dot(_PDIR[q], u)))
+    ci, cj = cont(li, qi), cont(lj, qj)
+    if ci is None and cj is None:
+        return "ss"
+    if ci is None or cj is None:
+        c = cj if ci is None else ci
+        return "sp_s" if c > 0.9 else ("sp_p" if c < 0.1 else "sp_m")
+    if ci > 0.9 and cj > 0.9:
+        return "pp_s"
+    if ci < 0.1 and cj < 0.1:
+        return "pp_p"
+    return "pp_m"
 
 
 def build(zs, xyz_bohr, charge=0):
@@ -103,7 +132,8 @@ def build(zs, xyz_bohr, charge=0):
     for a in range(nat):
         for b in range(nat):
             Rab[a, b] = float(np.linalg.norm(xyz[a] - xyz[b]))
-    return {"S": S, "H0": H0, "A": A, "meta": meta, "E": E, "zs": zs, "n": n, "Rab": Rab}
+    return {"S": S, "H0": H0, "A": A, "meta": meta, "E": E, "zs": zs, "n": n,
+            "Rab": Rab, "xyz": xyz}
 
 
 def fock(P, B):
@@ -154,20 +184,44 @@ def fock(P, B):
              + GRAND_D["mi_S_gb_s2"] * m * np.sum(gb * S2, axis=1)
              + GRAND_D["S_gb_s4"] * np.sum(gb * S2 * S * S, axis=1))
         F += np.diag(d)
-        RAB = np.zeros((n, n))
-        for i in range(n):
-            for j in range(n):
-                RAB[i, j] = B["Rab"][meta[i][0], meta[j][0]]
-        with np.errstate(divide="ignore", invalid="ignore"):
-            obj = np.where(cross, 0.42 * erf_np(0.2347 * RAB)
-                           / np.where(RAB > 0, RAB, 1.0) - 0.048 * S, 0.0)
-        # term-agnostic evaluator: whichever law set is banked applies; unknown
-        # term names must fail loudly, not silently skip
-        OFFF = {"gb_p_s2": gb * Ps * S2, "s": cross * S, "p": cross * Ps,
-                "obj_p": obj * Ps, "obj_s": cross * 0.42
-                * erf_np(0.2347 * RAB) / np.where(RAB > 0, RAB, 1.0) * S}
-        for t, cf in GRAND_O.items():
-            F += cf * OFFF[t]
+        if GRAND_C is not None:
+            # the sigma/pi CLASS-RESOLVED off-diagonal law (one classifier shared
+            # with the fit; laws live in grand-short.json offdiag_class)
+            for i in range(n):
+                for j in range(i + 1, n):
+                    if meta[i][0] == meta[j][0]:
+                        continue
+                    law = GRAND_C[pair_class(meta[i], meta[j], B["xyz"])]
+                    if not law:
+                        continue
+                    Rp = float(B["Rab"][meta[i][0], meta[j][0]])
+                    fv = {"gb": gb[i, j], "s": float(S[i, j]),
+                          "p": float(Ps[i, j]), "mm": 0.5 * float(m[i] + m[j]),
+                          "obj": 0.42 * math.erf(0.2347 * Rp) / Rp
+                          - 0.048 * float(S[i, j])}
+                    FVAL = {"gb_s": fv["gb"] * fv["s"],
+                            "gb_s3": fv["gb"] * fv["s"] ** 3,
+                            "gb_p": fv["gb"] * fv["p"],
+                            "gb_p_s2": fv["gb"] * fv["p"] * fv["s"] ** 2,
+                            "s": fv["s"], "p": fv["p"], "obj": fv["obj"],
+                            "obj_p": fv["obj"] * fv["p"],
+                            "gb_s_mm": fv["gb"] * fv["s"] * fv["mm"]}
+                    val = sum(cf * FVAL[t] for t, cf in law)
+                    F[i, j] += val
+                    F[j, i] += val
+        else:
+            RAB = np.zeros((n, n))
+            for i in range(n):
+                for j in range(n):
+                    RAB[i, j] = B["Rab"][meta[i][0], meta[j][0]]
+            with np.errstate(divide="ignore", invalid="ignore"):
+                obj = np.where(cross, 0.42 * erf_np(0.2347 * RAB)
+                               / np.where(RAB > 0, RAB, 1.0) - 0.048 * S, 0.0)
+            OFFF = {"gb_p_s2": gb * Ps * S2, "s": cross * S, "p": cross * Ps,
+                    "obj_p": obj * Ps, "obj_s": cross * 0.42
+                    * erf_np(0.2347 * RAB) / np.where(RAB > 0, RAB, 1.0) * S}
+            for t, cf in GRAND_O.items():
+                F += cf * OFFF[t]
     return F
 
 
