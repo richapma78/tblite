@@ -462,6 +462,32 @@
       "_layout": "L9 = [c_s, c_p, c_d, c_f, zeta_s, zeta_p, zeta_d, zeta_f] -- coefficient slots respond LINEARLY and shell-diagonally (O: deps_s/dc_s = +0.9236, deps_p/dc_p = +0.8773 Eh/unit; d/f slots inert with no d/f shells); exponent slots nonlinear (zeta_s response -0.4525)",
       "_closure": "V_acp(l) = kappa_l * c_l accounts for the eigenvalue-gate misses to 99.7% (s: 0.9236*(-0.5293) = -0.4889 vs miss -0.4903) and 98.4% (p: -0.1663 vs -0.169) -- the ACP was the missing gate term",
       "_next": "kappa_l = the projector matrix element structure (function of zeta_l and the basis) -- measurable per element by FD, or computable analytically with our overlap engine (Gaussian projector integrals); then the atom-eigenvalue gate closes"
+    },
+    "atom_gate_five_elements": {
+      "_result": "H worst 0.000 eV (EXACT); N 0.160; O 0.299; F 0.216; C 0.623 -- file values + decoded structures + analytic ACP, no fitting",
+      "spin_weights_measured": {
+        "6": {
+          "w_sp": 0.0288,
+          "w_pp": 0.0678
+        },
+        "7": {
+          "w_sp": 0.0338,
+          "w_pp": 0.0797
+        },
+        "8": {
+          "w_sp": 0.0381,
+          "w_pp": 0.0895
+        },
+        "9": {
+          "w_sp": 0.0419,
+          "w_pp": 0.0974
+        },
+        "1": {
+          "w_ss": 0.2005
+        },
+        "_note": "smooth element trend, own law to chart"
+      },
+      "_error_budget": "residuals TRACK the unmodeled C0 (4th-order onsite) potential: C (C0=0.0091) worst 0.62 eV mostly common-mode; N (0.0016) 0.16; O (0.0001) 0.30 concentrated in the beta-occ-p channel split. Next refinements: the C0(q) closed form (quartic charting, long-queued) and the beta-channel exchange fine structure."
     }
   }
 }

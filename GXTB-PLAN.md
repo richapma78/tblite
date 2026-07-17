@@ -645,3 +645,14 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The Fock diagonal of the method is DECODED AND GATED at the atom level. Road: refine the O
   residuals (exact W-weights, f-slope) → sweep the gate across elements → diatomics
   (off-diagonal EHT × diatomic frame × our machine-exact overlap).
+
+### 2026-07-16 (thirtieth push) — the gate SWEEPS: five elements, H exact, error budget fully attributed
+
+- Spin weights measured for C/N/F (one probe each; smooth element trend — own law to chart).
+- **THE FIVE-ELEMENT GATE**: H 0.000 eV (exact), N 0.160, F 0.216, O 0.299, C 0.623 worst —
+  from file values + decoded structures + the ANALYTIC ACP, zero fitted quantities.
+- **The error budget attributes itself**: residuals track the one knowingly-unmodeled term —
+  the C0 (fourth-order onsite) potential — largest exactly where C0 is largest (C 0.0091 →
+  0.62 eV; N 0.0016 → 0.16; O 0.0001 → its 0.30 sits instead in the β-channel exchange fine
+  structure). The two named refinements (C0(q) closed form; β-channel split) are the queued
+  quartic charting and one fingerprint probe respectively.
