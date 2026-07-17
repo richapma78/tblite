@@ -1582,3 +1582,20 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   gap #5 (a live AES term) stands, and its port sources from the g-xTB SI's AES formula
   cross-checked against the printed value, not from assuming the linked module is called
   verbatim.
+
+### 2026-07-17 (eighty-seventh push) — the AES kernel read: stock GFN2 form, g-xTB parameters (answering the differential-test question)
+
+- Read `mmomgaberf` (decomp 147391). The multipole kernel is UNAMBIGUOUSLY GFN2's AES
+  damped-multipole ladder: `(1 − erf(−a·(R − R0_AB)))` damping on 1/R³, 1/R⁵, 1/R⁷, 1/R⁹,
+  with R0_AB a per-element-PAIR table (stride 0x338 = 103 doubles/row). So the **form is
+  standard GFN2 AES; the parameters are g-xTB's own**.
+- **Why the naive run-compare fails** (the proposed test): g-xTB's printed ES-multipole
+  vs a GFN2 run would differ on two counts — different density (different atomic
+  multipole moments through the same kernel) AND different parameters — so a mismatch
+  proves nothing. Reading one kernel function settled the form question the run couldn't.
+- **The decisive test = the gap-#5 port**: implement this kernel + g-xTB's AES params,
+  reconstruct g-xTB's atomic multipole moments from the restart density (needs
+  dipole/quadrupole moment integrals over the q-vSZP basis — the engine has only
+  overlap), gate against the printed 0.00405221. g-xTB prints no per-atom moments (only
+  the total + molecular dipole 0.9289 au), so reconstruction is required. Standard xtb
+  is not installed (only /opt/gxtb-v1); a GFN2 run would be a weak cross-check at best.
