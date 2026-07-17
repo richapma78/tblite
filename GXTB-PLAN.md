@@ -932,3 +932,23 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   X_req_11 → −0.1790 at dissociation = −γ_on/2 EXACTLY (the spin-restricted atom limit);
   my form's limit is wrong (keeps falling). The binary's placement is simpler; fitting its
   form against these curves is the next push's job — then the SCF re-gates, then F2/HF.
+
+### 2026-07-18 (forty-fourth push, overnight close) — the exchange-Fock placement: leading candidate found, floor reached
+
+- The γ∘(P-sandwich) family REFUTED for the Fock placement (unphysical coefficients, wrong
+  dissociation limits). The **Mulliken-potential form** −½S∘(v_µ + v_ν), v = γ·(per-spin
+  Mulliken populations), matches BOTH H2 elements at a consistent w ≈ 0.47–0.52 for R ≤ 3 —
+  its S-suppressed cross element is exactly the required signature — with a small
+  slower-falling F12 remainder at long R.
+- **The floor**: fits plateau at rms 1.4e-2 because X_required is extracted THROUGH the
+  assembled H0+µS+ACP, whose own gaps are ~0.01 Eh. The placement cannot be pinned tighter
+  than the pieces beneath it. NEXT (the morning round): refine H0's (k, kb, b) on finer
+  grids + C_µ everywhere + the L3 term with the proper internal CN → re-extract X_required
+  at the 1e-3 level → pin w and the small term → re-gate the SCF → then F2/HF SCF and the
+  energy bookkeeping gate.
+- Overnight tally (pushes 41–44): L8[3] = the k̃2 knob; F2-ss forward PASSES; the polar wall
+  mapped (FD's clean domain = homonuclear); D4 registered (the exchange kernel's U placement,
+  onsite exactly linear at six digits = c_x = s/9.59); the offsite kernel γ(R) measured at
+  17 points with its four globals located (α hardcoded); THE PZPZ OBJECT SOLVED (the offsite
+  exchange's Euler remainder); the first SCF assembled with the exchange ENERGY gating
+  exactly; the Fock placement's leading candidate identified. Every step committed.
