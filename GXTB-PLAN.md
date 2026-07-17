@@ -1409,3 +1409,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   solve), (k3 ~ 2–4, k3x ~ 0.4), but the ladder targets carry ~0.01 of impurity from
   other ion layers. Clean those first (ion ES1/drho), then close, install, re-extract,
   re-fit ss, six-system gate.
+
+### 2026-07-17 (seventy-sixth push) — the τ(R) curve measured; the SI offsite form breaks twice; D5 registered
+
+- **The Euler-FD instrument** (Γ_X·dES23/dΓ_X = the X-part of E3 exactly — no ES2 model
+  in the loop) cleaned the offsite targets, and **H2+ measured τ(R) directly**: node at
+  ~2.48, shallow negative tail, values banked. The extracted SI form cannot fit it (it
+  ties node to envelope; best rms 0.42), the HeH+ Γ-part split shows τ is
+  **asymmetric** on a mixed pair (1.56 vs 0.37 — impossible for symmetric-Ū forms), and
+  H2+→H3+ transfer misses by 20% (the SI's own two-body approximation, Eq. 127, appears
+  not to be what the binary runs). **Registered as divergence D5.**
+- Among tied forms the inverse-U exponent family wins decisively (reproduces the HeH+
+  sign flip at R~2.0). Recorded for the day the form question reopens.
+- Path: per-pair measured τ curves (the x-curve precedent) — H-H done; He-H, O-H next;
+  then install ES3 (onsite closed-form + offsite tables), re-extract, re-fit ss, gate.

@@ -112,3 +112,27 @@ first.*
 - Eliminations from the theory tests (fifty-ninth push): the measured short pieces are NOT
   the (true-gradient minus shortcut) difference (ratio drifts 170x across the stretch), so
   the binary's F is not any fixed blend of the two either.
+
+## D5 — ES3 offsite: the binary's tau(R) does not follow the SI closed form
+
+**The SI says** (Eqs. 132-133): gamma(3)_off = k3 * Ubar^2 * R * exp(-k3x * Ubar^2 * R),
+whose U-derivative ties the sign-change radius to the envelope decay (both carry
+k3x * Ubar^2) and is symmetric in the pair.
+
+**The binary does something else, measured three ways** (seventy-sixth push):
+1. The H2+ Euler-FD ladder gives tau(R) directly (no ES2 model, no form assumed):
+   +2.189/+1.321/+0.637/+0.215/-0.005/-0.053 at R = 1.2..3.0 — node at ~2.48 with a
+   shallow negative tail. No (k3, k3x) fits it (best rms 0.42): the node and envelope
+   are DECOUPLED in the data.
+2. The HeH+ Gamma-part split implies tau_H = 1.56 vs tau_He = 0.37 on the same pair at
+   the same R — the tau that multiplies Gamma_A depends on WHICH atom A is, impossible
+   for any symmetric-Ubar closed form.
+3. H2+ -> H3+ transfer misses by 20% at matched R — the SI's Eq-127 two-body
+   approximation (drop all charge dependencies except the interacting atoms) appears
+   NOT to be what the binary computes; three-body ES3 content is alive.
+
+**Replication stance**: bug-compatible with the BINARY, as always — the offsite ES3
+ships as measured per-pair tau curves (the mu-CN x-curve precedent) until/unless a
+closed form that reproduces the measured curve is found. The inverse-U exponent family
+(w = (1/U + 1/U')/2) is the best tied form measured (halves the rms, reproduces the
+HeH+ sign flip) and is recorded for the day the form question reopens.
