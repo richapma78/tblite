@@ -1614,3 +1614,23 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   (0.727), likely EEQ — a side detail.
 - Next (step 3): per-atom CAMM (q_A/μ_A/θ_A) + the mmomgaberf damped 1/R³⁵⁷⁹ kernel with
   g-xTB's AES parameters, gated against the printed ES multipole 0.00405221.
+
+### 2026-07-17 (eighty-ninth push) — AES kernel parameters extracted LIVE from the binary via gdb; energy assembly sourced from tblite
+
+- **The .bss trap and the way through it**: the AES scales + R0 table live in .bss
+  (loaded from the param file at runtime), so they read as zero statically. The binary is
+  NOT stripped, so I broke at mmomgaberf (0x4d10c0) under gdb, ran H2O, and read the
+  runtime values directly -- the binary's OWN numbers, no fitting.
+- **Extracted**: erf damping scales a3=0.45 (1/R^3), a=1.05 (1/R^5,7,9); global scales
+  s3/s5/s7 = param-file G2[5]/G2[6]/G2[7] (0.4667/0.2287/0.0523), s9=-0.003 hardcoded;
+  the full symmetric per-element-pair R0 table for H/C/N/O/F (e.g. H-H 2.182, O-O 2.482,
+  H-F 2.065 -- NOT a mean, a genuine fitted table). Kernel:
+  gamma_n(R) = s_n * 0.5(1+erf(a_n(R-R0)))/R^n.
+- **Energy assembly** from tblite's own multipole.f90 (get_energy_aes): E = 0.5*e01 +
+  e11 + 0.5*e02 (charge-dipole, dipole-dipole, charge-quad), g-xTB's erf kernel slotting
+  into the amat matrices in place of tblite's power-law damping.
+- Remaining: per-atom CAMM (q/dp/qp) + amat build + contract, gated against the four
+  printed ES-multipole values (h2o 0.00405, hf 1.1e-5, ch4 0.00233, nh3 0.00683) --
+  a 4-point gate a wrong formula can't pass.
+- Gained a general capability: LIVE parameter extraction from the (unstripped) binary via
+  gdb symbol breakpoints -- reusable for any runtime-loaded constant.

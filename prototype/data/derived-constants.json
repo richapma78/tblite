@@ -944,6 +944,35 @@
    ]
   },
   "first_printed_dipole": "g-xTB prints TWO dipoles; the smaller (H2O 0.3107) is NOT the Mulliken point-charge dipole (that is 0.727) -- likely the EEQ/EEQBC charge dipole. The larger (0.9289) is the full density dipole = our checkpoint. Side detail, not needed for AES.",
-  "energy_shape": "aniso_electro (decomp 145174+) DECODED = standard multipole interaction energy per atom pair: mu.R_ij (local_188), R_ij.Theta.R_ij quadrupole contraction (dVar74/76 over the 9 components), the factor-3 dipole tensor (dVar70=3*mu), all contracted with precomputed DAMPED kernels (dVar2/dVar3/dVar6/DAT_03b2a788 = the gamma3/5/7 from mmomgaberf, stored in a per-pair table) into charge-dipole + dipole-dipole + charge-quad + dipole-quad + quad-quad accumulators (local_1b8/1c0). Fully confirms the GFN2 AES energy form. REMAINING for the port: the kernel PARAMETERS -- per-pair damping radius R0_AB, erf scales (mmomgaberf param_4/param_5), global scales (DAT_03be6398/63a0/63a8, and the -0.003 in the 1/R^9 term). Three ways to get them: (A) read the aespot setup that builds the R0 table (0x3be6080) from the param file; (B) test the published GFN2 AES params (if g-xTB did not refit AES); (C) fit R0+scales with the FORM fixed and moments exact, gated out-of-sample. Target: printed ES multipole 0.00405221 (H2O), plus hf/ch4/nh3 values."
+  "energy_shape": "aniso_electro (decomp 145174+) DECODED = standard multipole interaction energy per atom pair: mu.R_ij (local_188), R_ij.Theta.R_ij quadrupole contraction (dVar74/76 over the 9 components), the factor-3 dipole tensor (dVar70=3*mu), all contracted with precomputed DAMPED kernels (dVar2/dVar3/dVar6/DAT_03b2a788 = the gamma3/5/7 from mmomgaberf, stored in a per-pair table) into charge-dipole + dipole-dipole + charge-quad + dipole-quad + quad-quad accumulators (local_1b8/1c0). Fully confirms the GFN2 AES energy form. REMAINING for the port: the kernel PARAMETERS -- per-pair damping radius R0_AB, erf scales (mmomgaberf param_4/param_5), global scales (DAT_03be6398/63a0/63a8, and the -0.003 in the 1/R^9 term). Three ways to get them: (A) read the aespot setup that builds the R0 table (0x3be6080) from the param file; (B) test the published GFN2 AES params (if g-xTB did not refit AES); (C) fit R0+scales with the FORM fixed and moments exact, gated out-of-sample. Target: printed ES multipole 0.00405221 (H2O), plus hf/ch4/nh3 values.",
+  "kernel_params_from_binary": {
+   "_source": "EXTRACTED LIVE via gdb (pass 89): break at mmomgaberf entry (0x4d10c0, binary not stripped), read .bss globals after param load + the erf-scale args in registers. These are the binary's OWN runtime values, not fits.",
+   "erf_scale_dipole_a3": 0.45,
+   "erf_scale_higher_a5a7a9": 1.05,
+   "global_scale_s3": "G2[5] = 0.4667106684 (param-file global row 2, col 5)",
+   "global_scale_s5": "G2[6] = 0.2287119112 (param-file global row 2, col 6)",
+   "global_scale_s7": "G2[7] = 0.0522538831 (param-file global row 2, col 7)",
+   "scale_s9_hardcoded": -0.003,
+   "kernel_form": "gamma_n(R) = scale_n * 0.5*(1+erf(a_n*(R - R0_AB))) / R^n, n=3,5,7,9; a3=0.45 for n=3, a=1.05 for n=5,7,9; s3/s5/s7 from G2[5,6,7], s9=-0.003",
+   "R0_table_bohr": {
+    "1-1": 2.1823,
+    "1-6": 2.4492,
+    "1-7": 2.3667,
+    "1-8": 2.1768,
+    "1-9": 2.0646,
+    "6-6": 2.9103,
+    "6-7": 2.7063,
+    "6-8": 2.5697,
+    "6-9": 2.477,
+    "7-7": 2.6225,
+    "7-8": 2.4846,
+    "7-9": 2.3885,
+    "8-8": 2.4817,
+    "8-9": 2.3511,
+    "9-9": 2.2996
+   },
+   "R0_note": "per-element-PAIR table (decomp: base 0x3be6080, row stride 0x338=103 doubles, index by Z); symmetric; NOT an arithmetic mean (H-F 2.065 < both H-H 2.182 and F-F 2.300) -- a genuine fitted pair table. Extracted for the 5 gate elements; full 103x103 available via the same gdb read."
+  },
+  "energy_assembly_tblite": "tblite src/tblite/coulomb/multipole.f90 get_energy_aes gives the EXACT contraction: E_AES = 0.5*e01 + e11 + 0.5*e02, where e01 = charge-dipole (q_A * (amat_sd.dpat) + dpat.(amat_sd.q)), e11 = 0.5*dpat.(amat_dd.dpat) dipole-dipole, e02 = charge-quad (q_A*(amat_sq.qpat) + qpat.(amat_sq.q)). Interaction matrices amat_sd (charge-dipole ~R_i/R^3), amat_dd (dipole-dipole ~ delta_ij/R^3 - 3 R_iR_j/R^5), amat_sq (charge-quad ~ R_iR_j/R^5) carry the DAMPED kernels -- into which g-xTB's erf kernel (my extracted params) slots in place of tblite's power-law kdmp3/kdmp5. NOTE: tblite also has get_kernel_energy (on-site dkernel/qkernel AXC terms) -- the printed 'ES multipole' is likely the PAIRWISE get_energy_aes; on-site AXC may be separate/absent in g-xTB (test). REMAINING: (1) per-atom CAMM q/dp/qp (Mulliken partition, quadrupole trace convention TBD -- gate decides), (2) build amat with erf kernel, (3) contract, (4) 4-POINT GATE vs printed ES multipole: h2o 0.00405221, hf 0.000011, ch4 0.002332, nh3 0.006833 (a wrong formula cannot match all four)."
  }
 }
