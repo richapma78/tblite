@@ -1503,3 +1503,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The remaining ion Fock gap (H3+ 0.094, OH− 0.203) IS the binary's ES3 Fock shortcut —
   to be decoded as its own object via F-side extraction, exactly as the exchange Fock
   skeleton was decoded separately from the exchange energy.
+
+### 2026-07-17 (eighty-second push) — the pivot: decode phase ends, the Fortran port begins; U1 gated
+
+- Provoked by the user's audit question. The audit: **no glitch** — ES3 has no anchors
+  before pass 74 (earlier "ES2+3" matches were neutrals where the third order vanishes
+  identically; the label recurred, the layer was new). But the drift was real: the
+  remaining defects are ION-only and do not block the port's purpose. **PORT-PLAN.md
+  freezes the scope** (closed-shell neutrals, H/C/N/O/F + He) and lays the 8-unit
+  ladder; open items ride along as labeled bank anchors, not blockers.
+- **Carbon and nitrogen tested for the first time**: CH4 worst 0.0571 (0.007 over, one
+  uniform shift; C-H pairs unmeasured), **NH3 occupied manifold PASSES at 0.0268** —
+  the laws extrapolate off their H/He/O/F fitting domain.
+- **U1 shipped and gated**: the parameter parser + every element law in Fortran,
+  **74 values matching python to 1e-10**. U2 (basis + overlap) is next.
