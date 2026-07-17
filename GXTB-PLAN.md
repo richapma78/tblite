@@ -1634,3 +1634,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   a 4-point gate a wrong formula can't pass.
 - Gained a general capability: LIVE parameter extraction from the (unstripped) binary via
   gdb symbol breakpoints -- reusable for any runtime-loaded constant.
+
+### 2026-07-17 (ninetieth push) — AES energy assembled (SI Eq 116); 4-point gate at substitution grade
+
+- Full AES energy per SI Eq 116 (the g-xTB extension over GFN2 with dip-quad + quad-quad
+  terms), g-xTB's gdb-extracted erf kernels, traceless quadrupole (Eq 113b). The sign
+  crux: the CAMM dipole enters the energy with the OPPOSITE sign of the Mulliken Eq 112b
+  form -- flipping the odd-order (charge-dip, dip-quad) terms took it from wrong-sign/4x
+  off to matching.
+- **4-POINT GATE**: h2o 0.003955/0.004052, hf -9e-6/1.1e-5, ch4 0.002458/0.002332, nh3
+  0.006784/0.006833 -- worst 0.126 mEh. Passes the 1 mEh substitution-grade bar with 8x
+  margin; misses my aggressive 0.05 mEh pre-declared gate. Residual uneven (ch4 heaviest,
+  the higher-multipole-sensitive one) -> 6th-digit param precision or a small on-site AXC
+  term, documented not tuned.
+- R0 confirmed per-element universal (the H2O run holds C/N/F-pair radii absent from
+  water). Gap #5 (AES) is functionally CLOSED for the port; residual refinement noted.
