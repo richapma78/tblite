@@ -1223,3 +1223,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Standing: H2 (full range) and F2 (through equilibrium) both gate self-consistently from
   decoded parts. Next: HF's polar layer, the total-energy bookkeeping gate, gradients
   (per T1), the Fortran port.
+
+### 2026-07-18 (sixty-third push) — **THE HF GATE PASSES: three molecules, three regimes**
+
+- **hf_scf.py**: all five eigenvalues within 0.0096 (r_e) / 0.0187 / 0.0090 Eh,
+  self-consistently — the polar layer works. THREE molecular SCF gates now stand: H2
+  (s-block), F2 (p-block), HF (heteronuclear polar) — the method's three qualitatively
+  distinct regimes, each reproduced from decoded parts.
+- Honest ledger: HF's residual layer is larger than F2's and visibly carries real physics
+  (flat-tailed diagonal curves = the absorbed offsite-ES2 with its half-decoded kernel +
+  the k̃ q-channels; labeled). Refinement target: decode the offsite γ2 kernel and shrink
+  the residual to F2-grade.
+- Next: the total-energy bookkeeping gate (the validated per-term formulas at the gated
+  densities vs the printed decomposition), gradients per T1, the Fortran port.

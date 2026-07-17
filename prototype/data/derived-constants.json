@@ -706,6 +706,12 @@
    "conventions_locked": "per-AO populations; same-shell-only onsite exchange; the unified Mulliken form -1/2 S o (v+v) carrying ES1 + ES2 + X potentials together",
    "_next": "fit the p short pieces at short R (H2 route) -> re-gate at r_e; HF (polar ES; the q-channels k-tilde-0/3 wake); the total-energy bookkeeping gate; gradients (differentiate the implemented Fock, per T1); the Fortran port",
    "_FULL": "SIXTY-SECOND PUSH: with the empirical short pieces installed (f2_shortfit: 8 element classes fit at 2e-4..8e-3 to |S|-power pairs, center-swap mirror rules, re-extraction guard via INCLUDE_SHORT), THE F2 SCF PASSES AT ALL THREE DISTANCES: worst 0.0069 at R=3.8, 0.0016 at R=3.0 (near sub-mEh across all eight), 0.0144 at r_e = 2.668 (was 0.0447; the sigma* LUMO carries it, everything else <= 0.006). TWO complete molecular SCF gates now stand (H2 full-range; F2 through equilibrium)."
+  },
+  "scf_hf_GATE_PASSED": {
+   "_milestone": "THE HF SCF GATE PASSES (sixty-third push): all five eigenvalues within 0.0096/0.0187/0.0090 Eh at R = 1.733 (r_e)/2.3/3.2, self-consistently -- the polar layer works. THREE MOLECULES NOW GATE: H2 (s-block), F2 (p-block), HF (heteronuclear polar) -- the three qualitatively distinct regimes of the method's backbone.",
+   "assembly_notes": "heteronuclear H0 (harmonic kdiat = 2.446, arithmetic level means, mixed per-element metrics, one-sided Pi b_H = 0.021 band); per-element exchange constants (c_x(H), c_x(F)); onsite ES2 per element with self-consistent shell charges; ACP analytic.",
+   "residual_layer_honest": "HF's residual layer is LARGER than F2's and visibly carries real physics: the diagonal curves are big and flat-tailed (d_Hs +0.08, d_Fs -0.14 nearly R-constant) -- the absorbed OFFSITE-ES2 (atomic-charge electrostatics, kernel half-decoded) + the k-tilde q-channels; diagonal fit rms ~0.02 is coarse but the gate passes. REFINEMENT TARGET: decode the offsite gamma2 kernel properly and shrink the residual layer to F2-grade.",
+   "_next": "the total-energy bookkeeping gate (E from the validated per-term formulas at the gated densities, vs the printed decomposition); gradients per T1; the port"
   }
  }
 }
