@@ -1182,3 +1182,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   170× — killing every fixed blend of the two functionals. The triplet's striking
   matrix-parallelism is symmetry-forced, honestly noted. The coefficients stay
   measured-not-derived; the derivation attempts continue alongside the assembly work.
+
+### 2026-07-18 (sixtieth push) — the F2 diagonals: per-AO populations, same-shell exchange, 0.005-grade assembly
+
+- **Two structural verdicts from one probe** (f2_diag_probe.py): the exchange populations
+  resolve PER-AO (the pz/px split predicted within 0.006 at R=3.8 vs per-shell's 25×
+  miss; the populations are chemistry-clean — σ-bond pz at 0.514, lone pairs at exactly
+  1.0000), and the onsite exchange potential is SAME-SHELL-ONLY (the atom-gate form; the
+  cross-shell guess overshot by 1.4 Eh and is refuted).
+- All three F2 diagonals assemble from four pieces to 0.005–0.053 — and the pending ES2
+  shell-resolved shifts (F2's shells carry ∓0.116 charges; the decoded onsite kernel
+  predicts ~0.04) are exactly the remaining size. ES2-diag + p short pieces + the SCF
+  loop are next.
+- Also this push: the T1 practical ruling (bug-compatible pairing; gradients differentiate
+  the implemented Fock) confirmed as a banked design rule, no retrofit needed.
