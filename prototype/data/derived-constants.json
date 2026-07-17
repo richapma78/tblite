@@ -650,6 +650,12 @@
    "globals": "offsite movers: G1[4] (-0.264, strongest), G1[7] (-0.113), G2[8] (-0.067), G1[6] (-0.052) on H2@2.5 Ex -- four movers for the SI's four kernel globals (alpha hardcoded: all 20 globals give EXACT ZERO on the atom's Ex). G1[4]'s old 'H2-ss-heavy unknown' resolved",
    "eq151_checks": "the Eq-151 contraction with idempotent P gives A = B = -0.2500 EXACTLY at every R (invariants) -- the Mulliken structure confirmed; extraction of gamma from printed Ex is exact for H2's 2-AO case",
    "_next": "F2/heteronuclear kernel generalization (element pairs, favg); the SCF's exchange Fock = Eq 153 with the onsite-linear + offsite-kernel-curve pieces"
+  },
+  "scf_h2_v1": {
+   "_state": "FIRST SCF ASSEMBLY (scf_h2.py): Ex-energy gates EXACTLY (d = -0.00000 at R = 1.4/2.5/4.0 -- the Eq-151 energy form + measured kernel are right); ES1 gates; the occupied eigenvalue lands within 0.008-0.020; the VIRTUAL misses by +0.18..+0.33 -- GATE FAILED through the virtual",
+   "diagnosis": "H2's idempotent-manifold exchange energy is CONSTANT (the A = B = -0.25 invariants), so energy checks CANNOT pin the Fock's off-manifold form; my Eq-153 translation IS the exact gradient of my (gated) energy form (numerical-gradient Fock reproduces it), so the BINARY's Fock is the gradient of a DIFFERENT off-manifold continuation",
+   "x_required": "extracted (F_reconstructed - H0 - muS - ACP) at 12 R: X_req_11 flattens to -0.1790 ~ -gamma_on/2 EXACTLY (the spin-restricted atom limit, P^sigma_11 = 1/2); X_req_12 falls -0.137 -> -0.030; my gradient form has the WRONG dissociation limit (keeps falling). The binary's F^X placement is simpler/different -- fit its form against these curves next",
+   "_next": "fit X_req(R) against Mulliken-Fock candidates (the gamma*P^sigma family with S-weight variants); then re-gate the SCF; then F2/HF SCF with ES kernels; energy bookkeeping gate"
   }
  }
 }

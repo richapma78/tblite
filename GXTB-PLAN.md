@@ -916,3 +916,19 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Consequence for the assembly: the SCF's exchange Fock = Eq. 153 with onsite-linear +
   offsite-kernel-curve pieces; the F2 p-element forward gaps (spz/pzpz/pxpx) are expected to
   be largely THIS remainder — re-gate after the exchange is forward-modeled.
+
+### 2026-07-18 (forty-third push, overnight) — the first SCF: exchange ENERGY exact, the Fock's off-manifold form is the last piece
+
+- **scf_h2.py**: H2 assembled from gated parts (H0 forward + µ-law + analytic ACP + Eq-151
+  exchange with the measured kernel). **The exchange ENERGY gates EXACTLY** (d = −0.00000 at
+  all three R) and ES1 gates; the occupied eigenvalue lands within 0.008–0.020; **the VIRTUAL
+  misses by +0.18–0.33 — gate FAILED through the virtual, honestly.**
+- **The diagnosis is clean**: on H2's idempotent manifold the Mulliken exchange energy is
+  CONSTANT (the A = B = −0.25 invariants), so no energy check can pin the Fock; my Eq-153
+  translation is provably the exact gradient of my energy form (a numerical-gradient Fock
+  reproduces it) — the binary's Fock is the gradient of a DIFFERENT off-manifold
+  continuation of the same on-manifold energy.
+- **The required-Fock curves are extracted** (X_req = reconstruction − H0 − µS − ACP, 12 R):
+  X_req_11 → −0.1790 at dissociation = −γ_on/2 EXACTLY (the spin-restricted atom limit);
+  my form's limit is wrong (keeps falling). The binary's placement is simpler; fitting its
+  form against these curves is the next push's job — then the SCF re-gates, then F2/HF.
