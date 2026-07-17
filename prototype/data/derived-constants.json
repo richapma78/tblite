@@ -433,6 +433,14 @@
   },
   "hamiltonian_anchors": {
     "L2_levels": "H-atom FD: deps/dL2[0] = -1.00000 Eh/unit EXACT and delec/dL2[0] = -1.00000 (one electron) -- L2 = shell LEVELS with a MINUS sign convention (H0_diag includes -L2[l]); L3/L4/L1[7] exactly inert for the lone atom (molecular couplings only)",
-    "gradient_channel": "oracle -grad validated (parsed forces = FD of its total to ~1e-6); repulsion ANALYTIC gradient implemented incl. CN chain and gated at 3.9e-11 vs internal FD -- the port's first analytic force"
+    "gradient_channel": "oracle -grad validated (parsed forces = FD of its total to ~1e-6); repulsion ANALYTIC gradient implemented incl. CN chain and gated at 3.9e-11 vs internal FD -- the port's first analytic force",
+    "atom_fock_diagonal": {
+      "_probe": "O-atom FD on L2/L5/L1[9]/L7 slots, eigenvalue responses (Eh/unit)",
+      "L2_levels": "exact -1.000 diagonal per shell, both spin channels (multi-shell confirmed)",
+      "L7_mu_in_fock": "the first-order potential enters the Fock: deps/dmu_l = -1.006 for ALL orbitals of shell l (SI Eq. 87/88 confirmed live)",
+      "L5_exchange": "occupation-scaled diagonal: occupied orbitals of shell l respond at -0.122, VIRTUALS at 0.000 exactly -- V_ex(orbital) ~ L5[l] * n_orbital * 0.122-factor (factor identical for s and p; origin of 0.122 open)",
+      "L1[9]_spin": "spin-polarization potential: sign flips with channel (majority stabilized); p +-0.179, s +-0.076 with m_s = 0 -- CROSS-SHELL structure V_spin(l) = sum_l' W_ll'(L1[9]) * m_l' (shell-pair weights hardcoded; w_sp*2 = 0.076, w_pp*2 = 0.179)",
+      "_model": "eps_l,sigma(atom) = -L2[l] - mu-potential(l) + V_ex(L5, n) + V_spin(W, m) + V_ES(q) -- all structures now identified; the atom-eigenvalue GATE is buildable once the 0.122 factor and W weights are pinned (2-3 more probes)"
+    }
   }
 }

@@ -574,3 +574,19 @@ the print can lie in different ways.
   in the energy) — **L2 = the shell levels, minus-sign convention**; L3/L4/L1[7] exactly inert
   for lone atoms (molecular couplings, as the map said). The eigenvalue-gate program has its
   first measured anchor: ε(H) = −L2[0] + exchange/spin potentials (−0.2162 − 0.1918 Eh).
+
+### 2026-07-16 (twenty-fifth push) — the atom Fock diagonal DECODED (O-atom probe round)
+
+One FD round on the oxygen atom returned exact structure for every diagonal contribution:
+- **L2 = levels at exactly −1.000 per shell**, both spins, strictly diagonal (multi-shell ✓).
+- **The first-order µ enters the Fock** (deps/dµ_l = −1.006 for every orbital of shell l) —
+  SI Eqs. 87/88 observed live.
+- **The exchange potential is occupation-scaled**: occupied orbitals respond to L5[l] at −0.122,
+  virtuals at 0.000 EXACTLY — V_ex ∝ L5[l]·n_orbital with a shell-independent 0.122 factor
+  (origin open: one more probe class).
+- **The spin potential has cross-shell structure**: sign flips with channel; the s shell
+  responds (±0.076) despite zero s-magnetization — V_spin(l) = Σ_l' W_ll'·m_l' with hardcoded
+  shell-pair weights scaled by L1[9] (w·m_p: s 0.076, p 0.179 at m_p = 2).
+- The atom-eigenvalue MODEL is now assembled up to two constants (the 0.122 exchange factor,
+  the W shell-pair weights) — the eigenvalue GATE (predict all 8 O eigenvalues + H's 2 from
+  file values) is 2–3 probes away.
