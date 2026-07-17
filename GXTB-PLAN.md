@@ -1599,3 +1599,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   overlap), gate against the printed 0.00405221. g-xTB prints no per-atom moments (only
   the total + molecular dipole 0.9289 au), so reconstruction is required. Standard xtb
   is not installed (only /opt/gxtb-v1); a GFN2 run would be a weak cross-check at best.
+
+### 2026-07-17 (eighty-eighth push) — AES port, steps 1-2: multipole integrals + CAMM validated against the binary's dipole
+
+- **Step 1 (multipole.py)**: dipole D(3) and quadrupole Q(6) moment integrals extending
+  the gated Obara-Saika overlap engine (1-D moment factors T0/T1/T2 to la+2). Match
+  PySCF int1e_r/int1e_rr to ~1e-16 on h2o/hf/ch4.
+- **Step 2 (camm.py)**: the CAMM machinery validated against g-xTB's OWN printed dipole.
+  Full molecular dipole Σ_A Zval_A R_A − Tr(P·D) from the restart density reproduces the
+  printed value on all four gate neutrals to 4 decimals (h2o 0.92895/0.9289, hf 0.75054/
+  0.7505, ch4 0/0, nh3 0.84837/0.8484). **Key fact**: the effective nuclear charge is the
+  INTEGER valence count (F=7), not the fractional REFOCC sum (6.999) — that shift was a
+  0.24% HF dipole error until fixed. The smaller printed dipole (0.3107) is not Mulliken
+  (0.727), likely EEQ — a side detail.
+- Next (step 3): per-atom CAMM (q_A/μ_A/θ_A) + the mmomgaberf damped 1/R³⁵⁷⁹ kernel with
+  g-xTB's AES parameters, gated against the printed ES multipole 0.00405221.
