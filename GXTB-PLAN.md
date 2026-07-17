@@ -1032,3 +1032,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The Fock's emerging complete form: −½S∘(v+v), v_A = γ_on·m_A + w_A(P, S) with w built
   from (P_AA − m_A) and P12-carried pieces (coefficients ≈ −0.08 and −2c_x — neither
   identified against known constants yet). One unification step left.
+
+### 2026-07-18 (fiftieth push) — the (PS−I) object; the purity diagnostic; a correction
+
+- **Purity diagnostic**: pure Mulliken-potential ⟹ X12 = s·X11 (symmetric systems). The
+  triplet passes EXACTLY; H2⁺ violates 8× at long R → the complete form = −½S∘(v+v) + an
+  off-diagonal-only term. **That term's carrier is (PS − I)**: identically zero for the
+  triplet (P = S⁻¹), exactly ½ off-diagonal for the paired manifolds at all R — one object
+  explains the triplet's purity AND the R-flat H2⁺ branch (≈ −2c_x·γ_off·(PS−I)₁₂, ~7%).
+- Triplet potential sharpened: w = −0.166·γ_off·(P−m), constant ±3%; −0.166 ≈ −⅙ (flagged).
+- **Correction recorded**: the earlier "same c on H2⁺" claim skipped the Mulliken chain's
+  −s factor; corrected, H2⁺'s short pieces are LAWLESS still (and the two off-diagonal
+  pieces cancel near R=2.3, so the SCF needs both or neither).
+- Next discriminator: HeH⁺ — heteronuclear, one electron: two elements' kernels in one
+  clean spin-subtracted system; strong test of every γ-weighting question at once.
