@@ -1488,3 +1488,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   transfer because the two pieces scale with different charges.
 - Next: engine v2 ES3 (fold + Q-term replacing the v1 table), re-gate the six systems,
   then the clean grand-law re-fit.
+
+### 2026-07-17 (eighty-first push) — the v2 potential refuted: the energy/Fock split, measured twice
+
+- The exact q-gradient of the true composite third-order energy was wired as the Fock
+  potential and **regressed everything** (gate 3/6 vs v1's 4/6; every ion worse). The
+  crude v1 pairwise shift approximates the binary's operator better than the correct
+  energy's exact gradient does — **T1's non-variational pairing demonstrated at third
+  order by construction**. The binary pairs a correct energy with a shortcut operator;
+  the replication now does the same, deliberately and flagged.
+- Engine state: `es_charge_energy` (fold + Q composite) is the ENERGY-side truth;
+  `es3_energy_v1` drives the POTENTIAL (bank flag `es3.potential`). Gate re-confirmed
+  4/6, bit-identical to pass 77.
+- The remaining ion Fock gap (H3+ 0.094, OH− 0.203) IS the binary's ES3 Fock shortcut —
+  to be decoded as its own object via F-side extraction, exactly as the exchange Fock
+  skeleton was decoded separately from the exchange energy.

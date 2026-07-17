@@ -46,8 +46,10 @@ try:
     with open(os.path.join(HERE, "data", "derived-constants.json")) as _f:
         _DC = __import__("json").load(_f)
     ES3 = _DC.get("es3")
+    POT_MODE = (ES3 or {}).get("potential", "v1")
 except FileNotFoundError:
     ES3 = None
+    POT_MODE = "v1"
 
 
 _TAU_WARNED = set()
@@ -77,14 +79,40 @@ def _tau_off(za, zb, R):
             return t1 + (t2 - t1) * (R - r1) / (r2 - r1)
 
 
-def es3_energy(q, zs, Rab, E):
-    """the decoded third-order layer at Mulliken shell charges q[(at,l)]."""
+def _tau_q(za, zb, R):
+    """measured Q-term radial kernel (multiplies Gamma_A and Q_total); linear
+    interpolation, flat single points, zero far outside range; unmeasured pair -> 0
+    (the Q-term of that pair is dropped -- exact only at Q = 0)."""
+    pts = ES3["v2"]["tau_Q"].get(f"{za}-{zb}")
+    if not pts:
+        if (za, zb, "Q") not in _TAU_WARNED:
+            _TAU_WARNED.add((za, zb, "Q"))
+            print(f"    [es3v2] WARNING: no tau_Q for pair {za}-{zb}; dropping its "
+                  f"Q-term (exact only when Q = 0)")
+        return 0.0
+    if len(pts) == 1:
+        return pts[0][1] if abs(R - pts[0][0]) < 0.25 else 0.0
+    if R <= pts[0][0]:
+        return pts[0][1]
+    if R >= pts[-1][0]:
+        return 0.0 if R > pts[-1][0] + 0.5 else pts[-1][1]
+    for (r1, t1), (r2, t2) in zip(pts, pts[1:]):
+        if r1 <= R <= r2:
+            return t1 + (t2 - t1) * (R - r1) / (r2 - r1)
+
+
+def es3_energy_v1(q, zs, Rab, E):
+    """the v1 POTENTIAL-side third order: onsite closed form + the lumped measured
+    tau table. NOT the energy truth (that is es_charge_energy) -- but its simple
+    pairwise q-gradient matches the binary's Fock BETTER than the exact gradient of
+    the true energy does (measured: gate 4/6 vs 3/6). The binary pairs a correct
+    energy with a shortcut potential; so do we, deliberately."""
     if ES3 is None:
         return 0.0
     qat = {}
     for (at, l), v in q.items():
         qat[at] = qat.get(at, 0.0) + v
-    if all(abs(v) < 1e-12 for v in qat.values()):
+    if all(abs(x) < 1e-12 for x in qat.values()):
         return 0.0
     e3 = 0.0
     for (at, la), qa in q.items():
@@ -105,10 +133,65 @@ def es3_energy(q, zs, Rab, E):
             if bt == at:
                 continue
             if abs(qa * qb * qat[at]) < 1e-9:
-                continue          # term dead; tolerate an unmeasured pair here
+                continue
             tau = _tau_off(z, zs[bt], float(Rab[at, bt]))
             e3 += (1 / 6) * qa * qb * qat[at] * tau * ES3["gamma"][str(z)]
     return e3
+
+
+def es_charge_energy(q, zs, Rab, E):
+    """v2: everything charge-driven beyond the analytic onsite-ES2/mu -- the offsite
+    KO second order at FOLDED Hubbards U_l(q) = U_l + Gamma_A*qat_A (c=1, bare; pass
+    79), the onsite third-order closed form (pass 75), and the explicit Q-weighted
+    term with measured kernels (pass 80). The Fock takes this function's numeric
+    q-gradient, keeping energy and potential consistent BY CONSTRUCTION (the binary's
+    own pairing is looser -- pass 77 -- and the remainder gates measure the gap)."""
+    if ES3 is None:
+        return 0.0
+    qat = {}
+    for (at, l), v in q.items():
+        qat[at] = qat.get(at, 0.0) + v
+    Q = sum(qat.values())
+    gam = {z: ES3["gamma"][str(z)] for z in set(zs)}
+
+    def ueff(at, l):
+        z = zs[at]
+        u = E[z]["U"][l] + gam[z] * qat[at]
+        return max(u, 0.05 * E[z]["U"][l])      # He's big Gamma: floor on transients
+
+    e = 0.0
+    for (at, la), qa in q.items():
+        z = zs[at]
+        if E[z]["U"][la] == 0.0:
+            continue
+        # offsite KO at folded U (the ES2 offsite lives HERE now, not in v[])
+        for (bt, lb), qb in q.items():
+            if bt <= at or E[zs[bt]]["U"][lb] == 0.0:
+                continue
+            g = 1.0 / (float(Rab[at, bt])
+                       + 0.5 * (1.0 / ueff(at, la) + 1.0 / ueff(bt, lb)))
+            e += qa * qb * g
+        # onsite third order (closed form)
+        ga = (ES3["k3gs"] if la == 0 else ES3["k3gp"]) * gam[z]
+        Ula = E[z]["U"][la]
+        ta = -1.0 / (2 * Ula * Ula)
+        for lb in range(E[z]["nsh"]):
+            Ulb = E[z]["U"][lb]
+            if Ulb == 0.0:
+                continue
+            gb = (ES3["k3gs"] if lb == 0 else ES3["k3gp"]) * gam[z]
+            tb = -1.0 / (2 * Ulb * Ulb)
+            e += (1 / 6) * qa * q[(at, lb)] * qat[at] * (ta * ga + tb * gb)
+        # explicit Q-term (ordered cross pairs; dead when Q = 0)
+        if abs(Q) > 1e-12:
+            for (bt, lb), qb in q.items():
+                if bt == at:
+                    continue
+                if abs(qa * qb * Q) < 1e-9:
+                    continue
+                e += (1 / 6) * qa * qb * Q * _tau_q(z, zs[bt],
+                                                    float(Rab[at, bt])) * gam[z]
+    return e
 SRULE_P2 = (0.08247, 0.0920)
 SRULE = {1: 0.4726, 2: 0.9218}
 NVAL = {6: 4, 7: 5, 8: 6, 9: 7}
@@ -224,20 +307,24 @@ def fock(P, B):
             g2 = SRULE[z] * 2 * E[z]["U"][l] * E[z]["U"][l2] / \
                 (E[z]["U"][l] + E[z]["U"][l2])
             v[i] += g2 * q[(at, l2)]
-        # offsite ES2: the plain Klopman-Ohno kernel (k2x = 0; validated out-of-sample
-        # on HF), generalized to the N-atom sum
-        for bt in range(len(B["zs"])):
-            if bt == at:
-                continue
-            zb = B["zs"][bt]
-            for l2 in range(E[zb]["nsh"]):
-                gko = 1.0 / (Rab[at, bt] + 0.5 * (1.0 / E[z]["U"][l]
-                                                  + 1.0 / E[zb]["U"][l2]))
-                v[i] += gko * q[(bt, l2)]
+        if ES3 is None or POT_MODE == "v1":
+            # offsite ES2: plain KO (analytic; in v2-gradient mode this kernel
+            # lives inside es_charge_energy at FOLDED Hubbards instead)
+            for bt in range(len(B["zs"])):
+                if bt == at:
+                    continue
+                zb = B["zs"][bt]
+                for l2 in range(E[zb]["nsh"]):
+                    gko = 1.0 / (Rab[at, bt] + 0.5 * (1.0 / E[z]["U"][l]
+                                                      + 1.0 / E[zb]["U"][l2]))
+                    v[i] += gko * q[(bt, l2)]
         v[i] += 2 * E[z]["cx"] * E[z]["L5"][l] * m[i]
     if ES3 is not None:
-        # third-order potential: numeric dE3/dq_l on the decoded energy (the same
-        # +dE/dq Mulliken-shift convention the validated ES2 potential uses)
+        # THE POTENTIAL IS A SEPARATE OBJECT FROM THE ENERGY (T1, twice measured):
+        # v1 = simple pairwise shift over the lumped tau table (gate 4/6, installed);
+        # v2-gradient = exact dE/dq of the true composite energy (gate 3/6, refuted
+        # for the Fock; es_charge_energy REMAINS the energy-side truth).
+        efun = es3_energy_v1 if POT_MODE == "v1" else es_charge_energy
         h3 = 1e-6
         v3 = {}
         for key in q:
@@ -245,8 +332,8 @@ def fock(P, B):
             qp[key] += h3
             qm = dict(q)
             qm[key] -= h3
-            v3[key] = (es3_energy(qp, B["zs"], Rab, E)
-                       - es3_energy(qm, B["zs"], Rab, E)) / (2 * h3)
+            v3[key] = (efun(qp, B["zs"], Rab, E)
+                       - efun(qm, B["zs"], Rab, E)) / (2 * h3)
         for i in range(n):
             at, z, l, _ = meta[i]
             v[i] += v3[(at, l)]

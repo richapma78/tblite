@@ -742,7 +742,8 @@
   "es3_installed_v1": "ES3 INSTALLED IN THE ENGINE, v1 (seventy-seventh push; es3_parts.py + es3_verify.py + gxtb_engine es3_energy/_tau_off/v3-FD): onsite closed form + measured per-pair-side tau table + numeric dE3/dq Mulliken-shift potential. RESULTS: HeH+ remainder 0.212 -> 0.0408 PASS and HeH+ FULL SCF PASSES the 0.05 gate (0.0426) -- the first self-consistent ion; six-system gate 4/6 (H2 0.010, F2 0.039, HF 0.032, HeH+ 0.043 PASS; H2O 0.088, H3+ 0.113 MISS). TWO D5 DEEPENINGS from the misses: (1) H3+'s remainder WORSENED (0.042 -> 0.094) with its energy exact-by-construction -- the pairwise tau_eff reproduces the 3-body VALUE but not its q-DERIVATIVES: the binary's offsite ES3 potential is not the pairwise form's gradient. (2) The O-H tau table is charge-state inconsistent: OH-'s own solve gives tau_O = +1.347 @1.83 (CONSISTENT with the cation-fitted invU form, OOS 0.004) while H2O's measurement gave -0.127 @1.809 -- but H2O's rests on a 0.0009 Eh signal under a 34% relative FD (Gamma_O = 0.145 is small), so the H2O row is LOW-CONFIDENCE, not a confirmed flip. Neutrals carry a labeled double-count caveat (the grand diag law absorbed ES3 leakage; H2O 0.104 -> 0.088 improved but MISS until the re-fit on ES3-clean remainders). Unmeasured pairs return tau = 0 with a one-time warning (exact where converged qat = 0, e.g. F2's 9-9 during SCF startup). NEXT: charge-state scans at fixed geometry (OH radical vs OH- at 1.83; H2O+ vs H2O) to decode the true q-structure of the offsite ES3; then re-fit the grand laws clean; then the gate again.",
   "es3_qstructure_scan": "THE CHARGE-STATE SCAN (seventy-eighth push, es3_qstruct.py): four states of the O-H pair at fixed geometry (OH- / OH radical / H2O / H2O+; H2O2+ blocked -- eigenvalue window 5 < nsao 6, full inversion impossible, next probe should read oracle populations). ALL THREE pairwise atomic-charge models REFUTED (implied-tau spreads 333-862%): the offsite ES3 is NOT q_lA q_lB qat-weighted in any arrangement. THE LEAD THE WRECKAGE EXPOSED: the O-side offsite part is ~ZERO on BOTH neutrals (OH. -0.000026, H2O -0.0009) and alive only on net-charged states (OH- +0.0126, H2O+ +0.0014) -- TOTAL-MOLECULAR-CHARGE weighting; under Q-weighting tau_O comes out consistent (+1.69 OH-, +1.08 H2O+, same sign/order; 44% apart with H2O+'s coefficient tiny). The H-side carries an ADDITIONAL Q-independent piece (~-0.003 on every neutral) -- consistent with Gamma appearing INSIDE the second-order kernel (the GFN-style U(q) fold: charge-dependent Hubbards make part of the third order live inside ES2's kernels, which the Euler-FD then reads as a Gamma-part). Both leads are testable: Q-weighting predicts the O-side exactly zero on ANY neutral regardless of polarity; the U(q) fold predicts the H-side extra scales like dES2/dU with known kernels. NOTE: the installed v1 tau table remains gate-valid (values measured AT the gate states) but its R-interpolation across charge states is now known unsound -- do not transfer v1 taus to new charge states.",
   "es3_uq_fold": "THE U(q) FOLD, PARAMETER-FREE (seventy-ninth push, es3_fold.py): the neutral H-side extras are explained by charge-updated Hubbards inside the OFFSITE KO second-order kernel with the chain constant EXACTLY 1 -- U_l(q) = U_l + Gamma_A*q_A, i.e. Gamma_A literally IS dU/dq as the SI names it. Pure prediction, no fitted constant: OH. H-side -0.00233 vs measured -0.00266 (12%), H2O H-side -0.00511 vs -0.00442 (16%). The O-side tests are BELOW THE INSTRUMENT FLOOR (sub-millihartree signals; the onsite subtraction's own 4-17% constants dominate) -- labeled inconclusive, not contradicting. THE COMPOSITE PICTURE of the binary's third order: (a) onsite explicit closed form (decoded pass 75, 4%); (b) offsite = the U(q) fold in the KO kernel (c=1, parameter-free) PLUS an explicit total-charge-weighted term alive only on ions (the fold alone predicts the WRONG SIGN for OH-'s O-part +0.0126, so an explicit Q-weighted piece exists; pass-78's Q-lead). NEXT DECOMPOSITION: subtract the c=1 fold from the ion Euler parts and re-test Q-weighting on the residue -- if tau_Q comes out state-invariant the offsite ES3 is FULLY decoded as fold + Q-term. The scoped variants (onsite-only fold, dressed chains) are all refuted on the H-sides; offsite-KO scope with c=1 is the unique survivor.",
-  "es3_offsite_decomposed": "THE OFFSITE ES3 DECOMPOSED (eightieth push, es3_final.py): residue = measured_offsite_part - fold(c=1), tested against total-charge weighting. RESULTS: (1) THE O-SIDE Q-TERM IS STATE-INVARIANT ACROSS A CHARGE-SIGN FLIP -- tau_Q(O|H, ~1.8) = +1.138 on the ANION (OH-) vs +0.997 on the CATION (H2O+), 13% apart with the cation's signal small: the pass-78 Q-lead is now quantitative. (2) The H2+ -> H3+ transfer miss HALVES (20% -> 10%, ratio 0.897 at 1.5) once the fold is separated -- most of the pass-76 'three-body' signal was fold contamination; a ~10% residual remains (short-range fold detail or true 3-body, labeled). (3) The H|H Q-kernel is a measured curve: tau_Q = +0.787/+0.422/+0.129/-0.047/-0.124/-0.119 at R = 1.2..3.0 (node ~2.05, negative tail). (4) Per-pair-side kernels differ (H|He +0.89 at 1.46 vs H|H ~0.47 interpolated; He|H small negative; H|O +0.25 one clean point) -- a pair kernel in both U's, as expected. Sub-floor signals (OH- H-side residue -0.0015) stay labeled inconclusive. THE COMPOSITE THIRD ORDER, ASSEMBLED: E3 = onsite closed form (pass 75) + U(q) fold c=1 in the offsite KO kernel (pass 79) + explicit Q-weighted term with measured per-pair radial kernels (this pass). Engine v2 install: replace the v1 tau table with this decomposition. The pass-77 charge-state inconsistency of the v1 table is now EXPLAINED: v1 lumped fold+Q into one 'tau', which cannot transfer across charge states because the fold scales with local charges while the Q-term scales with total charge."
+  "es3_offsite_decomposed": "THE OFFSITE ES3 DECOMPOSED (eightieth push, es3_final.py): residue = measured_offsite_part - fold(c=1), tested against total-charge weighting. RESULTS: (1) THE O-SIDE Q-TERM IS STATE-INVARIANT ACROSS A CHARGE-SIGN FLIP -- tau_Q(O|H, ~1.8) = +1.138 on the ANION (OH-) vs +0.997 on the CATION (H2O+), 13% apart with the cation's signal small: the pass-78 Q-lead is now quantitative. (2) The H2+ -> H3+ transfer miss HALVES (20% -> 10%, ratio 0.897 at 1.5) once the fold is separated -- most of the pass-76 'three-body' signal was fold contamination; a ~10% residual remains (short-range fold detail or true 3-body, labeled). (3) The H|H Q-kernel is a measured curve: tau_Q = +0.787/+0.422/+0.129/-0.047/-0.124/-0.119 at R = 1.2..3.0 (node ~2.05, negative tail). (4) Per-pair-side kernels differ (H|He +0.89 at 1.46 vs H|H ~0.47 interpolated; He|H small negative; H|O +0.25 one clean point) -- a pair kernel in both U's, as expected. Sub-floor signals (OH- H-side residue -0.0015) stay labeled inconclusive. THE COMPOSITE THIRD ORDER, ASSEMBLED: E3 = onsite closed form (pass 75) + U(q) fold c=1 in the offsite KO kernel (pass 79) + explicit Q-weighted term with measured per-pair radial kernels (this pass). Engine v2 install: replace the v1 tau table with this decomposition. The pass-77 charge-state inconsistency of the v1 table is now EXPLAINED: v1 lumped fold+Q into one 'tau', which cannot transfer across charge states because the fold scales with local charges while the Q-term scales with total charge.",
+  "es3_v2_potential_refuted": "THE V2 POTENTIAL REFUTED BY THE GATE -- THE ENERGY/FOCK SPLIT MEASURED A SECOND TIME (eighty-first push): the exact q-gradient of the TRUE composite third-order energy (fold + Q-term, pass 80) was wired as the Fock potential and REGRESSED everything: gate 3/6 vs v1's 4/6, HeH+ remainder 0.041 -> 0.059, HeH+ SCF 0.043 -> 0.057, OH- 0.203 -> 0.224. The v1 potential (simple pairwise Mulliken shift over the lumped tau table) approximates the binary's Fock BETTER than the exact gradient of the correct energy does. This is T1's non-variational pairing demonstrated at third order by construction: the binary pairs a correct energy with a shortcut operator. ENGINE STATE: both objects now live side by side -- es_charge_energy (fold+Q composite) is the ENERGY-side truth for energy gates; es3_energy_v1 (lumped table) drives the POTENTIAL, selected by the bank flag es3.potential = 'v1'. Gate re-confirmed 4/6 bit-identical to pass 77. The remaining Fock gap (H3+ 0.094, OH- 0.203 diag remainders) is the binary's ES3 Fock SHORTCUT itself -- decode it as its own object (F-side extraction on the ion ladders), exactly as the exchange Fock skeleton was decoded separately from the exchange energy."
  },
  "es3": {
   "_provenance": "onsite: decoded closed form (pass 75; He+ measured, H- predicted 4%); offsite: MEASURED per-pair-side tau (passes 76-77; D5 -- the SI form is refuted, curves are the deliverable). tau key 'zA-zB' multiplies Gamma_A. H-H short range is H3+-derived (equilateral, absorbs 3-body exactly at those geometries), tail from H2+ (2-body); 20% seam labeled. Single-point pairs are exact at gate geometries.",
@@ -830,6 +831,79 @@
      1.34714
     ]
    ]
-  }
+  },
+  "v2": {
+   "_provenance": "the pass-80 decomposition: offsite ES3 = U(q) fold (c=1, BARE Gamma, offsite-KO scope; pass-79 parameter-free) + explicit Q-weighted term with MEASURED per-pair-side radial kernels tau_Q (pass-80 residues). tau_Q key 'zA-zB' multiplies Gamma_A and Q_total. Neutrals: Q-term vanishes, fold survives. H|H curve from the H2+ ladder (H3+ transfer residual ~10%, labeled); O|H = mean of the state-invariant pair (+1.138 anion, +0.997 cation); H|O one clean point (H2O+); OH- H-side below floor. U_eff floor 0.05*U guards He's large Gamma on transient negative charges.",
+   "fold": {
+    "c": 1.0,
+    "scope": "offsite-KO",
+    "gamma": "bare"
+   },
+   "tau_Q": {
+    "1-1": [
+     [
+      1.2,
+      0.787
+     ],
+     [
+      1.5,
+      0.422
+     ],
+     [
+      1.8,
+      0.129
+     ],
+     [
+      2.1,
+      -0.047
+     ],
+     [
+      2.5,
+      -0.124
+     ],
+     [
+      3.0,
+      -0.119
+     ],
+     [
+      3.5,
+      0.0
+     ]
+    ],
+    "1-2": [
+     [
+      1.46,
+      0.892
+     ]
+    ],
+    "2-1": [
+     [
+      1.46,
+      -0.134
+     ],
+     [
+      2.0,
+      -0.108
+     ],
+     [
+      2.5,
+      -0.053
+     ]
+    ],
+    "8-1": [
+     [
+      1.8,
+      1.068
+     ]
+    ],
+    "1-8": [
+     [
+      1.8,
+      0.249
+     ]
+    ]
+   }
+  },
+  "potential": "v1"
  }
 }
