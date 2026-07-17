@@ -42,6 +42,73 @@ try:
                if _G.get("offdiag_class", {}).get("installed") else None)
 except FileNotFoundError:
     GRAND_D = GRAND_O = GRAND_C = None
+try:
+    with open(os.path.join(HERE, "data", "derived-constants.json")) as _f:
+        _DC = __import__("json").load(_f)
+    ES3 = _DC.get("es3")
+except FileNotFoundError:
+    ES3 = None
+
+
+_TAU_WARNED = set()
+
+
+def _tau_off(za, zb, R):
+    """measured per-pair-side tau (multiplies Gamma_A of za); linear interpolation,
+    flat single points, zero outside the measured range + margin. An UNMEASURED pair
+    returns 0 with a one-time warning -- correct only where the converged atomic
+    charge vanishes (homonuclear neutrals); anywhere else the ES3 of that pair is
+    silently dropped and the result is suspect."""
+    pts = [(r, t) for r, t in ES3["tau_pairs"].get(f"{za}-{zb}", []) if t is not None]
+    if not pts:
+        if (za, zb) not in _TAU_WARNED:
+            _TAU_WARNED.add((za, zb))
+            print(f"    [es3] WARNING: no measured tau for pair {za}-{zb}; using 0 "
+                  f"(exact only if converged qat = 0)")
+        return 0.0
+    if len(pts) == 1:
+        return pts[0][1] if abs(R - pts[0][0]) < 0.2 else 0.0
+    if R <= pts[0][0]:
+        return pts[0][1]
+    if R >= pts[-1][0]:
+        return 0.0 if R > pts[-1][0] + 0.5 else pts[-1][1]
+    for (r1, t1), (r2, t2) in zip(pts, pts[1:]):
+        if r1 <= R <= r2:
+            return t1 + (t2 - t1) * (R - r1) / (r2 - r1)
+
+
+def es3_energy(q, zs, Rab, E):
+    """the decoded third-order layer at Mulliken shell charges q[(at,l)]."""
+    if ES3 is None:
+        return 0.0
+    qat = {}
+    for (at, l), v in q.items():
+        qat[at] = qat.get(at, 0.0) + v
+    if all(abs(v) < 1e-12 for v in qat.values()):
+        return 0.0
+    e3 = 0.0
+    for (at, la), qa in q.items():
+        z = zs[at]
+        Ula = E[z]["U"][la]
+        if Ula == 0.0:
+            continue
+        ga = (ES3["k3gs"] if la == 0 else ES3["k3gp"]) * ES3["gamma"][str(z)]
+        ta = -1.0 / (2 * Ula * Ula)
+        for lb in range(E[z]["nsh"]):
+            Ulb = E[z]["U"][lb]
+            if Ulb == 0.0:
+                continue
+            gb = (ES3["k3gs"] if lb == 0 else ES3["k3gp"]) * ES3["gamma"][str(z)]
+            tb = -1.0 / (2 * Ulb * Ulb)
+            e3 += (1 / 6) * qa * q[(at, lb)] * qat[at] * (ta * ga + tb * gb)
+        for (bt, lb), qb in q.items():
+            if bt == at:
+                continue
+            if abs(qa * qb * qat[at]) < 1e-9:
+                continue          # term dead; tolerate an unmeasured pair here
+            tau = _tau_off(z, zs[bt], float(Rab[at, bt]))
+            e3 += (1 / 6) * qa * qb * qat[at] * tau * ES3["gamma"][str(z)]
+    return e3
 SRULE_P2 = (0.08247, 0.0920)
 SRULE = {1: 0.4726, 2: 0.9218}
 NVAL = {6: 4, 7: 5, 8: 6, 9: 7}
@@ -168,6 +235,21 @@ def fock(P, B):
                                                   + 1.0 / E[zb]["U"][l2]))
                 v[i] += gko * q[(bt, l2)]
         v[i] += 2 * E[z]["cx"] * E[z]["L5"][l] * m[i]
+    if ES3 is not None:
+        # third-order potential: numeric dE3/dq_l on the decoded energy (the same
+        # +dE/dq Mulliken-shift convention the validated ES2 potential uses)
+        h3 = 1e-6
+        v3 = {}
+        for key in q:
+            qp = dict(q)
+            qp[key] += h3
+            qm = dict(q)
+            qm[key] -= h3
+            v3[key] = (es3_energy(qp, B["zs"], Rab, E)
+                       - es3_energy(qm, B["zs"], Rab, E)) / (2 * h3)
+        for i in range(n):
+            at, z, l, _ = meta[i]
+            v[i] += v3[(at, l)]
     F = B["H0"] + B["A"] - 0.5 * S * (v[:, None] + v[None, :])
     if GRAND_D is not None:
         # the GRAND short-piece layer (fitted across H2/F2/HF/H2O on THIS baseline;

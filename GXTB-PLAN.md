@@ -1423,3 +1423,21 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   sign flip at R~2.0). Recorded for the day the form question reopens.
 - Path: per-pair measured τ curves (the x-curve precedent) — H-H done; He-H, O-H next;
   then install ES3 (onsite closed-form + offsite tables), re-extract, re-fit ss, gate.
+
+### 2026-07-17 (seventy-seventh push) — ES3 installed; the first self-consistent ion passes; the misses deepen D5
+
+- **The engine now carries the third-order layer**: decoded onsite closed form, measured
+  per-pair-side τ table, numeric dE3/dq Mulliken-shift potential. **HeH+ passes a full
+  SCF within the 0.05 bar** (0.0426; its Fock remainder collapsed 0.212 → 0.041) — the
+  campaign's first self-consistent ion. Six-system gate 4/6.
+- The two misses are measurements, not noise: **H3+'s remainder worsened with its
+  energy exact-by-construction** — the pairwise τ_eff reproduces the three-body value
+  but not its q-derivatives, so the binary's ES3 potential is not the pairwise form's
+  gradient (D5 deepens). And the O-H τ table is charge-state inconsistent — though
+  H2O's row rests on a 0.0009 Eh signal under a 34% relative FD (Γ_O is small), so it
+  is labeled low-confidence rather than a confirmed flip.
+- Neutrals carry the known double-count caveat (the grand diag law absorbed ES3
+  leakage): H2O improved 0.104 → 0.088 but stays MISS until the clean re-fit.
+- Next: charge-state scans at fixed geometry (OH· vs OH−; H2O+ vs H2O) to decode the
+  true q-structure of the offsite ES3; re-fit the grand laws on ES3-clean remainders;
+  gate again.
