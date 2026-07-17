@@ -1373,3 +1373,20 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Lab-note: a circularity bug (re-extraction against an engine already carrying the
   banked laws) announced itself as all-classes-below-noise + gate 0/4; both law sets are
   now stripped during extraction.
+
+### 2026-07-17 (seventy-fourth push) — ES3 discovered as the missing ion layer; the ss stall explained
+
+- The ss campaign's new invertible systems (H3+, HeH+, He2, OH-) exposed the pattern:
+  ion diagonal remainders 0.19–0.21, neutral He2 at 0.0015. The measured scalar targets
+  (printed ES2+3 minus our validated ES2, F2 control −0.00006) carry the third-order
+  fingerprint: **cations positive, the anion negative** — odd in charge, impossible for
+  ES2 — at a scale that closes both the energy (HeH+ +0.073) and the Fock books (implied
+  cubic potential ~0.28 vs the 0.212 remainder). Even H2O hides +0.017 of it.
+- SI Eqs. 129b–133 specify the layer completely (Γ_A element-wise, k3Γ_l per-shell
+  globals, k3/k3x offsite kernel). ES3 vanishes EXACTLY on homonuclear neutrals — the
+  discriminator behind the slot hunt. Globals candidates: G2[0], G2[1], G2[5] (strict
+  hit); Γ_A element rows unscanned.
+- The ss law's refusal to crack (32 points, rms 0.0154) is now explained: its ion rows
+  carry ES3 leakage. Order of operations fixed: decode ES3 slots → install from the
+  closed form (no fitting) → re-extract clean remainders → re-fit ss and the grand
+  diagonal law → the six-system gate.

@@ -4541,5 +4541,32 @@
   },
   "installed": false,
   "note": "sigma/pi class-resolved; ZERO law = class below noise. NOT INSTALLED (pre-declared gate): dominates v1 on H2/F2/H2O (water closes fully, 0.017) but the HF LUMO regresses 0.026->0.053, 0.003 over the bar -- it sits on the unresolved ss channel (rms 0.011, H2-holdout fails). Static-restriction variants of sp_s and ss both REFUTED (HF worse: 0.056/0.057). Next entry ticket: crack ss."
+ },
+ "ss_campaign": {
+  "n": 32,
+  "families": [
+   "F2",
+   "H2",
+   "H2O",
+   "H3+",
+   "HF",
+   "He2",
+   "HeH+",
+   "OH-"
+  ],
+  "best": {
+   "terms": [
+    "gb_s3",
+    "gh_s3",
+    "s"
+   ],
+   "coefs": [
+    -2.145589787355285,
+    3.042832893852684,
+    -0.10722456720449491
+   ],
+   "rms": 0.01542293141360658
+  },
+  "worst_loo": 0.07241972460437
  }
 }
