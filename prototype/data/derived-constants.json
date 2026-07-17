@@ -704,7 +704,8 @@
    "_milestone": "THE F2 SCF GATE PASSES (sixty-first push): all EIGHT eigenvalues within 0.0155 Eh at R=3.8 (six of eight within 0.005), self-consistently, from decoded parts -- the first p-shell molecule. The ES2 shell-resolved layer runs LIVE in the loop (decoded onsite kernel gamma2 = s(F)*harmonic(U_l,U_l') with self-consistent shell charges); the exchange uses the per-AO same-shell skeleton + the p-sigma object's closed form; H0 the forward metric; ACP analytic; ES1 the mu-law.",
    "re_diagnostic": "at r_e: 0.007-0.045, concentrated on the sigma orbitals -- the unfitted p short pieces (the H2-style fit route applies) + the k_p metric puzzle. The pi orbitals already sit at 0.007.",
    "conventions_locked": "per-AO populations; same-shell-only onsite exchange; the unified Mulliken form -1/2 S o (v+v) carrying ES1 + ES2 + X potentials together",
-   "_next": "fit the p short pieces at short R (H2 route) -> re-gate at r_e; HF (polar ES; the q-channels k-tilde-0/3 wake); the total-energy bookkeeping gate; gradients (differentiate the implemented Fock, per T1); the Fortran port"
+   "_next": "fit the p short pieces at short R (H2 route) -> re-gate at r_e; HF (polar ES; the q-channels k-tilde-0/3 wake); the total-energy bookkeeping gate; gradients (differentiate the implemented Fock, per T1); the Fortran port",
+   "_FULL": "SIXTY-SECOND PUSH: with the empirical short pieces installed (f2_shortfit: 8 element classes fit at 2e-4..8e-3 to |S|-power pairs, center-swap mirror rules, re-extraction guard via INCLUDE_SHORT), THE F2 SCF PASSES AT ALL THREE DISTANCES: worst 0.0069 at R=3.8, 0.0016 at R=3.0 (near sub-mEh across all eight), 0.0144 at r_e = 2.668 (was 0.0447; the sigma* LUMO carries it, everything else <= 0.006). TWO complete molecular SCF gates now stand (H2 full-range; F2 through equilibrium)."
   }
  }
 }

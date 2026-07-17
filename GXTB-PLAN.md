@@ -1211,3 +1211,15 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Two SCF gates now stand (H2 full; F2 at the gate distance). Next: the p short pieces →
   the r_e re-gate; HF's polar layer; the total-energy bookkeeping; gradients per T1; the
   port.
+
+### 2026-07-18 (sixty-second push) — **F2 PASSES AT EQUILIBRIUM**: two full molecular SCF gates stand
+
+- **f2_shortfit.py**: the eight element-class remainder curves extracted across the stretch
+  and fit to |S|-power pairs at 2e-4–8e-3 (labeled empirical working laws; center-swap
+  mirror rules; an INCLUDE_SHORT guard keeps re-extraction clean).
+- **The re-gate**: worst 0.0069 at R=3.8, **0.0016 at R=3.0** (near sub-mEh across all
+  eight orbitals), **0.0144 at equilibrium** (was 0.0447) — the σ* LUMO carries the worst,
+  everything else ≤0.006. The F2 SCF passes everywhere tested.
+- Standing: H2 (full range) and F2 (through equilibrium) both gate self-consistently from
+  decoded parts. Next: HF's polar layer, the total-energy bookkeeping gate, gradients
+  (per T1), the Fortran port.

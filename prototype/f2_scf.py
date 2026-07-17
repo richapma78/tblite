@@ -44,6 +44,7 @@ S_F = 0.08247 * 7 + 0.0920
 CX = S_F / 9.59
 KS, KP, KB = 0.730, 1.205, 0.0632
 REF = K.REFOCC[9]
+INCLUDE_SHORT = True   # f2_shortfit sets False to re-extract cleanly
 LOFAO = [0, 1, 1, 1, 0, 1, 1, 1]                  # shell of each AO
 ATOFAO = [0, 0, 0, 0, 1, 1, 1, 1]
 
@@ -81,6 +82,35 @@ def build_static(R):
         "hamiltonian_anchors"]["pzpz_object"]["closed_form_MEASURED"]
     OBJ = np.zeros((n, n))
     OBJ[3, 7] = OBJ[7, 3] = obj["c"] * math.erf(obj["a"] * R) / R
+    # the EMPIRICAL short pieces (f2_shortfit; labeled working laws), with the
+    # center-swap mirror rules (spz-type elements are antisymmetric under the swap)
+    sf = os.path.join(HERE, "data", "f2-short.json")
+    if INCLUDE_SHORT and os.path.exists(sf):
+        fits = json.load(open(sf))["fits"]
+
+        def ev(k, sval):
+            f = fits[k]
+            a_ = abs(sval)
+            fns = {"s2,s4": (a_ * a_, a_ ** 4), "s,s2": (a_, a_ * a_),
+                   "s2,s3": (a_ * a_, a_ ** 3), "s,s3": (a_, a_ ** 3)}[f["form"]]
+            return f["c"][0] * fns[0] + f["c"][1] * fns[1]
+
+        SH = np.zeros((n, n))
+        for i, k in ((0, "d_s"), (4, "d_s"), (1, "d_px"), (2, "d_px"), (5, "d_px"),
+                     (6, "d_px"), (3, "d_pz"), (7, "d_pz")):
+            car = {"d_s": S[0, 4], "d_px": S[1, 5], "d_pz": S[3, 7]}[k]
+            SH[i, i] = ev(k, car)
+        SH[0, 4] = SH[4, 0] = ev("ss", S[0, 4])
+        SH[3, 7] = SH[7, 3] = ev("pzpz", S[3, 7])
+        for i, j in ((1, 5), (2, 6)):
+            SH[i, j] = SH[j, i] = ev("pxpx", S[1, 5])
+        v = ev("spz", S[0, 7])
+        SH[0, 7] = SH[7, 0] = v
+        SH[3, 4] = SH[4, 3] = -v
+        v = ev("on_spz", S[0, 7])
+        SH[0, 3] = SH[3, 0] = v
+        SH[4, 7] = SH[7, 4] = -v
+        OBJ = OBJ + SH
     return S, H0, A, OBJ
 
 
@@ -135,7 +165,7 @@ def scf(R, iters=60):
 
 
 def main():
-    for R in (3.8, 2.668):
+    for R in (3.8, 3.0, 2.668):
         w, P = scf(R)
         r = oracle.run([("F", 0, 0, 0), ("F", 0, 0, R / K.BOHR)])
         ref = sorted(x / K.EV for x in r["eps_ev"])
