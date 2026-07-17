@@ -17,6 +17,7 @@ _PATH = os.path.join(_HERE, "data", "derived-constants.json")
 _D = json.load(open(_PATH))
 
 BOHR = 1.8897261254578281
+EV = 27.211386245988          # Hartree -> eV (CODATA); the oracle prints eigenvalues in eV
 
 # --- basis CN (q-vSZP) ----------------------------------------------------------------------
 BASIS_CN_KN = _D["basis_cn"]["kn"]

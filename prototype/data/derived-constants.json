@@ -1,522 +1,536 @@
 {
-  "_what": "EVERY constant of the g-xTB v1.1 method that does NOT live in the official parameter files (gxtb_parameters / basisq / eeq) -- decoded from reference sources or MEASURED from the oracle, one table each, loaded once at start (constants.py). Nothing in the prototype may hardcode a method constant; this file is the single home. Provenance per entry.",
-  "_rule": "If a value here disagrees with a new measurement, the MEASUREMENT wins and this file gets the update + a provenance note. Values marked 'measured' carry the experiment that produced them.",
-  "basis_cn": {
-    "_source": "grimme-lab/qvSZP src/chargscfcts.f90 ncoord_basq + app/main.f90 (kn); gate: adapt.py (CN(basis) <= 4e-5 vs oracle on 6 probes incl. PdCl2)",
-    "kn": -3.75,
-    "rcov_angstrom_pyykko_atsumi_2009_metals_minus_10pct": [
-      0.29,
-      0.46,
-      1.2,
-      0.94,
-      0.77,
-      0.75,
-      0.71,
-      0.63,
-      0.64,
-      0.67,
-      1.4,
-      1.25,
-      1.13,
-      1.04,
-      1.1,
-      1.02,
-      0.99,
-      0.96,
-      1.76,
-      1.54,
-      1.33,
-      1.22,
-      1.21,
-      1.1,
-      1.07,
-      1.04,
-      1.0,
-      0.99,
-      1.01,
-      1.09,
-      1.12,
-      1.09,
-      1.15,
-      1.1,
-      1.14,
-      1.17,
-      1.89,
-      1.67,
-      1.47,
-      1.39,
-      1.32,
-      1.24,
-      1.15,
-      1.13,
-      1.13,
-      1.08,
-      1.15,
-      1.23,
-      1.28,
-      1.26,
-      1.26,
-      1.23,
-      1.32,
-      1.31,
-      2.09,
-      1.76,
-      1.62,
-      1.47,
-      1.58,
-      1.57,
-      1.56,
-      1.55,
-      1.51,
-      1.52,
-      1.51,
-      1.5,
-      1.49,
-      1.49,
-      1.48,
-      1.53,
-      1.46,
-      1.37,
-      1.31,
-      1.23,
-      1.18,
-      1.16,
-      1.11,
-      1.12,
-      1.13,
-      1.32,
-      1.3,
-      1.3,
-      1.36,
-      1.31,
-      1.38,
-      1.42,
-      2.01,
-      1.81,
-      1.67,
-      1.58,
-      1.52,
-      1.53,
-      1.54,
-      1.55,
-      1.49,
-      1.49,
-      1.51,
-      1.51,
-      1.48,
-      1.5,
-      1.56,
-      1.58,
-      1.45,
-      1.41,
-      1.34,
-      1.29,
-      1.27,
-      1.21,
-      1.16,
-      1.15,
-      1.09,
-      1.22,
-      1.36,
-      1.43,
-      1.46,
-      1.58,
-      1.48,
-      1.57
-    ]
+ "_what": "EVERY constant of the g-xTB v1.1 method that does NOT live in the official parameter files (gxtb_parameters / basisq / eeq) -- decoded from reference sources or MEASURED from the oracle, one table each, loaded once at start (constants.py). Nothing in the prototype may hardcode a method constant; this file is the single home. Provenance per entry.",
+ "_rule": "If a value here disagrees with a new measurement, the MEASUREMENT wins and this file gets the update + a provenance note. Values marked 'measured' carry the experiment that produced them.",
+ "basis_cn": {
+  "_source": "grimme-lab/qvSZP src/chargscfcts.f90 ncoord_basq + app/main.f90 (kn); gate: adapt.py (CN(basis) <= 4e-5 vs oracle on 6 probes incl. PdCl2)",
+  "kn": -3.75,
+  "rcov_angstrom_pyykko_atsumi_2009_metals_minus_10pct": [
+   0.29,
+   0.46,
+   1.2,
+   0.94,
+   0.77,
+   0.75,
+   0.71,
+   0.63,
+   0.64,
+   0.67,
+   1.4,
+   1.25,
+   1.13,
+   1.04,
+   1.1,
+   1.02,
+   0.99,
+   0.96,
+   1.76,
+   1.54,
+   1.33,
+   1.22,
+   1.21,
+   1.1,
+   1.07,
+   1.04,
+   1.0,
+   0.99,
+   1.01,
+   1.09,
+   1.12,
+   1.09,
+   1.15,
+   1.1,
+   1.14,
+   1.17,
+   1.89,
+   1.67,
+   1.47,
+   1.39,
+   1.32,
+   1.24,
+   1.15,
+   1.13,
+   1.13,
+   1.08,
+   1.15,
+   1.23,
+   1.28,
+   1.26,
+   1.26,
+   1.23,
+   1.32,
+   1.31,
+   2.09,
+   1.76,
+   1.62,
+   1.47,
+   1.58,
+   1.57,
+   1.56,
+   1.55,
+   1.51,
+   1.52,
+   1.51,
+   1.5,
+   1.49,
+   1.49,
+   1.48,
+   1.53,
+   1.46,
+   1.37,
+   1.31,
+   1.23,
+   1.18,
+   1.16,
+   1.11,
+   1.12,
+   1.13,
+   1.32,
+   1.3,
+   1.3,
+   1.36,
+   1.31,
+   1.38,
+   1.42,
+   2.01,
+   1.81,
+   1.67,
+   1.58,
+   1.52,
+   1.53,
+   1.54,
+   1.55,
+   1.49,
+   1.49,
+   1.51,
+   1.51,
+   1.48,
+   1.5,
+   1.56,
+   1.58,
+   1.45,
+   1.41,
+   1.34,
+   1.29,
+   1.27,
+   1.21,
+   1.16,
+   1.15,
+   1.09,
+   1.22,
+   1.36,
+   1.43,
+   1.46,
+   1.58,
+   1.48,
+   1.57
+  ]
+ },
+ "eeqbc": {
+  "_source": "multicharge param.f90 new_eeqbc2025_model (arrays byte-identical to param/gxtb/eeq, proven all 103x8 by extract_tables.py); gate: eeqbc.py (q <= 5e-5 vs oracle, 6 probes)",
+  "kcn": 2.0,
+  "norm_exp": 0.75,
+  "kbc": 0.6,
+  "kcnrad": 0.14,
+  "cutoff_bohr": 25.0,
+  "en_normalization": 3.98,
+  "en_patches": {
+   "_note": "applied BEFORE /3.98",
+   "ge_90_default": 1.3,
+   "87": 0.8,
+   "89": 1.0,
+   "90": 1.1,
+   "91": 1.1,
+   "92": 1.1,
+   "95": 1.1,
+   "93": 1.2,
+   "94": 1.2,
+   "97": 1.2,
+   "103": 1.2
   },
-  "eeqbc": {
-    "_source": "multicharge param.f90 new_eeqbc2025_model (arrays byte-identical to param/gxtb/eeq, proven all 103x8 by extract_tables.py); gate: eeqbc.py (q <= 5e-5 vs oracle, 6 probes)",
-    "kcn": 2.0,
-    "norm_exp": 0.75,
-    "kbc": 0.6,
-    "kcnrad": 0.14,
-    "cutoff_bohr": 25.0,
-    "en_normalization": 3.98,
-    "en_patches": {
-      "_note": "applied BEFORE /3.98",
-      "ge_90_default": 1.3,
-      "87": 0.8,
-      "89": 1.0,
-      "90": 1.1,
-      "91": 1.1,
-      "92": 1.1,
-      "95": 1.1,
-      "93": 1.2,
-      "94": 1.2,
-      "97": 1.2,
-      "103": 1.2
-    },
-    "rvdw_unit_quirk": "pair vdW radii enter as ANGSTROM literals against Bohr distances (multicharge converts au at declaration, back at use); gate-confirmed the oracle does the same"
+  "rvdw_unit_quirk": "pair vdW radii enter as ANGSTROM literals against Bohr distances (multicharge converts au at declaration, back at use); gate-confirmed the oracle does the same"
+ },
+ "repulsion": {
+  "_source": "SI Sec 1.6 (kexp); structural readings MEASURED by repulsion.py gate (worst 4.75e-9 over 13 cases)",
+  "kexp": 1.5,
+  "offset_sign": "+R0  (exp(-a*(R + R0_AB)^kexp))",
+  "rc_convention": "arithmetic mean of rcov_cn (Eq. 47's 'arithmetical average')",
+  "alpha_combination": "harmonic  (2*aA*aB/(aA+aB); SI Eq. 55 as extracted lost the factor 2 -- refuted 150x by the H2 tail)",
+  "zeff_charge_signs": "Zeff = zeff0*(1 - kq*q - kq2*q^2)  (quadratic MINUS measured by FD ratio -1.000)"
+ },
+ "reference_occupations": {
+  "_source": "SI Tab. 1 (Z<=18, 3 decimals) CONFIRMED by FD on L7 chemical potentials (exact: ES1 linear in mu); convention q_l = refocc - pop; heavier elements get FD-measured and appended here",
+  "_gate": "es_atoms.py cross-check <= 5e-4 per shell",
+  "by_z": {
+   "1": {
+    "s": 1.0
+   },
+   "2": {
+    "s": 2.0
+   },
+   "3": {
+    "s": 0.389,
+    "p": 0.61
+   },
+   "4": {
+    "s": 0.866,
+    "p": 1.133
+   },
+   "5": {
+    "s": 1.034,
+    "p": 1.965
+   },
+   "6": {
+    "s": 1.035,
+    "p": 2.964
+   },
+   "7": {
+    "s": 1.374,
+    "p": 3.625
+   },
+   "8": {
+    "s": 1.673,
+    "p": 4.326
+   },
+   "9": {
+    "s": 1.855,
+    "p": 5.144
+   },
+   "10": {
+    "s": 2.024,
+    "p": 5.975
+   },
+   "11": {
+    "s": 0.449,
+    "p": 0.55
+   },
+   "12": {
+    "s": 0.905,
+    "p": 0.747
+   },
+   "13": {
+    "s": 1.189,
+    "p": 1.401,
+    "d": 0.346
+   },
+   "14": {
+    "s": 1.387,
+    "p": 2.324,
+    "d": 0.287
+   },
+   "15": {
+    "s": 1.569,
+    "p": 2.991,
+    "d": 0.438
+   },
+   "16": {
+    "s": 1.757,
+    "p": 4.089,
+    "d": 0.152
+   },
+   "17": {
+    "s": 1.875,
+    "p": 5.067,
+    "d": 0.057
+   },
+   "18": {
+    "s": 2.032,
+    "p": 5.927,
+    "d": 0.039
+   },
+   "35": {
+    "s": 1.89888,
+    "p": 5.02125,
+    "d": 0.07988
+   },
+   "53": {
+    "s": 1.92602,
+    "p": 4.98008,
+    "d": 0.0939
+   }
   },
-  "repulsion": {
-    "_source": "SI Sec 1.6 (kexp); structural readings MEASURED by repulsion.py gate (worst 4.75e-9 over 13 cases)",
-    "kexp": 1.5,
-    "offset_sign": "+R0  (exp(-a*(R + R0_AB)^kexp))",
-    "rc_convention": "arithmetic mean of rcov_cn (Eq. 47's 'arithmetical average')",
-    "alpha_combination": "harmonic  (2*aA*aB/(aA+aB); SI Eq. 55 as extracted lost the factor 2 -- refuted 150x by the H2 tail)",
-    "zeff_charge_signs": "Zeff = zeff0*(1 - kq*q - kq2*q^2)  (quadratic MINUS measured by FD ratio -1.000)"
+  "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far).",
+  "_z35_note": "Br FD-measured 2026-07-16 (sum = 7.00000 exact); first beyond the SI table"
+ },
+ "oracle_conventions": {
+  "_source": "restart.py measurements",
+  "d_component_order": [
+   "x2-y2",
+   "z2",
+   "xy",
+   "xz",
+   "yz"
+  ],
+  "d_perm_from_pyscf_m_order": [
+   2,
+   4,
+   1,
+   3,
+   0
+  ],
+  "d_signs": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "f_component_order": "UNMEASURED -- overlap.py refuses oracle-order f shells by design",
+  "restart_format": "Fortran sequential: rec1 = packed row-lower symmetric density; rec2 = MO matrix column-major (big systems: only occupied columns)",
+  "coord_format": "Turbomole $coord, Bohr; .CHRG/.UHF files; fresh dir per run (stale gxtbrestart crashes)"
+ },
+ "onsite_electronic_measured": {
+  "_note": "charted from the oracle (chart_onsite.py + ion-channel scans); closed forms partly identified. All PROVEN hardcoded in the binary.",
+  "equal_U_decomposition": "ES23(ion; U=u,u) = A + B*u + C*u^2 fits EXACTLY (3-point); B = (s/2)*q_A^2 (even, quadratic to 5 digits); C = k3*q_A^3*u^2-coefficient (cubic to 4 digits); A = u-independent remainder entangled with ion shell redistribution",
+  "s_rule": {
+   "_form": "s = a_p * Nval + b_p  (linear in valence-electron count WITHIN a period; 9 elements, max dev 2e-4)",
+   "period2": {
+    "a": 0.08247,
+    "b": 0.092,
+    "confirmed": "Li(1) 0.1745 EXACT, C(4) 0.4220, N(5) 0.5044, O(6) 0.5869, F(7) 0.6693"
+   },
+   "period3": {
+    "a": 0.04193,
+    "b": 0.1378,
+    "confirmed": "Si 0.3054, P 0.3473, S 0.3892, Cl 0.4312"
+   },
+   "period1_H": 0.4726,
+   "period4_anchor_Br": 0.437,
+   "_caveat": "d-block/heavy ions (Ge test) show shell-redistribution contamination -- extraction needs population tracking there"
   },
-  "reference_occupations": {
-    "_source": "SI Tab. 1 (Z<=18, 3 decimals) CONFIRMED by FD on L7 chemical potentials (exact: ES1 linear in mu); convention q_l = refocc - pop; heavier elements get FD-measured and appended here",
-    "_gate": "es_atoms.py cross-check <= 5e-4 per shell",
-    "by_z": {
-      "1": {
-        "s": 1.0
-      },
-      "2": {
-        "s": 2.0
-      },
-      "3": {
-        "s": 0.389,
-        "p": 0.61
-      },
-      "4": {
-        "s": 0.866,
-        "p": 1.133
-      },
-      "5": {
-        "s": 1.034,
-        "p": 1.965
-      },
-      "6": {
-        "s": 1.035,
-        "p": 2.964
-      },
-      "7": {
-        "s": 1.374,
-        "p": 3.625
-      },
-      "8": {
-        "s": 1.673,
-        "p": 4.326
-      },
-      "9": {
-        "s": 1.855,
-        "p": 5.144
-      },
-      "10": {
-        "s": 2.024,
-        "p": 5.975
-      },
-      "11": {
-        "s": 0.449,
-        "p": 0.55
-      },
-      "12": {
-        "s": 0.905,
-        "p": 0.747
-      },
-      "13": {
-        "s": 1.189,
-        "p": 1.401,
-        "d": 0.346
-      },
-      "14": {
-        "s": 1.387,
-        "p": 2.324,
-        "d": 0.287
-      },
-      "15": {
-        "s": 1.569,
-        "p": 2.991,
-        "d": 0.438
-      },
-      "16": {
-        "s": 1.757,
-        "p": 4.089,
-        "d": 0.152
-      },
-      "17": {
-        "s": 1.875,
-        "p": 5.067,
-        "d": 0.057
-      },
-      "18": {
-        "s": 2.032,
-        "p": 5.927,
-        "d": 0.039
-      },
-      "35": {
-        "s": 1.89888,
-        "p": 5.02125,
-        "d": 0.07988
-      },
-      "53": {
-        "s": 1.92602,
-        "p": 4.98008,
-        "d": 0.0939
-      }
-    },
-    "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far).",
-    "_z35_note": "Br FD-measured 2026-07-16 (sum = 7.00000 exact); first beyond the SI table"
+  "third_order_u2_rule": {
+   "_form": "the u^2 coefficient = k3 * q_A^3 (exact for C and O across +-1, +-2)",
+   "k3": {
+    "6": 0.01988,
+    "7": 0.02714,
+    "8": 0.03445,
+    "9": 0.01643,
+    "14": 0.00544,
+    "15": 0.01206,
+    "16": 0.01717,
+    "17": 0.01239
+   },
+   "_caveat": "row-2 C..O linear (+0.0073/Z) but F breaks it -- F/heavier extractions need the per-state check; refine next"
   },
-  "oracle_conventions": {
-    "_source": "restart.py measurements",
-    "d_component_order": [
-      "x2-y2",
-      "z2",
-      "xy",
-      "xz",
-      "yz"
-    ],
-    "d_perm_from_pyscf_m_order": [
-      2,
-      4,
-      1,
-      3,
-      0
-    ],
-    "d_signs": [
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    "f_component_order": "UNMEASURED -- overlap.py refuses oracle-order f shells by design",
-    "restart_format": "Fortran sequential: rec1 = packed row-lower symmetric density; rec2 = MO matrix column-major (big systems: only occupied columns)",
-    "coord_format": "Turbomole $coord, Bohr; .CHRG/.UHF files; fresh dir per run (stale gxtbrestart crashes)"
+  "f_switching_samples": {
+   "_form": "f = 1 + k_dis*[erf(kx*(q-ks)) + erf(kx*(q+ks))] (ODD, SI Eq. 83b)",
+   "q": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+   ],
+   "f": [
+    0.9764,
+    0.9831,
+    1.0,
+    1.0165,
+    1.0234
+   ]
   },
-  "onsite_electronic_measured": {
-    "_note": "charted from the oracle (chart_onsite.py + ion-channel scans); closed forms partly identified. All PROVEN hardcoded in the binary.",
-    "equal_U_decomposition": "ES23(ion; U=u,u) = A + B*u + C*u^2 fits EXACTLY (3-point); B = (s/2)*q_A^2 (even, quadratic to 5 digits); C = k3*q_A^3*u^2-coefficient (cubic to 4 digits); A = u-independent remainder entangled with ion shell redistribution",
-    "s_rule": {
-      "_form": "s = a_p * Nval + b_p  (linear in valence-electron count WITHIN a period; 9 elements, max dev 2e-4)",
-      "period2": {
-        "a": 0.08247,
-        "b": 0.092,
-        "confirmed": "Li(1) 0.1745 EXACT, C(4) 0.4220, N(5) 0.5044, O(6) 0.5869, F(7) 0.6693"
-      },
-      "period3": {
-        "a": 0.04193,
-        "b": 0.1378,
-        "confirmed": "Si 0.3054, P 0.3473, S 0.3892, Cl 0.4312"
-      },
-      "period1_H": 0.4726,
-      "period4_anchor_Br": 0.437,
-      "_caveat": "d-block/heavy ions (Ge test) show shell-redistribution contamination -- extraction needs population tracking there"
-    },
-    "third_order_u2_rule": {
-      "_form": "the u^2 coefficient = k3 * q_A^3 (exact for C and O across +-1, +-2)",
-      "k3": {
-        "6": 0.01988,
-        "7": 0.02714,
-        "8": 0.03445,
-        "9": 0.01643,
-        "14": 0.00544,
-        "15": 0.01206,
-        "16": 0.01717,
-        "17": 0.01239
-      },
-      "_caveat": "row-2 C..O linear (+0.0073/Z) but F breaks it -- F/heavier extractions need the per-state check; refine next"
-    },
-    "f_switching_samples": {
-      "_form": "f = 1 + k_dis*[erf(kx*(q-ks)) + erf(kx*(q+ks))] (ODD, SI Eq. 83b)",
-      "q": [
-        -2,
-        -1,
-        0,
-        1,
-        2
-      ],
-      "f": [
-        0.9764,
-        0.9831,
-        1.0,
-        1.0165,
-        1.0234
-      ]
-    },
-    "C0_by_element_neutral_equalU1": {
-      "6": 0.00909053,
-      "7": 0.00160619,
-      "8": 0.00012001,
-      "16": 2.132e-05,
-      "17": 1.42e-06
-    },
-    "third_order_shape": {
-      "_form": "E3_onsite = c1_el * q_A * sum_ll' q_l q_l' (U_l+U_l')^2/4  (the Eq.132 DEGREE-2 kernel applied onsite -- NOT the harmonic the garbled SI line suggested; explains the u^2 rule)",
-      "_evidence": "chart_onsite2.py: per-point populations + s-rule subtracted; c1 consistent across +- states (F: 0.01628/0.01627; C-1 captures 99.4% of a 0.17 Eh signal at 1e-3)",
-      "c1": {
-        "6": 0.0197,
-        "8": 0.0318,
-        "9": 0.0163,
-        "16": 0.0075
-      },
-      "_resolved": "v1's 'F k3 anomaly' dissolved -- F was right; the row-2 linear k3 trend was the artifact of the wrong (u^2-only) shape",
-      "_open": "C+1 and O+2 carry unmodeled structure (shell-resolved quartic candidate); c1's element rule not yet identified; d-block extraction needs population tracking"
-    },
-    "master_element_function": {
-      "_discovery": "the exchange self-energy coefficient c_x(el) = s(el)/9.59 EXACTLY for all 9 measured elements (H through Cl, three periods) -- ONE hardcoded per-period-linear master function g(el) underlies BOTH the 2nd-order damping (s = A*g) and the Mulliken exchange (c_x = B*g), B/A = 0.10427",
-      "exchange_energy_form": "E_x(atom) = -c_x * sum_l L5[l] * sum_{i,sigma in l} n_i^2 (self-exchange; explains the occupied-only eigenvalue response at -2*c_x and the energy simultaneously; verified O to 4 digits, homogeneous-in-L5 verified)",
-      "c_x_measured": {
-        "1": 0.04927,
-        "6": 0.04399,
-        "7": 0.05258,
-        "8": 0.06119,
-        "9": 0.06978,
-        "14": 0.03184,
-        "15": 0.03621,
-        "16": 0.04058,
-        "17": 0.04495
-      },
-      "spin_energy_form": "E_spin = -1/2 * L1[9] * sum_ll' w_ll' m_l m_l' -- closes O exactly (w_pp 0.0895 -> -0.0702 vs printed -0.070021); H gives w_ss 0.2005; N implies w_pp 0.0797 -- the w shell-pair weights carry element structure still to chart"
-    }
+  "C0_by_element_neutral_equalU1": {
+   "6": 0.00909053,
+   "7": 0.00160619,
+   "8": 0.00012001,
+   "16": 2.132e-05,
+   "17": 1.42e-06
   },
-  "slot_assignments_molecular": {
-    "_source": "FD response-shape probing on the HCl stretch at R=2/3/5 bohr (thirteenth-fourteenth pushes)",
-    "L1[6]": "kU -- Hubbard CN-dependence (SI Eq. 102)",
-    "L1[7]": "Hamiltonian-basis scale (moves charges; response persists at dissociation)",
-    "L1[8]": "k1CN -- chemical-potential CN-dependence (SI Eq. 84); H 0.775 magnitude-verified",
-    "G1[0]": "exchange global, short-range-heavy (largest Ex mover)",
-    "G1[5]": "exchange global, R-independent component (range-separation signature)",
-    "G2[1]": "offsite ES kernel global (k2x candidate; ES23 response ~constant R=3..5)",
-    "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values",
-    "_eq85_resolved": "VISUAL read of SI p.47-48 (rendered PNG): Eq.85 as PRINTED carries a subscript typo (l_B left, l_A right); intent per prose: drho_l = aufbau_l - refocc_l, static and per-shell small (near-cancelling atom sums). The fast-decaying stretch signal was the k1CN onsite term (L1[8]); the true offsite E1 is tiny. First-order term fully accounted for: mu=L7, k1CN=L1[8], f-switching globals hardcoded.",
-    "mu_cn_structure": "MEASURED (machine-precision FD via restart-density charges, HCl R=2..4): the mu CN-coupling is SQRT(CN)-structured -- direct/(mu*q) tracks sqrt(CN_mean) at ratio 1.07-1.21 across the range while every other candidate varies by factors. Same family as repulsion Eq. 56; the SI's Eq. 84 prints plain CN_A -- another paper-vs-binary divergence (pattern: Eq. 55 factor 2, Eq. 84 sqrt). OPEN: amplitude ~1.49x the file k1 value and a smooth 6% shape drift -- rc/amplitude separable by multi-partner stretches (HF/HBr), designed next.",
-    "mu_cn_multipartner": {
-      "_data": "x = dES1/dk1H/(mu_H*q_H) vs R for HF/HCl/HBr (restart-precision charges)",
-      "HF": {
-        "R": [
-          1.5,
-          1.7,
-          1.9
-        ],
-        "x": [
-          0.3662,
-          0.2164,
-          0.1103
-        ]
-      },
-      "HCl": {
-        "R": [
-          2.2,
-          2.7
-        ],
-        "x": [
-          0.4122,
-          0.1607
-        ]
-      },
-      "HBr": {
-        "R": [
-          2.5,
-          2.9,
-          3.4
-        ],
-        "x": [
-          0.6131,
-          0.3777,
-          0.1689
-        ]
-      },
-      "implied_per_pair": "solving x = k_eff*sqrt(CN(R; rc)) per pair: rc(HF)~0.99, rc(HCl)~1.465, rc(HBr)~1.82 with k_eff F~1.22, Cl~1.29, Br~1.50 (Br's constant to 0.3% over its scan)",
-      "_verdict": "sqrt(CN)-family CONFIRMED per-pair, but the effective radii match NO decoded set (element diffs 0.475/0.355 vs L1[5] 0.783/0.508, Pyykko 0.662/0.283) and k_eff is partner-dependent -- either mu-CN has its own radius table (hardcoded) or a second CN-like term overlaps. Next discriminator: dense R-scans per pair for exact (k_eff, rc) + joint solve across many partners for a per-element radius table."
-    },
-    "mu_cn_own_table": {
-      "_conclusion": "the mu-CN uses its OWN hardcoded per-element geometry (the FOURTH hardcoded table): dense scans exclude every decoded radius set (L1[5], Pyykko, CEH, EEQBC-cov, vdW, Slater) under free-(keff,rc) fits, AND per-pair steepness varies (-2.39..-1.44) under fixed-radii fits -- no shared convention reproduces all pairs",
-      "measured_pair_rc": {
-        "HF": 0.9832,
-        "HCl": 1.4708,
-        "HBr": 1.8236,
-        "HI": 2.119
-      },
-      "measured_keff": {
-        "HF": 1.2309,
-        "HCl": 1.2929,
-        "HBr": 1.4882,
-        "HI": 1.3714,
-        "_caveat": "relaxation-contaminated ~5-10%; underlying constant plausibly ~1.3-1.4x k1(file)"
-      },
-      "fit_quality": "sqrt(CN) shape explains 99%+ per pair (worst resid 9e-4 for HBr)",
-      "_closure_design": "triangulation: perturb the PARTNER's k1CN in mixed X-Y pairs -> rc(X,Y) directly; enough pairs over-determine the per-element radius table (up to the combination convention); relaxation subtraction via restart-density charges throughout"
-    },
-    "mu_cn_pair_function": {
-      "_finding": "BOTH atoms of a pair share the same C(R): Cl-side on HCl fits (keff 1.2484, rc 1.4742) vs H-side (1.2929, 1.4708) -- the mu-CN count is a PAIR property (the same bond counted from both ends), so per-element radii combine to the measured pair rc",
-      "es1_closure_hcl": "forward model with measured pair C(R) (keff 1.2707, rc 1.4725 avg) + static drho offsite + KO kernel: worst |d| 2.4e-3 at R=2 (was 1.0e-2), mid/long range 1e-4..4e-4",
-      "_remaining": "R=2 residual suspects: relaxation contamination in keff (~5%), f-linearization at |q|~0.33, offsite k2x screening"
-    },
-    "kU_shapes_hcl": "dES23/dkU on HCl: sqrt-CN-compatible (rc 1.46/1.60), magnitudes ~5% of the mu-CN signals -- the ES23 short-range residual belongs to offsite-E3/screening structure, not kU",
-    "f_smallq_regime": "long-R HCl f-extraction is corrupted by the soft-charge mode approaching the ionic jump (at R=10 the state ionizes fully, q_H = 1.00000, and f(1) = 1.0161 REPRODUCES the atomic-ion sample -- technique validated, regime unusable for small-q f)"
+  "third_order_shape": {
+   "_form": "E3_onsite = c1_el * q_A * sum_ll' q_l q_l' (U_l+U_l')^2/4  (the Eq.132 DEGREE-2 kernel applied onsite -- NOT the harmonic the garbled SI line suggested; explains the u^2 rule)",
+   "_evidence": "chart_onsite2.py: per-point populations + s-rule subtracted; c1 consistent across +- states (F: 0.01628/0.01627; C-1 captures 99.4% of a 0.17 Eh signal at 1e-3)",
+   "c1": {
+    "6": 0.0197,
+    "8": 0.0318,
+    "9": 0.0163,
+    "16": 0.0075
+   },
+   "_resolved": "v1's 'F k3 anomaly' dissolved -- F was right; the row-2 linear k3 trend was the artifact of the wrong (u^2-only) shape",
+   "_open": "C+1 and O+2 carry unmodeled structure (shell-resolved quartic candidate); c1's element rule not yet identified; d-block extraction needs population tracking"
   },
-  "si_text_findings": {
-    "_source": "ChemRoutes reference/Supplement_Information_TextCopyOnly.txt (Richard's direct copy-paste extraction, 2026-07-16) + rendered-page reads",
-    "one_internal_cn": "SI 1.4 verbatim: the Eq.47 CN serves repulsion + Hamiltonian + 1st/2nd-order TB + exchange (one parameterization -- the L1[5] radii + G2[0] steepness verified by the repulsion gate); basis/EEQBC/revD4 carry their own three",
-    "exchange_kernel_form": "SI Eq. 149: gamma_MFX = [eta + (1-eta)*erf(omega*R_AB)] / ... -- textbook range separation; matches G1[5]'s R-independent FD signature (omega/eta candidates G1[0]/G1[5])",
-    "eq55_print_vs_binary": "BOTH extractions print alpha_AB = aA*aB/(aA+aB); the binary implements 2x that (harmonic) -- measured by the repulsion gate (4.75e-9; the halved form refuted 150x by the H2 tail). Paper-vs-binary discrepancy, binary is authority.",
-    "mu_cn_slope_gap": "measured dES1/dk1CN = 2.5x direct-term model: density relaxation (SCF q-response to the perturbation) is the prime suspect; testable by FD with population readout; second suspect: CN-dependence inside the hardcoded onsite s/c1 (charted at CN=0 only)"
-  },
-  "hamiltonian_anchors": {
-    "L2_levels": "H-atom FD: deps/dL2[0] = -1.00000 Eh/unit EXACT and delec/dL2[0] = -1.00000 (one electron) -- L2 = shell LEVELS with a MINUS sign convention (H0_diag includes -L2[l]); L3/L4/L1[7] exactly inert for the lone atom (molecular couplings only)",
-    "gradient_channel": "oracle -grad validated (parsed forces = FD of its total to ~1e-6); repulsion ANALYTIC gradient implemented incl. CN chain and gated at 3.9e-11 vs internal FD -- the port's first analytic force",
-    "atom_fock_diagonal": {
-      "_probe": "O-atom FD on L2/L5/L1[9]/L7 slots, eigenvalue responses (Eh/unit)",
-      "L2_levels": "exact -1.000 diagonal per shell, both spin channels (multi-shell confirmed)",
-      "L7_mu_in_fock": "the first-order potential enters the Fock: deps/dmu_l = -1.006 for ALL orbitals of shell l (SI Eq. 87/88 confirmed live)",
-      "L5_exchange": "occupation-scaled diagonal: occupied orbitals of shell l respond at -0.122, VIRTUALS at 0.000 exactly -- V_ex(orbital) ~ L5[l] * n_orbital * 0.122-factor (factor identical for s and p; origin of 0.122 open)",
-      "L1[9]_spin": "spin-polarization potential: sign flips with channel (majority stabilized); p +-0.179, s +-0.076 with m_s = 0 -- CROSS-SHELL structure V_spin(l) = sum_l' W_ll'(L1[9]) * m_l' (shell-pair weights hardcoded; w_sp*2 = 0.076, w_pp*2 = 0.179)",
-      "_model": "eps_l,sigma(atom) = -L2[l] - mu-potential(l) + V_ex(L5, n) + V_spin(W, m) + V_ES(q) -- all structures now identified; the atom-eigenvalue GATE is buildable once the 0.122 factor and W weights are pinned (2-3 more probes)"
-    },
-    "acp_structure": {
-      "_layout": "L9 = [c_s, c_p, c_d, c_f, zeta_s, zeta_p, zeta_d, zeta_f] -- coefficient slots respond LINEARLY and shell-diagonally (O: deps_s/dc_s = +0.9236, deps_p/dc_p = +0.8773 Eh/unit; d/f slots inert with no d/f shells); exponent slots nonlinear (zeta_s response -0.4525)",
-      "_closure": "V_acp(l) = kappa_l * c_l accounts for the eigenvalue-gate misses to 99.7% (s: 0.9236*(-0.5293) = -0.4889 vs miss -0.4903) and 98.4% (p: -0.1663 vs -0.169) -- the ACP was the missing gate term",
-      "_next": "kappa_l = the projector matrix element structure (function of zeta_l and the basis) -- measurable per element by FD, or computable analytically with our overlap engine (Gaussian projector integrals); then the atom-eigenvalue gate closes"
-    },
-    "atom_gate_five_elements": {
-      "_result": "H worst 0.000 eV (EXACT); N 0.160; O 0.299; F 0.216; C 0.623 -- file values + decoded structures + analytic ACP, no fitting",
-      "spin_weights_measured": {
-        "6": {
-          "w_sp": 0.0288,
-          "w_pp": 0.0678
-        },
-        "7": {
-          "w_sp": 0.0338,
-          "w_pp": 0.0797
-        },
-        "8": {
-          "w_sp": 0.0381,
-          "w_pp": 0.0895
-        },
-        "9": {
-          "w_sp": 0.0419,
-          "w_pp": 0.0974
-        },
-        "1": {
-          "w_ss": 0.2005
-        },
-        "_note": "smooth element trend, own law to chart"
-      },
-      "_error_budget": "residuals TRACK the unmodeled C0 (4th-order onsite) potential: C (C0=0.0091) worst 0.62 eV mostly common-mode; N (0.0016) 0.16; O (0.0001) 0.30 concentrated in the beta-occ-p channel split. Next refinements: the C0(q) closed form (quartic charting, long-queued) and the beta-channel exchange fine structure."
-    },
-    "h2_fock_inversion": {
-      "_instrument": "H2's printed eigenvalue pair + our machine-exact S12 invert to the FULL 2x2 Fock at every R: F11 = ((1+S)e_bond + (1-S)e_anti)/2, F12 = ((1+S)e_bond - (1-S)e_anti)/2 -- the off-diagonal EHT rule is now directly measurable (data/h2-fock.json, R = 1..5)",
-      "first_readings": "F12/S12 drifts smoothly -0.53..-0.79 over the stretch -> not constant K*h*S: the Hamiltonian-basis scaling (L1[7]/L4) and/or a distance polynomial are in play. F11(R->5) sits 0.141 Eh above the atom anchor -- the density-dependent terms (exchange halved by delocalization, spin off in the closed shell) account for the shift structure",
-      "_next": "decompose F12 = H0_12 + X_12 by perturbing L5 and re-inverting (the exchange part is L5-linear); chart the pure H0_12(R) against K*h*S-tilde candidates built with scaled-exponent bases; locate K and the scalings among the remaining slots"
-    },
-    "h2_h0_offdiagonal": {
-      "_result": "exchange-subtracted (X12 = L5 * dF12/dL5, 32-47% of F12): H0_12/S12 = -0.400 +- 0.6% over R = 2..4 (raw F12/S12 drifted 50%) -- the Hueckel rule is K*S to first order with the measured effective prefactor -0.400 Eh for H-H",
-      "_edges": "R=1 gives -0.360, R=5 gives -0.422 -- the remaining structure is the distance polynomial / Ham-basis k-scalings (the zeta-scaled candidate S was slightly worse than the primary S)",
-      "_data": "data/h2-h0.json; next: express -0.400 as K*(h_1+h_2)/2 with the decoded diagonal levels -> locate K among the remaining globals; heteronuclear pairs discriminate the averaging rule"
-    },
-    "h0_offdiagonal_composition": {
-      "_probe": "dF11/dF12 per slot on H2 at R=2.5 (Fock-inversion FDs); K = 2.26 measured via the element-L2 response (-K*S, both centers shift)",
-      "G1[2]_refuted": "the 1.1995 numerology killed properly: dF12/dG1[2] = 0.00000 exactly",
-      "composition": {
-        "L2 level": "weight ~1 in h-bar (diagonal -1 exact)",
-        "L3 cn-level": "inert at this geometry",
-        "L4": "OFF-DIAGONAL-ONLY parameter (dF11 = 0, dF12 = +0.133) -- the shell-wise off-diagonal scaling candidate",
-        "L7 mu": "enters h-bar at ~0.45 weight (diagonal full -1.01)",
-        "L9 ACP": "diagonal response 0.999 (q_eff-adapted molecular kappa) and OFF-DIAGONAL +0.565 = the TWO-CENTER ACP cross integral <AO1|g><g|AO2> -- computable analytically with our engine",
-        "L1[7] hbasis": "PURELY off-diagonal and the strongest mover (dF12 = -1.170, dF11 = 0) -- the SI's 'decouple overlap from Hamiltonian' scaling, localized"
-      },
-      "_structure": "F12 = EHT(K~2.26, levels + mu-weights, L1[7]/L4 scalings) + ACP_12(analytic two-center) + X12(exchange, separable) -- next: compute ACP_12 analytically, subtract, decode the EHT core"
-    },
-    "eht_core_h2": {
-      "_state": "F12 decomposition COMPLETE and validated: X12 (exchange, slot-linear FD) + ACP12 (analytic two-center -- matches the FD response EXACTLY: -0.0738 vs -0.0739) + EHT12 (the naked core, extracted R = 1..5)",
-      "_tail": "EHT12 / S12(exponents x 0.6) is CONSTANT to +-1% for R >= 2.5 (plateau -0.162) -- the Hamiltonian basis is DIFFUSE-scaled; short range (R < 2.5) needs one more ingredient (polynomial or the k-scaled q_eff part)",
-      "_hypothesis_flagged": "0.6 ~ L4(H)^2/2 = 0.5985 -- HYPOTHESIS ONLY, to be FD-tested (the G1[2] numerology lesson applies)",
-      "_data": "extraction table in the session log; next: fine-scan the tail scale, FD-test the L4 link, identify the short-range ingredient, then heteronuclear"
-    }
+  "master_element_function": {
+   "_discovery": "the exchange self-energy coefficient c_x(el) = s(el)/9.59 EXACTLY for all 9 measured elements (H through Cl, three periods) -- ONE hardcoded per-period-linear master function g(el) underlies BOTH the 2nd-order damping (s = A*g) and the Mulliken exchange (c_x = B*g), B/A = 0.10427",
+   "exchange_energy_form": "E_x(atom) = -c_x * sum_l L5[l] * sum_{i,sigma in l} n_i^2 (self-exchange; explains the occupied-only eigenvalue response at -2*c_x and the energy simultaneously; verified O to 4 digits, homogeneous-in-L5 verified)",
+   "c_x_measured": {
+    "1": 0.04927,
+    "6": 0.04399,
+    "7": 0.05258,
+    "8": 0.06119,
+    "9": 0.06978,
+    "14": 0.03184,
+    "15": 0.03621,
+    "16": 0.04058,
+    "17": 0.04495
+   },
+   "spin_energy_form": "E_spin = -1/2 * L1[9] * sum_ll' w_ll' m_l m_l' -- closes O exactly (w_pp 0.0895 -> -0.0702 vs printed -0.070021); H gives w_ss 0.2005; N implies w_pp 0.0797 -- the w shell-pair weights carry element structure still to chart"
   }
+ },
+ "slot_assignments_molecular": {
+  "_source": "FD response-shape probing on the HCl stretch at R=2/3/5 bohr (thirteenth-fourteenth pushes)",
+  "L1[6]": "kU -- Hubbard CN-dependence (SI Eq. 102)",
+  "L1[7]": "Hamiltonian-basis scale (moves charges; response persists at dissociation)",
+  "L1[8]": "k1CN -- chemical-potential CN-dependence (SI Eq. 84); H 0.775 magnitude-verified",
+  "G1[0]": "exchange global, short-range-heavy (largest Ex mover)",
+  "G1[5]": "exchange global, R-independent component (range-separation signature)",
+  "G2[1]": "offsite ES kernel global (k2x candidate; ES23 response ~constant R=3..5)",
+  "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values",
+  "_eq85_resolved": "VISUAL read of SI p.47-48 (rendered PNG): Eq.85 as PRINTED carries a subscript typo (l_B left, l_A right); intent per prose: drho_l = aufbau_l - refocc_l, static and per-shell small (near-cancelling atom sums). The fast-decaying stretch signal was the k1CN onsite term (L1[8]); the true offsite E1 is tiny. First-order term fully accounted for: mu=L7, k1CN=L1[8], f-switching globals hardcoded.",
+  "mu_cn_structure": "MEASURED (machine-precision FD via restart-density charges, HCl R=2..4): the mu CN-coupling is SQRT(CN)-structured -- direct/(mu*q) tracks sqrt(CN_mean) at ratio 1.07-1.21 across the range while every other candidate varies by factors. Same family as repulsion Eq. 56; the SI's Eq. 84 prints plain CN_A -- another paper-vs-binary divergence (pattern: Eq. 55 factor 2, Eq. 84 sqrt). OPEN: amplitude ~1.49x the file k1 value and a smooth 6% shape drift -- rc/amplitude separable by multi-partner stretches (HF/HBr), designed next.",
+  "mu_cn_multipartner": {
+   "_data": "x = dES1/dk1H/(mu_H*q_H) vs R for HF/HCl/HBr (restart-precision charges)",
+   "HF": {
+    "R": [
+     1.5,
+     1.7,
+     1.9
+    ],
+    "x": [
+     0.3662,
+     0.2164,
+     0.1103
+    ]
+   },
+   "HCl": {
+    "R": [
+     2.2,
+     2.7
+    ],
+    "x": [
+     0.4122,
+     0.1607
+    ]
+   },
+   "HBr": {
+    "R": [
+     2.5,
+     2.9,
+     3.4
+    ],
+    "x": [
+     0.6131,
+     0.3777,
+     0.1689
+    ]
+   },
+   "implied_per_pair": "solving x = k_eff*sqrt(CN(R; rc)) per pair: rc(HF)~0.99, rc(HCl)~1.465, rc(HBr)~1.82 with k_eff F~1.22, Cl~1.29, Br~1.50 (Br's constant to 0.3% over its scan)",
+   "_verdict": "sqrt(CN)-family CONFIRMED per-pair, but the effective radii match NO decoded set (element diffs 0.475/0.355 vs L1[5] 0.783/0.508, Pyykko 0.662/0.283) and k_eff is partner-dependent -- either mu-CN has its own radius table (hardcoded) or a second CN-like term overlaps. Next discriminator: dense R-scans per pair for exact (k_eff, rc) + joint solve across many partners for a per-element radius table."
+  },
+  "mu_cn_own_table": {
+   "_conclusion": "the mu-CN uses its OWN hardcoded per-element geometry (the FOURTH hardcoded table): dense scans exclude every decoded radius set (L1[5], Pyykko, CEH, EEQBC-cov, vdW, Slater) under free-(keff,rc) fits, AND per-pair steepness varies (-2.39..-1.44) under fixed-radii fits -- no shared convention reproduces all pairs",
+   "measured_pair_rc": {
+    "HF": 0.9832,
+    "HCl": 1.4708,
+    "HBr": 1.8236,
+    "HI": 2.119
+   },
+   "measured_keff": {
+    "HF": 1.2309,
+    "HCl": 1.2929,
+    "HBr": 1.4882,
+    "HI": 1.3714,
+    "_caveat": "relaxation-contaminated ~5-10%; underlying constant plausibly ~1.3-1.4x k1(file)"
+   },
+   "fit_quality": "sqrt(CN) shape explains 99%+ per pair (worst resid 9e-4 for HBr)",
+   "_closure_design": "triangulation: perturb the PARTNER's k1CN in mixed X-Y pairs -> rc(X,Y) directly; enough pairs over-determine the per-element radius table (up to the combination convention); relaxation subtraction via restart-density charges throughout"
+  },
+  "mu_cn_pair_function": {
+   "_finding": "BOTH atoms of a pair share the same C(R): Cl-side on HCl fits (keff 1.2484, rc 1.4742) vs H-side (1.2929, 1.4708) -- the mu-CN count is a PAIR property (the same bond counted from both ends), so per-element radii combine to the measured pair rc",
+   "es1_closure_hcl": "forward model with measured pair C(R) (keff 1.2707, rc 1.4725 avg) + static drho offsite + KO kernel: worst |d| 2.4e-3 at R=2 (was 1.0e-2), mid/long range 1e-4..4e-4",
+   "_remaining": "R=2 residual suspects: relaxation contamination in keff (~5%), f-linearization at |q|~0.33, offsite k2x screening"
+  },
+  "kU_shapes_hcl": "dES23/dkU on HCl: sqrt-CN-compatible (rc 1.46/1.60), magnitudes ~5% of the mu-CN signals -- the ES23 short-range residual belongs to offsite-E3/screening structure, not kU",
+  "f_smallq_regime": "long-R HCl f-extraction is corrupted by the soft-charge mode approaching the ionic jump (at R=10 the state ionizes fully, q_H = 1.00000, and f(1) = 1.0161 REPRODUCES the atomic-ion sample -- technique validated, regime unusable for small-q f)"
+ },
+ "si_text_findings": {
+  "_source": "ChemRoutes reference/Supplement_Information_TextCopyOnly.txt (Richard's direct copy-paste extraction, 2026-07-16) + rendered-page reads",
+  "one_internal_cn": "SI 1.4 verbatim: the Eq.47 CN serves repulsion + Hamiltonian + 1st/2nd-order TB + exchange (one parameterization -- the L1[5] radii + G2[0] steepness verified by the repulsion gate); basis/EEQBC/revD4 carry their own three",
+  "exchange_kernel_form": "SI Eq. 149: gamma_MFX = [eta + (1-eta)*erf(omega*R_AB)] / ... -- textbook range separation; matches G1[5]'s R-independent FD signature (omega/eta candidates G1[0]/G1[5])",
+  "eq55_print_vs_binary": "BOTH extractions print alpha_AB = aA*aB/(aA+aB); the binary implements 2x that (harmonic) -- measured by the repulsion gate (4.75e-9; the halved form refuted 150x by the H2 tail). Paper-vs-binary discrepancy, binary is authority.",
+  "mu_cn_slope_gap": "measured dES1/dk1CN = 2.5x direct-term model: density relaxation (SCF q-response to the perturbation) is the prime suspect; testable by FD with population readout; second suspect: CN-dependence inside the hardcoded onsite s/c1 (charted at CN=0 only)"
+ },
+ "hamiltonian_anchors": {
+  "L2_levels": "H-atom FD: deps/dL2[0] = -1.00000 Eh/unit EXACT and delec/dL2[0] = -1.00000 (one electron) -- L2 = shell LEVELS with a MINUS sign convention (H0_diag includes -L2[l]); L3/L4/L1[7] exactly inert for the lone atom (molecular couplings only)",
+  "gradient_channel": "oracle -grad validated (parsed forces = FD of its total to ~1e-6); repulsion ANALYTIC gradient implemented incl. CN chain and gated at 3.9e-11 vs internal FD -- the port's first analytic force",
+  "atom_fock_diagonal": {
+   "_probe": "O-atom FD on L2/L5/L1[9]/L7 slots, eigenvalue responses (Eh/unit)",
+   "L2_levels": "exact -1.000 diagonal per shell, both spin channels (multi-shell confirmed)",
+   "L7_mu_in_fock": "the first-order potential enters the Fock: deps/dmu_l = -1.006 for ALL orbitals of shell l (SI Eq. 87/88 confirmed live)",
+   "L5_exchange": "occupation-scaled diagonal: occupied orbitals of shell l respond at -0.122, VIRTUALS at 0.000 exactly -- V_ex(orbital) ~ L5[l] * n_orbital * 0.122-factor (factor identical for s and p; origin of 0.122 open)",
+   "L1[9]_spin": "spin-polarization potential: sign flips with channel (majority stabilized); p +-0.179, s +-0.076 with m_s = 0 -- CROSS-SHELL structure V_spin(l) = sum_l' W_ll'(L1[9]) * m_l' (shell-pair weights hardcoded; w_sp*2 = 0.076, w_pp*2 = 0.179)",
+   "_model": "eps_l,sigma(atom) = -L2[l] - mu-potential(l) + V_ex(L5, n) + V_spin(W, m) + V_ES(q) -- all structures now identified; the atom-eigenvalue GATE is buildable once the 0.122 factor and W weights are pinned (2-3 more probes)"
+  },
+  "acp_structure": {
+   "_layout": "L9 = [c_s, c_p, c_d, c_f, zeta_s, zeta_p, zeta_d, zeta_f] -- coefficient slots respond LINEARLY and shell-diagonally (O: deps_s/dc_s = +0.9236, deps_p/dc_p = +0.8773 Eh/unit; d/f slots inert with no d/f shells); exponent slots nonlinear (zeta_s response -0.4525)",
+   "_closure": "V_acp(l) = kappa_l * c_l accounts for the eigenvalue-gate misses to 99.7% (s: 0.9236*(-0.5293) = -0.4889 vs miss -0.4903) and 98.4% (p: -0.1663 vs -0.169) -- the ACP was the missing gate term",
+   "_next": "kappa_l = the projector matrix element structure (function of zeta_l and the basis) -- measurable per element by FD, or computable analytically with our overlap engine (Gaussian projector integrals); then the atom-eigenvalue gate closes"
+  },
+  "atom_gate_five_elements": {
+   "_result": "H worst 0.000 eV (EXACT); N 0.160; O 0.299; F 0.216; C 0.623 -- file values + decoded structures + analytic ACP, no fitting",
+   "spin_weights_measured": {
+    "6": {
+     "w_sp": 0.0288,
+     "w_pp": 0.0678
+    },
+    "7": {
+     "w_sp": 0.0338,
+     "w_pp": 0.0797
+    },
+    "8": {
+     "w_sp": 0.0381,
+     "w_pp": 0.0895
+    },
+    "9": {
+     "w_sp": 0.0419,
+     "w_pp": 0.0974
+    },
+    "1": {
+     "w_ss": 0.2005
+    },
+    "_note": "smooth element trend, own law to chart"
+   },
+   "_error_budget": "residuals TRACK the unmodeled C0 (4th-order onsite) potential: C (C0=0.0091) worst 0.62 eV mostly common-mode; N (0.0016) 0.16; O (0.0001) 0.30 concentrated in the beta-occ-p channel split. Next refinements: the C0(q) closed form (quartic charting, long-queued) and the beta-channel exchange fine structure."
+  },
+  "h2_fock_inversion": {
+   "_instrument": "H2's printed eigenvalue pair + our machine-exact S12 invert to the FULL 2x2 Fock at every R: F11 = ((1+S)e_bond + (1-S)e_anti)/2, F12 = ((1+S)e_bond - (1-S)e_anti)/2 -- the off-diagonal EHT rule is now directly measurable (data/h2-fock.json, R = 1..5)",
+   "first_readings": "F12/S12 drifts smoothly -0.53..-0.79 over the stretch -> not constant K*h*S: the Hamiltonian-basis scaling (L1[7]/L4) and/or a distance polynomial are in play. F11(R->5) sits 0.141 Eh above the atom anchor -- the density-dependent terms (exchange halved by delocalization, spin off in the closed shell) account for the shift structure",
+   "_next": "decompose F12 = H0_12 + X_12 by perturbing L5 and re-inverting (the exchange part is L5-linear); chart the pure H0_12(R) against K*h*S-tilde candidates built with scaled-exponent bases; locate K and the scalings among the remaining slots"
+  },
+  "h2_h0_offdiagonal": {
+   "_result": "exchange-subtracted (X12 = L5 * dF12/dL5, 32-47% of F12): H0_12/S12 = -0.400 +- 0.6% over R = 2..4 (raw F12/S12 drifted 50%) -- the Hueckel rule is K*S to first order with the measured effective prefactor -0.400 Eh for H-H",
+   "_edges": "R=1 gives -0.360, R=5 gives -0.422 -- the remaining structure is the distance polynomial / Ham-basis k-scalings (the zeta-scaled candidate S was slightly worse than the primary S)",
+   "_data": "data/h2-h0.json; next: express -0.400 as K*(h_1+h_2)/2 with the decoded diagonal levels -> locate K among the remaining globals; heteronuclear pairs discriminate the averaging rule"
+  },
+  "h0_offdiagonal_composition": {
+   "_probe": "dF11/dF12 per slot on H2 at R=2.5 (Fock-inversion FDs); K = 2.26 measured via the element-L2 response (-K*S, both centers shift)",
+   "G1[2]_refuted": "the 1.1995 numerology killed properly: dF12/dG1[2] = 0.00000 exactly",
+   "composition": {
+    "L2 level": "weight ~1 in h-bar (diagonal -1 exact)",
+    "L3 cn-level": "inert at this geometry",
+    "L4": "OFF-DIAGONAL-ONLY parameter (dF11 = 0, dF12 = +0.133) -- the shell-wise off-diagonal scaling candidate",
+    "L7 mu": "enters h-bar at ~0.45 weight (diagonal full -1.01)",
+    "L9 ACP": "diagonal response 0.999 (q_eff-adapted molecular kappa) and OFF-DIAGONAL +0.565 = the TWO-CENTER ACP cross integral <AO1|g><g|AO2> -- computable analytically with our engine",
+    "L1[7] hbasis": "PURELY off-diagonal and the strongest mover (dF12 = -1.170, dF11 = 0) -- the SI's 'decouple overlap from Hamiltonian' scaling, localized"
+   },
+   "_structure": "F12 = EHT(K~2.26, levels + mu-weights, L1[7]/L4 scalings) + ACP_12(analytic two-center) + X12(exchange, separable) -- next: compute ACP_12 analytically, subtract, decode the EHT core"
+  },
+  "eht_core_h2": {
+   "_state": "the three probes RAN (committed instrument: prototype/eht_h2.py; data: h2-eht-probes.json). F12 = X12 (L5-linear FD, curvature 1.3e-5) + ACP12 (analytic bare two-center, tail-validated to 5e-4) + EHT12",
+   "ham_basis_exponent_scale": {
+    "law": "Hamiltonian-basis exponents = primary exponents x L4_l^2/2 (H s-shell: 1.0940^2/2 = 0.59846)",
+    "status": "CONFIRMED BY FD (pre-declared band): perturbing L4(H) +0.10 moved the fine-scanned k* 0.602 -> 0.702 vs predicted (1.1940)^2/2 = 0.713; baseline k* 0.602 within +-0.01 of L4^2/2",
+    "k_star": 0.602,
+    "plateau": -0.1641,
+    "tail_spread": 0.0179,
+    "_next": "heteronuclear + multi-shell decide whether the scale is per-AO L4_l^2/2 or a pair rule"
+   },
+   "l17_channel": {
+    "slot": "L1[7] = 0.0224 (NOT 0.8142 -- that is L1[6] = kU; a this-session prose misread, instruments were right)",
+    "response": "purely off-diagonal (dF11 = 0.00000), slope dF12/dL1[7] = -1.1703 at base (linear delta 0.02..0.05), superlinear far out (slope ~-4.5 near slot 1.0)",
+    "content": "SET-to-zero: 26-36% of the naked core, R-shape ~ the DIFFUSE S~ (chan/S12 drifts 5.6x, chan/S~ ~30%) -- an amplitude PART of the core, not the short-range ingredient: subtracting it degrades the tail plateau 1.79% -> 6.72%",
+    "verdict": "amplitude channel inside K*h-bar; k* pinned (0.608 vs 0.602) under a +10% slot move, plateau x1.040"
+   },
+   "acp_relaxation": "the c_s FD response exceeds the bare analytic matrix element at short R: +0.6% (R=2.0) -> +4.4% (R=0.9), zero on the tail -- the SCF density-relaxation channel, isolated; the decomposition subtracts the BARE element by construction",
+   "short_range_ingredient": "OPEN -- probe 3 pre-declared bar (rms 2x under runner-up AND max resid <= 2x tail noise) NOT met: CN best (rms 0.0032, a = -0.61, ~50% core suppression at CN~0.8) vs sqrt(CN) 0.0038; candidates collinear over one homonuclear stretch, and the short-range chart carries the ACP-relaxation systematic. Heteronuclear stretches de-collinearize; that is the next instrument",
+   "_supersedes": "h2-h0.json (unlabeled; its col4 retro-identified as the raw L5 slope -- matches dF12_dL5 to 15 digits)"
+  }
+ }
 }

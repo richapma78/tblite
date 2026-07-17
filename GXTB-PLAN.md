@@ -709,3 +709,31 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   pending an FD test (the G1[2] lesson).
 - Next session: fine-scan the tail scale; FD-test the L4/L1[7] links to the scale; identify the
   short-range ingredient; heteronuclear inversions; then the diatomic gate.
+
+### 2026-07-16 (thirty-fifth push) — the three probes ran: L4 IS the Hamiltonian-basis scale (FD-CONFIRMED)
+
+- **The push-34 one-off is now a committed instrument** (`prototype/eht_h2.py`, labeled data in
+  `h2-eht-probes.json`): selftest reproduces the banked R=2.5 Fock row to all digits, the
+  analytic both-center ACP matches FD on BOTH matrix elements (5e-4 on the tail), L5 curvature
+  1.3e-5. The old unlabeled `h2-h0.json` col4 retro-identified (raw L5 slope, 15-digit match).
+- **PROBE 1** (fine-scan): k* = 0.602, plateau −0.1641, tail spread 1.79% (R = 2.5–6).
+- **PROBE 2** (the FD test the G1[2] lesson demands): perturbing L4(H) by +0.10 moved k* to
+  0.702 vs the hypothesis prediction (L4+δ)²/2 = 0.713 — **inside the pre-declared band. The
+  0.6 ≈ L4²/2 numerical closeness is now a CONFIRMED law**: the Hamiltonian basis is the primary
+  basis with exponents × L4²/2. Whether the rule is per-AO or per-pair awaits heteronuclear.
+- **L1[7] arm**: k* pinned (0.608), plateau ×1.040 for +10% — an AMPLITUDE channel, not a scale.
+  SET-to-zero: its content is 26–36% of the core, shaped like the diffuse S̃ itself (subtracting
+  it DEGRADES the plateau 1.79% → 6.72%): part of K·h̄, keep it inside. Slope −1.1703 at base
+  (linear δ 0.02–0.05, F11 dead), superlinear far out. A prose misread this session (0.8142 —
+  that is L1[6]=kU) voided the arm's original k*-band before the run; the discriminator actually
+  used (k* moved vs pinned) is value-independent and the correction is recorded in the docstring.
+- **ACP relaxation channel isolated**: the c_s FD response exceeds the bare analytic element by
+  +0.6% (R=2.0) → +4.4% (R=0.9), zero on the tail — SCF density relaxation; the decomposition
+  subtracts the BARE element by construction.
+- **PROBE 3** (short-range ingredient): pre-declared bar NOT met — honest abstention. CN is the
+  best 1-parameter suppressor (rms 0.0032, ~50% suppression at CN≈0.8) but only 1.17× under
+  √CN, and one homonuclear stretch cannot de-collinearize the candidates. Next instrument:
+  heteronuclear Fock inversions (HF/HCl s-block) — they separate the candidates AND pin the
+  level-averaging rule and the L4 pair-vs-AO question in the same runs; then the diatomic gate.
+- Housekeeping: WSL home had lost ~/.basisq and ~/.eeq (oracle failed on startup) — restored
+  from /opt/gxtb-v1; the pristine parameter file verified byte-identical to the release asset.
