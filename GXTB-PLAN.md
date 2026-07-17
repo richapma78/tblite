@@ -1066,3 +1066,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   system is weakly mixing for cross-kernel purposes; alternatives (LiH⁺-type) noted.
 - He calibration stands (γ_on(He) = 0.8992, slope-exact); γ_cross(HeH) ≈ +0.06–0.08 mid-R
   (weakly determined, no inversion involved).
+
+### 2026-07-18 (fifty-second push) — the heteronuclear campaign CONFIRMS the skeleton; UKS gate machine-exact
+
+- **The UKS reconstruction gates at machine precision** (H2⁺ ΔF vs the symmetric inversion:
+  1.7e-16) — both instruments validated against each other where both apply.
+- **HeH²⁺ proper**: the population law holds with ELEMENT-RESOLVED kernels — X_HeHe =
+  −γ_on(He)·m_He to ≤0.006 at every R (through m_He > 1, and −0.00004 at dissociation);
+  X_HH = −γ_on(H)·m_H exact asymptotically INCLUDING m_H < 0; the off-diagonal
+  −½s(v_He+v_H) ≤ 0.02 everywhere. Five manifolds now confirm the exchange-Fock skeleton.
+- **New localization**: the residual short-piece lives on the SMALL-population atom (H:
+  −0.086 at R=1.2 vs He 30× smaller, same geometry) — leverage no homonuclear system could
+  give. The (m−1)-carrier candidate fits here (+0.081, the −0.08-family again) but would
+  vanish on the triplet, which has its own extra — the unified short-piece law is still the
+  one open item. restart.py + fock_recon.py now carry UKS natively.

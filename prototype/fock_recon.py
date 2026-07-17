@@ -44,16 +44,24 @@ _SYM2Z = {"h": 1, "he": 2, "c": 6, "n": 7, "o": 8, "f": 9, "si": 14, "p": 15, "s
           "br": 35, "i": 53, "pd": 46}
 
 
+def _pick_orient(Craw, S):
+    best = None
+    for tag, C in (("as-stored", Craw), ("transposed", Craw.T)):
+        err = float(np.abs(C.T @ S @ C - np.eye(S.shape[0])).max())
+        if best is None or err < best[1]:
+            best = (tag, err, C)
+    return best
+
+
 def fock_ao(atoms, charge=0, uhf=0):
-    """atoms in ANGSTROM (restart.converged_state convention). Returns dict with F, S, C,
-    eps (Eh), occ, ao labels [(atom_index, z, l, m)], and the gate numbers."""
-    assert uhf == 0, "closed-shell only (the restart record layout for UKS is unprobed)"
+    """atoms in ANGSTROM (restart.converged_state convention). Closed shell: returns dict
+    with F, S, C, eps (Eh), occ, ao labels, gate numbers. UKS (uhf > 0): returns the same
+    plus F_a/F_b/C_a/C_b/eps_a/eps_b (per-spin full reconstructions, no symmetry assumption;
+    layout decoded fifty-first push), with F = F_a for backward compatibility."""
     st = restart.converged_state(atoms, charge=charge, uhf=uhf)
     n = st["nsao"]
     eps = np.array(st["eps_ev"]) / K.EV
     occ = np.array(st["occ"])
-    assert len(eps) == n, f"printed eps has {len(eps)} entries, nsao {n} -- virtuals missing?"
-    assert len(occ) == n
     zs = [_SYM2Z[s.lower()] for s, _x, _y, _z in atoms]
     xyz = np.array([[x, y, z] for _s, x, y, z in atoms]) * K.BOHR
     shells, _ = overlap.build_shells(zs, xyz, charge=charge)
@@ -63,16 +71,34 @@ def fock_ao(atoms, charge=0, uhf=0):
     for sh in shells:
         for m in range(2 * sh["l"] + 1):
             labels.append((sh["at"], zs[sh["at"]], sh["l"], m))
-    best = None
-    for tag, C in (("as-stored", st["C"]), ("transposed", st["C"].T)):
-        err = float(np.abs(C.T @ S @ C - np.eye(n)).max())
-        if best is None or err < best[1]:
-            best = (tag, err, C)
-    tag, ortho_err, C = best
-    dens_err = float(np.abs(C @ np.diag(occ) @ C.T - st["P"]).max())
-    F = S @ C @ np.diag(eps) @ C.T @ S
-    return {"F": F, "S": S, "C": C, "eps": eps, "occ": occ, "labels": labels,
-            "orientation": tag, "ortho_err": ortho_err, "dens_err": dens_err, "state": st}
+    if uhf == 0:
+        assert len(eps) == n, f"printed eps has {len(eps)} entries, nsao {n}"
+        assert len(occ) == n
+        tag, ortho_err, C = _pick_orient(st["C"], S)
+        dens_err = float(np.abs(C @ np.diag(occ) @ C.T - st["P"]).max())
+        F = S @ C @ np.diag(eps) @ C.T @ S
+        return {"F": F, "S": S, "C": C, "eps": eps, "occ": occ, "labels": labels,
+                "orientation": tag, "ortho_err": ortho_err, "dens_err": dens_err,
+                "state": st}
+    # ---- UKS
+    assert len(eps) == 2 * n, f"UKS eps has {len(eps)} entries, expected {2 * n}"
+    assert "C_a" in st, "UKS restart records not found"
+    out = {"S": S, "labels": labels, "state": st, "occ": occ}
+    for sp, sl in (("a", slice(0, n)), ("b", slice(n, 2 * n))):
+        tag, ortho_err, C = _pick_orient(st[f"C_{sp}"], S)
+        e = eps[sl]
+        F = S @ C @ np.diag(e) @ C.T @ S
+        o = occ[sl]
+        dens_err = float(np.abs(C @ np.diag(o) @ C.T - st[f"P_{sp}"]).max())
+        out[f"F_{sp}"] = F
+        out[f"C_{sp}"] = C
+        out[f"eps_{sp}"] = e
+        out[f"ortho_err_{sp}"] = ortho_err
+        out[f"dens_err_{sp}"] = dens_err
+    out["F"] = out["F_a"]
+    out["ortho_err"] = max(out["ortho_err_a"], out["ortho_err_b"])
+    out["dens_err"] = max(out["dens_err_a"], out["dens_err_b"])
+    return out
 
 
 def _gate():

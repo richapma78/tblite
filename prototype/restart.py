@@ -95,6 +95,14 @@ def converged_state(atoms, charge=0, uhf=0):
             state["P"] = unpack_symmetric(vals, nsao)
         elif len(vals) == nsao * nsao and "C" not in state:
             state["C"] = vals.reshape(nsao, nsao)
+        elif len(vals) == 2 * ntri and "P_a" not in state:
+            # UKS: the two packed spin densities back-to-back (decoded fifty-first push;
+            # the empty beta channel of a 1-electron system shows as literal zeros)
+            state["P_a"] = unpack_symmetric(vals[:ntri], nsao)
+            state["P_b"] = unpack_symmetric(vals[ntri:], nsao)
+        elif len(vals) == 2 * nsao * nsao and "C_a" not in state:
+            state["C_a"] = vals[:nsao * nsao].reshape(nsao, nsao)
+            state["C_b"] = vals[nsao * nsao:].reshape(nsao, nsao)
     return state
 
 
