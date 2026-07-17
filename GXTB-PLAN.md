@@ -1663,3 +1663,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Reusable capability confirmed: `nm` exposes named parcom globals, gdb reads them live.
 - Remaining: implement the CN-scaled favg kernel + OFX (Eq 155), call the 4-index energy,
   4-point gate vs printed Ex; then the symmetric Fock (Eq 153) for the SCF.
+
+### 2026-07-17 (ninety-second push) — MFX energy pathway VALIDATED via extraction; generation ~90%
+
+- **The decisive test**: `setgab_lrao_`'s 4th argument is the AO γ matrix (H2:
+  [[0.3601,0.0446],[0.0446,0.3601]]), and **printed Ex(H2) = 2·ex_energy(P,S,p4) exactly**
+  (−0.20235). H2 has OFX=0 (no onsite different-l), so this is pure MFX — the 4-index
+  energy form is confirmed with the real γ. Extraction-based MFX reproduces H2 exactly.
+- **Generation ~90%**: identified ipse=s_rule (H 0.4726) and DAT_03bfb298=Γ_A (H 0.8142);
+  U^MFX = gam2·(q·Γ+1)·s_rule. Onsite γ = α/U^MFX predicts 0.3155 vs the actual 0.3601 —
+  a 14% residual (one onsite detail). The offsite AO γ (0.0446) doesn't fit a naive
+  Eq-149 offsite (~0.32), so the AO γ is a shell→AO transform of the shell γ (p1=0.4466 =
+  the shell-level offsite).
+- Remaining: close the onsite residual + the shell→AO transform, generate p4, gate all
+  systems, add OFX (Eq 155). The biggest gap is most of the way cracked.
