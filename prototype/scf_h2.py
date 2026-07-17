@@ -115,10 +115,31 @@ def fock_x(P, S, gam):
     C2, a_, b_ = -0.4438, -0.3666, +0.6480
     C_BR = -0.0985
     if not V3:
+        # v4 (fifty-seventh push): skeleton + the validated (PS-I) branch + the EMPIRICAL
+        # SINGLET short-piece laws (fit to the measured 13-point remainder curves at
+        # rms 8e-4/1e-3; closed-shell channel only, H2-calibrated, labeled WORKING):
+        #   diag  += -0.0660*pm*s + 0.3038*pm*s^2      (pm = P^s_AA - m_A = -P12*s)
+        #   offd  += C_BR*gf*(D-I)_12 + 0.1122*s^2 - 0.0712*s^4
         Ps = P / 2.0
+        n = P.shape[0]
         m = np.diag(Ps @ S)
         v = np.diag(gam) * m
-        return -0.5 * S * (v[:, None] + v[None, :])
+        F = -0.5 * S * (v[:, None] + v[None, :])
+        pm = np.diag(Ps) - m
+        for A in range(n):
+            B = 1 - A if n == 2 else A
+            s = S[A, B]
+            F[A, A] += -0.0660 * pm[A] * s + 0.3038 * pm[A] * s * s
+        D = 0.5 * (Ps @ S + S @ Ps)
+        br = C_BR * gam * (D - np.eye(n))
+        np.fill_diagonal(br, 0.0)
+        F = F + br
+        for A in range(n):
+            for B in range(n):
+                if A != B:
+                    s = S[A, B]
+                    F[A, B] += 0.1122 * s * s - 0.0712 * s ** 4
+        return F
     Ps = P / 2.0
     n = P.shape[0]
     m = np.diag(Ps @ S)

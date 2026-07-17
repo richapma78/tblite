@@ -1139,3 +1139,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   short-ranged, with six datasets bearing on it. Next: the singlet-vs-H2⁺ matched-s scan
   (the cleanest discriminator: vary s at fixed structures) or β-occupied probe systems
   (H2⁻? He2⁺-triplet?) to pin the opposite-spin dependence directly.
+
+### 2026-07-18 (fifty-seventh push) — **THE FULL H2 SCF ASSEMBLY GATE PASSES**
+
+- The singlet's own short pieces (the measured 13-point remainder curves) fit clean
+  2-parameter forms (diag rms 8e-4: −0.0660·pm·s + 0.3038·pm·s²; off-diag rms 1e-3:
+  +0.1122·s² − 0.0712·s⁴ after branch subtraction) — EMPIRICAL WORKING LAWS, labeled.
+- **The v4 assembly** (skeleton + validated branch + singlet laws) **PASSES the full gate**:
+  self-consistent eigenvalues at R = 1.4/2.5/4.0 within (+0.0053, −0.0057) /
+  (−0.0010, +0.0001) / (+0.0009, −0.0037) Eh — equilibrium included — with Ex exact to five
+  decimals and ES1 exact everywhere. The first complete self-consistent reproduction of the
+  binary's Hamiltonian from decoded parts.
+- Honest caveats carried in the bank: the two empirical exchange pieces await their physical
+  closed form (the opposite-spin question); transferability is untested until F2/HF.
+- Next: the F2 SCF (p-shells; the exchange remainder = "the object" folds in), HF's polar
+  ES, the total-energy bookkeeping gate, gradients, the port.
