@@ -511,6 +511,12 @@
         "L1[7] hbasis": "PURELY off-diagonal and the strongest mover (dF12 = -1.170, dF11 = 0) -- the SI's 'decouple overlap from Hamiltonian' scaling, localized"
       },
       "_structure": "F12 = EHT(K~2.26, levels + mu-weights, L1[7]/L4 scalings) + ACP_12(analytic two-center) + X12(exchange, separable) -- next: compute ACP_12 analytically, subtract, decode the EHT core"
+    },
+    "eht_core_h2": {
+      "_state": "F12 decomposition COMPLETE and validated: X12 (exchange, slot-linear FD) + ACP12 (analytic two-center -- matches the FD response EXACTLY: -0.0738 vs -0.0739) + EHT12 (the naked core, extracted R = 1..5)",
+      "_tail": "EHT12 / S12(exponents x 0.6) is CONSTANT to +-1% for R >= 2.5 (plateau -0.162) -- the Hamiltonian basis is DIFFUSE-scaled; short range (R < 2.5) needs one more ingredient (polynomial or the k-scaled q_eff part)",
+      "_hypothesis_flagged": "0.6 ~ L4(H)^2/2 = 0.5985 -- HYPOTHESIS ONLY, to be FD-tested (the G1[2] numerology lesson applies)",
+      "_data": "extraction table in the session log; next: fine-scan the tail scale, FD-test the L4 link, identify the short-range ingredient, then heteronuclear"
     }
   }
 }

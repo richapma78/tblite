@@ -696,3 +696,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Structure: F12 = EHT-core (K, levels/µ, L1[7]/L4) + ACP_12 (analytic) + X12 (exchange,
   separable). Next session: compute ACP_12 analytically → subtract → decode the EHT core's
   exact form → the diatomic gate.
+
+### 2026-07-16 (thirty-fourth push) — the EHT core extracted; the Hamiltonian basis is DIFFUSE
+
+- **The F12 decomposition is complete and self-validating**: exchange (slot-linear FD) +
+  two-center ACP (analytic — matches its FD response EXACTLY, −0.0738 vs −0.0739) + the naked
+  EHT core, extracted across R = 1..5.
+- **The tail identifies the Hamiltonian basis**: EHT12/S̃12 with exponents × 0.6 is constant to
+  ±1% for R ≥ 2.5 (plateau −0.162) — the Ham basis is a DIFFUSE rescaling of the primary basis
+  (consistent with the SI's "scaled exponents… decouple overlap from Hamiltonian"). Short range
+  needs one more ingredient. The 0.6 ≈ L4²/2 numerical closeness is FLAGGED AS HYPOTHESIS ONLY
+  pending an FD test (the G1[2] lesson).
+- Next session: fine-scan the tail scale; FD-test the L4/L1[7] links to the scale; identify the
+  short-range ingredient; heteronuclear inversions; then the diatomic gate.
