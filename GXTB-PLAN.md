@@ -1545,3 +1545,21 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   repulsion heteronuclear ~4 mEh → AES (undecoded) ~7 mEh → dispersion (unported).
 - Substitution-grade bars pre-declared: per-term ≤ 1 mEh, then reaction-ΔE ≤ 1–2
   kcal/mol on a declared set. The campaign attacks in ledger order, Ex first.
+
+### 2026-07-17 (eighty-fifth push) — the binary decompilation: architecture map; 3 of 6 gaps re-sourced to open-source libraries
+
+- Richard supplied a 551 MB Ghidra decompilation of the g-xTB executable
+  (`reference/gxtb-psedocode/gxtb.c`), ifort, **symbols intact** (12,145 `_mp_`).
+  Processed structurally (floats are `DAT_` refs, bodies are SIMD soup — anchor on
+  symbol names, not constants).
+- **The map**: g-xTB total = the custom core we hand-decode (H0/ES1/ES2/ES3/MFX, inline
+  in MAIN__, no module symbols) **+ three stock open-source libraries** statically
+  linked: `xtb_aespot` (GFN2 AES multipole electrostatics = ledger gap #5), `dftd4`
+  (full charge+CN D4 dispersion = gap #6), `multicharge` EEQ2019 (the charge model,
+  feeds D4 + our basis adaptation). tblite integrals confirmed.
+- **Consequence**: the AES and dispersion gaps are now **library ports**, not decode
+  work — read the real Fortran, don't reverse the SIMD. The genuine custom-core decode
+  targets stay: Ex general γ-matrix, ES1 polar/µ-CN, the ES2+3 Γ-blind residual,
+  repulsion. For those the decompilation is a **differential check** (is our formula
+  the binary's, stock or modified?), not primary source.
+- Assets saved: memory `gxtb-decompilation-asset` (how to search it) + this map.
