@@ -1046,3 +1046,8 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   pieces cancel near R=2.3, so the SCF needs both or neither).
 - Next discriminator: HeH⁺ — heteronuclear, one electron: two elements' kernels in one
   clean spin-subtracted system; strong test of every γ-weighting question at once.
+
+- Addendum (same push): **HeH²⁺ is viable and He is calibrated** — Ex(He) = −0.8992 =
+  −γ_on(He) with dEx/dL5 = −0.19224 = −2c_x(He) EXACTLY (self-consistent): c_x(He) =
+  0.09612, s(He) = 0.9218 — a NEW element datum giving the s-rule its period-1 line
+  (a = 0.4492, b = 0.0234). The heteronuclear spin-subtraction campaign opens next session.
