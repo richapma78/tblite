@@ -502,3 +502,18 @@ the print can lie in different ways.
   (slightly different counting radii suspected). Separation experiment designed: stretch H
   against DIFFERENT partners (HF, HBr) — different rc, same H constants — isolating rc from
   amplitude cleanly.
+
+### 2026-07-16 (twentieth push) — the DIVERGENCE REGISTRY with mathematical verdicts
+
+- **`PAPER-VS-BINARY-DIVERGENCES.md`** (per Richard): every confirmed paper-vs-binary split,
+  with evidence, a mathematical analysis of which side is "correct" in what sense, and the
+  implementation verdict. D1 (Eq. 55 factor 2): both means are valid parameterization choices,
+  neither derivable at kexp=1.5 — binary correct-by-construction, paper likely dropped the 2.
+  D2 (onsite 3rd-order): NEITHER side satisfies strict DFTB3 derivative-consistency (which
+  would give a U-INDEPENDENT equal-U onsite); the binary's degree-2 form equals the offsite τ
+  structure with the distance factor regularized — our port may offer a labelled
+  theory-consistent option. D3 (Eq. 84): family consistency (√CN in Eqs. 56 and 28) favors the
+  binary's √CN — a dropped radical sign; amplitude ~1.49× still open.
+- Multi-partner round, first attempt: HF's CN window closes below R≈1.9 (F's small radius) —
+  probe distances corrected; Br BLOCKED on its reference occupations (SI table ends at Ar) —
+  the FD refocc measurement for Z>18 goes first. Both queued.
