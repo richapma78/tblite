@@ -1019,3 +1019,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The symbolic-enumeration session now has everything it needs: three clean curve families,
   the identified onsite form, the lawful long branch, and the crossing structure. Then the
   full H2 gate → F2/HF → energies → the port.
+
+### 2026-07-18 (forty-ninth push) — two exact laws: the triplet Fock is PURE Mulliken-potential; the (P−m) object
+
+- **rem(triplet) = ρ(R)·S EXACTLY** (rem12 = rem11·s to 3–4 digits everywhere): the triplet's
+  entire exchange Fock is the Mulliken-potential form with ONE extra per-atom potential
+  w = ρ/2. And w tracks **(P_AA − m_A)** — the onsite density-matrix element minus the
+  Mulliken population — at c ≈ −0.080; H2⁺'s short-range OFF-diagonal piece fits the SAME c
+  (−0.0802 vs −0.0815). H2⁺'s diagonal short piece still resists (sign conflict) — recorded.
+- The hybrid hypothesis (onsite population-gradient + variational γ_off-gradient) REFUTED
+  cleanly: parallel-matrix ratio ≈ −1.33 on the triplet (wrong sign), wrong shape on H2⁺.
+- The Fock's emerging complete form: −½S∘(v+v), v_A = γ_on·m_A + w_A(P, S) with w built
+  from (P_AA − m_A) and P12-carried pieces (coefficients ≈ −0.08 and −2c_x — neither
+  identified against known constants yet). One unification step left.
