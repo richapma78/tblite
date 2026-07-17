@@ -632,3 +632,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   measurable per element by FD, or computable analytically with our gated integral engine
   (Gaussian projector overlaps — same machinery as Term 4). Next session: κ in place → the
   atom-eigenvalue gate PASSES → extend across elements → diatomics.
+
+### 2026-07-16 (twenty-ninth push) — THE ATOM-EIGENVALUE GATE PASSES; the ACP is pure integrals
+
+- **κ computed analytically = the measured responses to FOUR DIGITS** (O s 0.9236 = 0.9236,
+  p 0.8773 = 0.8773; H 0.9105 → V_acp = −0.1190 = the measured miss EXACTLY): the ACP diagonal
+  is V_acp(l) = c_l·|⟨AO_l|g(ζ_l)⟩|² — file values + our gated integral engine, NO fitting.
+- **THE GATE**: hydrogen — both eigenvalues at 0.000 eV (EXACT: level + µ-potential + exchange
+  + spin + ACP all correct simultaneously); oxygen — six of eight orbitals within 0.03–0.07 eV,
+  worst 0.30 eV (the β-occupied p; residuals at the size of the FD-measured W-weights and the
+  f-slope approximations — refinement targets named).
+- The Fock diagonal of the method is DECODED AND GATED at the atom level. Road: refine the O
+  residuals (exact W-weights, f-slope) → sweep the gate across elements → diatomics
+  (off-diagonal EHT × diatomic frame × our machine-exact overlap).
