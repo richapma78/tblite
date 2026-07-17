@@ -1275,3 +1275,14 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   value, no perturbation anywhere. New suspect for the ES1 miss: the Eq-86 offsite Δρ⁰
   term, negligible at EEQ-scale charges (the old "tiny" ruling) but miss-sized at
   Mulliken scale. Plus: SI Sec 1.9's exact q_lA definition, L8[4] as k̃0, the offsite γ2.
+
+### 2026-07-18 (sixty-seventh push) — the polar ES1 miss DIAGNOSED: the omitted µ-CN factor
+
+- SI Eq. 84 (read) puts the µ-CN dressing inside E1 — the exact half-decoded 4th-table
+  coupling measured on HF/HCl/HBr in the early campaign (rc(HF) = 0.99, banked x-curves).
+  The energy assembly omitted it; the banked x-values bracket the +0.031 miss (H ≈ −0.015,
+  F ≈ −0.027). The CHARGES are vindicated as Mulliken-shell (F2's 1e-5 agreement stands);
+  the "charge-partition mystery" dissolves into known bookkeeping.
+- The HF energy re-gate now needs: the µ-CN wiring (banked x-curves or the finished
+  4th-table decode), the offsite γ2, the k̃0 term — bounded items, no mysteries. Then
+  gradients per T1 and the Fortran port.
