@@ -15,22 +15,43 @@ Named so far (slot -> role; evidence = which oracle observable moved when ONLY t
                   AND repulsion-via-alpha(CN) together)
   L1[6] ku_cn    Hubbard CN-dependence U = U0*(1+ku*CN) (SI Eq. 102; shape-identified on the
                   HCl stretch: small ES23+ES1 response, erf-fast decay, dead by R=5)
-  L1[7] hbasis   Hamiltonian-basis scale (persists at dissociation BY MOVING THE CHARGES --
-                  the one L1 slot whose response never dies with R; Ex-heavy at short range)
+  L1[7] k_shp    the SHELL-POLYNOMIAL element amplitude (SI Eq. 67: pi_l = 1 + k_shp*k_shp,l*
+                  R/Rcov): its off-diagonal Fock response over the level response is LINEAR
+                  IN R on BOTH H2 and F2 (atlas, 37th push) -- the polynomial-derivative
+                  signature. Supersedes the earlier 'hbasis' reading; 'moves charges,
+                  persists at dissociation' was this term's through-density ES footprint.
   L1[8] k1_cn    chemical-potential CN-dependence mu = mu0*(1+k1cn*CN) (SI Eq. 84;
                   ES1-dominant, erf-fast decay, H/Cl signs opposite matching mu signs;
                   file value H 0.775 reproduces the measured stretch signal magnitude)
+  L8[0] k_diat_sg the diatomic-frame SIGMA scaling (SI Eq. 31): moves ss/spz/pzpz, pi only
+                  through density feedback; H's slot is its sigma value (response confirmed)
+  L8[1] k_diat_pi the diatomic-frame PI scaling: moves pxpx ONLY (exact zeros elsewhere);
+                  H's stored value is 0.0 -- hydrogen cannot pi-bond
+  L8[2] k_diat_dl the diatomic-frame DELTA scaling (exact zeros on F2/H2 -- no d AOs; by
+                  count and Eq. 31; direct confirmation needs a d element)
   L8[5] increment atomic core increment (moved the printed increments by exactly N_A*delta;
                   H's stored value is 0.0, matching Term 1's measurement)
   L8[6] kq2_rep   quadratic charge-dependence of Zeff (rep-only, q^2-scaled: big in NH4+)
+  L8[7] (unnamed) short-range all-element Fock response, CN-family decay (dead by R=3.8)
   L9[*] ACP block (all slots move electronic/eps/gap only -- s,p,d,f projector pairs)
 GLOBALS:
+  G1[0] k_W_s     WOLFSBERG s prefactor: rho-constant on ss/spz, dead on p-p elements
+                  (supersedes the energy-side 'exchange short-range-heavy' reading -- that
+                  was this term's through-density Ex footprint)
+  G1[1] k_W_p     WOLFSBERG p prefactor: rho-constant and equal on p-sigma AND p-pi,
+                  dead on ss and on H2 entirely (H has no p)
   G1[3] kpen1     penetration 1/R coefficient, elements WITH a core
+  G1[6], G1[7]    amplitude knobs of the pzpz PENETRATION OBJECT (sigma-only; outside Eq. 64;
+                  see hamiltonian_anchors.pzpz_object) -- entry mode still open
   G1[8] kpen1_hhe penetration 1/R coefficient for H/He
   G2[0] kcn_glob  Eq.47 CN steepness (NEGATIVE -- the SI's Eq. 47 prints without the minus)
   G2[2] kpen2 ; G2[3] kpen3 ; G2[4] kpen4   (1/R^2..4 penetration terms)
+  G2[8] a_pen     the penetration object's erf RANGE (fitted a = 0.23 = the slot's 0.2347;
+                  FD-shape corroborated at two distances)
   G1[9], G2[9]    dispersion globals (not yet named individually)
   G2[6], G2[7]    multipole electrostatics globals
+NOTE: the SI's k_shp,l angular-momentum globals are NOT located in the file (no global shows
+the required rho ~ R growth on ss) -- possibly hardcoded, like the four hidden tables.
 Unnamed slots stay accessible by row/index; naming continues as terms get implemented.
 """
 import os

@@ -796,3 +796,31 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   S̃-shaped responses); locate Eq 67's k^shp element slot; fit the two-part object form; the
   H2-absence constraint on its amplitude (p-specific? drho-carried?); then HF's polar ES and
   the diatomic gate.
+
+### 2026-07-17 (thirty-eighth push) — the object has a CLOSED FORM; the EHT globals are NAMED
+
+- **atlas_globals.py** (all 20 globals + the L8 quartet at short R — the R=6 null sweep was
+  blind to overlap-shaped responses): **G1[0] = k^W_s and G1[1] = k^W_p** (Wolfsberg
+  prefactors: rho-constant, exact selectivity — G1[1] dead on ss and on ALL of H2; equal on
+  σ and π as Eq. 64 demands). **L8[0]/L8[1]/L8[2] = k^diat σ/π/δ** (Eq. 31): the π slot moves
+  pxpx ONLY with exact zeros elsewhere, and hydrogen's π slot is stored as 0.0 — H cannot
+  π-bond. **L1[7] = k^shp** (the shell-polynomial element amplitude): its rho is LINEAR in R
+  on both molecules — the Π = 1 + k·R derivative signature; 'hbasis' retired. The k^shp,l
+  angular-momentum globals are NOT in the file (no global shows rho ∝ R on ss) — a fifth
+  hidden-table candidate. Old energy-side labels for G1[0]/L1[7] were these terms'
+  through-density footprints; superseded.
+- **The pzpz object has a measured closed form** (prototype/object_fit.py, reproducible):
+  obj(R) = 0.42·erf(0.23·R)/R − 0.048·S̃(0.635), rms 4.2e-4 Eh on the positive branch and
+  4.9e-4 on |obj| over all 13 points — both under the pre-declared 2e-3 bar. The R≥7 sign
+  flip is an ATTRIBUTION artifact (the crossing-capable fit chose no crossing; my earlier
+  'real crossing' call is corrected). **a = 0.23 = G2[8] (0.2347)**, corroborated by FD shape
+  at two distances — G2[8] is the penetration range global. **c = 0.42 ≈ 3·|Δρ⁰_p(F)| = 0.432**
+  (3%): FLAGGED numerology that survives its first falsification — REFOCC(H) = 1.0 exactly,
+  so Δρ⁰(H) = 0 predicts the object's measured H2-absence. Interpretation (flagged): the
+  reference-density PENETRATION correction the SI admits is 'not fully captured' — σ-selective
+  because pσ points along the axis, outside Eq. 64, with G1[6]/G1[7] as amplitude knobs
+  (entry mode open — G1[7]'s R-flat response is not explained by the c-pathway).
+- Next: chart c across elements (the 3·Δρ⁰ test needs a second p element — CO/N2 partial
+  inversions or HF's s-p σ), close G1[6]/G1[7]'s entry mode by SET-scans, the H0 forward
+  model (all pieces now named: K^W·H̄·Π·S̃sc + object), then HF's polar ES and the diatomic
+  gate.

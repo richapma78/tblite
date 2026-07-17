@@ -572,7 +572,29 @@
    "sigma_selectivity": "G1[6]/G1[7]/G2[8] move pzpz ONLY at R=6 (spz/ss/pxpx dead to 3e-4); pi dead to 2e-4 even at r_e",
    "shape_hypothesis_FLAGGED": "the zero crossing + 1/R asymptote fit a TWO-PART form: A*(overlap-shaped, +) - 0.41*gamma(R); no single overlap or kernel crosses zero. HYPOTHESIS -- needs the closed-form fit. The numerology 0.41 ~ 6*c_x(F)=0.419 is FLAGGED UNBELIEVED (G1[2] rule)",
    "si_reading": "SI Sec 1.7: H0 = (K_W avg)*(H avg)*Pi_shellpoly*S-tilde(diat-frame sigma/pi/delta-scaled, Eq 31-32) -- ALL H-multiplied, so Euler kills every Eq-64 form: the object is OUTSIDE Eq 64. Sec 1.8: g-xTB ACP is NON-LOCAL ONLY (no ECP Coulomb) -- our projector decode is the COMPLETE ACP; the local-potential hypothesis is EXECUTED",
-   "candidate_slots_next": "L8[0..3] = (2.11, 2.40, 1.07, 0.15) as k^diat sigma/pi/delta candidates -- probe at SHORT R (nullsweep only covered R=6 where S-shaped responses die); Eq 67 shell-polynomial k^shp element slot unlocated"
+   "candidate_slots_next": "L8[0..3] = (2.11, 2.40, 1.07, 0.15) as k^diat sigma/pi/delta candidates -- probe at SHORT R (nullsweep only covered R=6 where S-shaped responses die); Eq 67 shell-polynomial k^shp element slot unlocated",
+   "closed_form_MEASURED": {
+    "form": "obj(R) = c*erf(a*R)/R - A*S~(0.635)",
+    "c": 0.42,
+    "a": 0.23,
+    "A": 0.048,
+    "evidence": "rms 4.2e-4 Eh on the positive branch (R=2..6, 10 pts; crossing-capable fit chose NO crossing) and 4.9e-4 on |obj| over all 13 pts -- both under the pre-declared 2e-3 bar (prototype/object_fit.py, reproducible)",
+    "sign_flip_resolved": "the R>=7 sign change is an ATTRIBUTION artifact of the near-degenerate sigma pair (the R<=6 branch admits no crossing at 4e-4; magnitudes smooth to R=10)",
+    "a_identified": "a = G2[8] = 0.2347: the G2[8] FD response equals c*(2/sqrt(pi))*exp(-a^2 R^2) within 9% at R=6 and 20% at R=2.67 -- shape-corroborated, so G2[8] = the penetration range global",
+    "c_candidate_FLAGGED": "c ~ 3*|drho_p(F)| = 3*0.144 = 0.432 (3% off). FLAGGED numerology, but it SURVIVES its first falsification: REFOCC(H) = 1.0 exactly -> drho(H) = 0 -> predicts the object's measured H2-absence. Next test: another p element (Cl blocked by eps window; O/N via their homodiatomics are open-shell; consider CO/N2 partial inversions or HF)",
+    "interpretation_FLAGGED": "a reference-density PENETRATION correction outside Eq 64 (the SI admits: 'part of the penetration effects ... is not fully captured') -- sigma-selective (p_sigma points along the axis), drho0-carried, erf-Coulomb ranged"
+   }
+  },
+  "eht_globals_named": {
+   "_instrument": "atlas_globals.py: all 20 globals + the L8 quartet at short R (the R=6 nullsweep was blind to S-shaped responses); data/atlas-globals.json",
+   "G1[0]": "k_W_s (Wolfsberg s): rho-constant 0.49-0.53 on ss, 0.30-0.32 on spz, DEAD on pzpz/pxpx; supersedes the energy-side exchange reading",
+   "G1[1]": "k_W_p (Wolfsberg p): rho-constant 0.61 on p-sigma AND p-pi equally, 0.29 on spz, DEAD on ss and on H2",
+   "L8[0]": "k_diat_sigma (Eq 31): ss/spz/pzpz, pi only via density feedback (-0.009 at r_e); H2 responds (H sigma)",
+   "L8[1]": "k_diat_pi: pxpx ONLY, EXACT zeros elsewhere; H's slot value is 0.0 (cannot pi-bond)",
+   "L8[2]": "k_diat_delta: exact zeros (no d AOs here)",
+   "L1[7]": "k_shp element amplitude: rho LINEAR in R on both molecules (slope 1.28-1.32 on F2 pzpz, ~0.5 on H2) -- supersedes 'hbasis'",
+   "k_shp_l_globals": "NOT located: no global shows the rho~R signature on ss -- possibly hardcoded (fifth hidden table candidate)",
+   "unnamed": "G1[4] (H2-ss-heavy 0.31, F2 short-range), L8[3] (weak short-range), L8[7] (strong short-range all-element, CN-family decay)"
   }
  }
 }
