@@ -1441,3 +1441,19 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: charge-state scans at fixed geometry (OH· vs OH−; H2O+ vs H2O) to decode the
   true q-structure of the offsite ES3; re-fit the grand laws on ES3-clean remainders;
   gate again.
+
+### 2026-07-17 (seventy-eighth push) — the charge-state scan: pairwise-qat refuted; the total-charge lead and the U(q) fold
+
+- Four charge states of the O-H pair at fixed geometry, Euler-FD'd per element. **All
+  three pairwise atomic-charge models refuted** (implied-τ spreads 333–862%) — the
+  offsite ES3 is not qat-weighted in any arrangement.
+- The wreckage exposed the structure: the **O-side vanishes on both neutrals** and is
+  alive only on net-charged states — total-MOLECULAR-charge weighting, under which τ_O
+  becomes consistent across OH−/H2O+ (+1.69/+1.08). The **H-side carries a
+  Q-independent extra** (~−0.003 on every neutral) — the signature of Γ inside the
+  second-order kernel (the GFN-style U(q) fold, third order living partly inside ES2).
+- Both leads are falsifiable next round: Q-weighting predicts exact zero O-side on any
+  neutral; the U(q) fold predicts the H-side extra from known ES2 kernels via dES2/dU.
+- Instrument limit logged: H2O²⁺ is not fully invertible (window 5 < 6) — read oracle
+  populations instead. The installed v1 τ table stays gate-valid (measured at the gate
+  states) but must NOT be transferred to new charge states.
