@@ -688,6 +688,12 @@
    "assembly": "S (gated chain) + H0 forward (file amplitudes k^W*k^diat, level -L2, Pi(b=0.0315), metric S~(k=1.110, kb=0.179)) + the mu-law (-mu*C_mu(R)*S, measured) + analytic ACP + exchange v4: the five-manifold skeleton (-gamma_on*m potentials) + the validated (PS-I) branch (c = -0.0985, flagged -2c_x) + the EMPIRICAL SINGLET laws (diag -0.0660*pm*s + 0.3038*pm*s^2; offdiag +0.1122*s^2 - 0.0712*s^4; fit to the measured 13-point remainder curves at rms 8e-4/1e-3, H2-calibrated, labeled WORKING)",
    "honest_caveats": "two exchange pieces are empirical working laws (the singlet short pieces and the branch coefficient) pending the physical closed form (the opposite-spin-sensitivity question, pass 56); transferability to p-shells/heteronuclear is untested -- the F2/HF gates are the next test",
    "_next": "F2 SCF (p-shells, the n=2-like multi-pair channels, the object=exchange remainder folded in); HF (polar ES); the total-energy bookkeeping gate; gradients; the Fortran port"
+  },
+  "f2_assembly_v1": {
+   "_state": "the F2 STATIC Fock assembly (f2_assembly.py, at the oracle's converged density): ALL FOUR cross elements within 0.0053 at R=3.8 (ss +0.0027, spz +0.0053, pzpz -0.0035, pxpx -0.0021) and 0.006-0.024 at r_e = 2.668 -- the H0 forward + measured CN/mu channels + analytic ACP + measured exchange (Euler + the object's closed form) assemble to sub-percent at long range on p-shells too",
+   "re_gaps": "the bonding-distance p-element gaps (spz +0.024, pzpz -0.011, pxpx -0.010) are the F2 analogues of the singlet short pieces (not yet fitted for p-shells) plus the known k_p-metric puzzle (1.205 vs L4_p 1.127)",
+   "diagonals": "not yet assembled (mu/X/ES2-diag pending); the s-diagonal ballpark closes within ~0.03 with the atom-gate pieces (lvl+ACP -1.080, mu +0.37-ish, X -0.76-ish vs measured -1.500). THE NEXT PROBE: the measured pz-vs-px diagonal split (-0.519 vs -0.579 at r_e) decides whether the exchange/ES populations resolve per-AO or per-shell -- the one structural question the diagonal assembly needs",
+   "_next": "the F2 diagonal assembly (per-AO-vs-per-shell resolution via the pz/px split), the p-shell short pieces at r_e, then the F2 SCF loop and its gate"
   }
  }
 }

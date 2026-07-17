@@ -1154,3 +1154,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   closed form (the opposite-spin question); transferability is untested until F2/HF.
 - Next: the F2 SCF (p-shells; the exchange remainder = "the object" folds in), HF's polar
   ES, the total-energy bookkeeping gate, gradients, the port.
+
+### 2026-07-18 (fifty-eighth push) — the F2 static assembly: cross elements at 0.005 long-range
+
+- **f2_assembly.py** (every piece at the oracle's converged density, element-by-element):
+  all four cross elements within 0.0053 at R=3.8; 0.006–0.024 at r_e — the H0 forward +
+  measured channels + analytic ACP + measured exchange assemble on p-shells too. The r_e
+  p-gaps are the F2 analogues of the singlet short pieces (unfitted for p) plus the known
+  k_p puzzle.
+- Diagonals pending (µ/X/ES2-diag): the s-diagonal ballpark closes within ~0.03 from the
+  atom-gate pieces. **The next probe is handed to us by the data**: the measured pz-vs-px
+  diagonal split (−0.519 vs −0.579 at r_e) decides per-AO vs per-shell population
+  resolution in the exchange/ES machinery — the one structural question the diagonal
+  assembly needs answered.
+- Then: the F2 SCF loop and gate; HF's polar ES; the energy bookkeeping.
