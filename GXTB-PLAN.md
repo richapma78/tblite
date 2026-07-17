@@ -656,3 +656,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   0.62 eV; N 0.0016 → 0.16; O 0.0001 → its 0.30 sits instead in the β-channel exchange fine
   structure). The two named refinements (C0(q) closed form; β-channel split) are the queued
   quartic charting and one fingerprint probe respectively.
+
+### 2026-07-16 (thirty-first push) — the OFF-DIAGONAL channel opens: H2 Fock inversion
+
+- **The instrument**: H2 has one orbital per atom, so the printed eigenvalue pair + our
+  machine-exact S12 INVERT to the complete 2×2 Fock at every distance — F11(R) and F12(R)
+  measured directly across R = 1..5 (data/h2-fock.json). The off-diagonal EHT rule, the last
+  major undecoded structure, is now a measurable curve rather than an equation to trust.
+- First readings: F12/S12 drifts −0.53..−0.79 (not a constant Hückel prefactor → the
+  Hamiltonian-basis scaling and/or a distance polynomial participate); F11's long-range limit
+  sits 0.141 Eh above the atom anchor, with the shift structure accounted by the
+  density-dependent terms (delocalization halves the self-exchange; the closed shell turns the
+  spin term off).
+- **Decomposition designed**: perturb L5 and re-invert → the exchange part of F12 (L5-linear)
+  subtracts out, leaving pure H0_12(R) to chart against K·h·S̃ candidates with scaled bases.

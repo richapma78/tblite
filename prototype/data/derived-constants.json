@@ -488,6 +488,11 @@
         "_note": "smooth element trend, own law to chart"
       },
       "_error_budget": "residuals TRACK the unmodeled C0 (4th-order onsite) potential: C (C0=0.0091) worst 0.62 eV mostly common-mode; N (0.0016) 0.16; O (0.0001) 0.30 concentrated in the beta-occ-p channel split. Next refinements: the C0(q) closed form (quartic charting, long-queued) and the beta-channel exchange fine structure."
+    },
+    "h2_fock_inversion": {
+      "_instrument": "H2's printed eigenvalue pair + our machine-exact S12 invert to the FULL 2x2 Fock at every R: F11 = ((1+S)e_bond + (1-S)e_anti)/2, F12 = ((1+S)e_bond - (1-S)e_anti)/2 -- the off-diagonal EHT rule is now directly measurable (data/h2-fock.json, R = 1..5)",
+      "first_readings": "F12/S12 drifts smoothly -0.53..-0.79 over the stretch -> not constant K*h*S: the Hamiltonian-basis scaling (L1[7]/L4) and/or a distance polynomial are in play. F11(R->5) sits 0.141 Eh above the atom anchor -- the density-dependent terms (exchange halved by delocalization, spin off in the closed shell) account for the shift structure",
+      "_next": "decompose F12 = H0_12 + X_12 by perturbing L5 and re-inverting (the exchange part is L5-linear); chart the pure H0_12(R) against K*h*S-tilde candidates built with scaled-exponent bases; locate K and the scalings among the remaining slots"
     }
   }
 }
