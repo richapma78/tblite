@@ -1108,3 +1108,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   the natural candidates. Charge-driven forms were already excluded (triplet-HeH⁺ is
   charged and lawful). Next: MO-resolved candidates vs the four n=1 curve families, with
   the n=2 invariance as the cross-check.
+
+### 2026-07-18 (fifty-fifth push) — the (1−m) carrier: right class, no closed form yet; the term matters mainline
+
+- The (1−m)-carrier family is the only class explaining BOTH the n-split (vanishes at m=1)
+  and the HeH²⁺ asymmetry by construction; quantitatively −0.15·s·(1−m) holds ±9% on H2⁺
+  (±2% short-range) but dies incorrectly on HeH²⁺'s hydrogen — no cross-system closed form
+  yet. The MO-term dataset (extra − the m_B-generalized law) is tabulated for both systems.
+- **Key realization**: singlet spin channels are n=1 — the term is active in EVERY
+  single-bond closed-shell molecule, and it IS the H2 SCF's remaining +0.10 short-range
+  miss. Not exotic; mainline.
+- Next: a third n=1 system with intermediate mixing (LiH⁺/BeH²⁺/H3⁺-linear), or bound the
+  practical impact by re-gating the SCF with the n=2-law Fock and quantifying the n=1 term
+  as the residual per system.
