@@ -457,6 +457,11 @@
       "L5_exchange": "occupation-scaled diagonal: occupied orbitals of shell l respond at -0.122, VIRTUALS at 0.000 exactly -- V_ex(orbital) ~ L5[l] * n_orbital * 0.122-factor (factor identical for s and p; origin of 0.122 open)",
       "L1[9]_spin": "spin-polarization potential: sign flips with channel (majority stabilized); p +-0.179, s +-0.076 with m_s = 0 -- CROSS-SHELL structure V_spin(l) = sum_l' W_ll'(L1[9]) * m_l' (shell-pair weights hardcoded; w_sp*2 = 0.076, w_pp*2 = 0.179)",
       "_model": "eps_l,sigma(atom) = -L2[l] - mu-potential(l) + V_ex(L5, n) + V_spin(W, m) + V_ES(q) -- all structures now identified; the atom-eigenvalue GATE is buildable once the 0.122 factor and W weights are pinned (2-3 more probes)"
+    },
+    "acp_structure": {
+      "_layout": "L9 = [c_s, c_p, c_d, c_f, zeta_s, zeta_p, zeta_d, zeta_f] -- coefficient slots respond LINEARLY and shell-diagonally (O: deps_s/dc_s = +0.9236, deps_p/dc_p = +0.8773 Eh/unit; d/f slots inert with no d/f shells); exponent slots nonlinear (zeta_s response -0.4525)",
+      "_closure": "V_acp(l) = kappa_l * c_l accounts for the eigenvalue-gate misses to 99.7% (s: 0.9236*(-0.5293) = -0.4889 vs miss -0.4903) and 98.4% (p: -0.1663 vs -0.169) -- the ACP was the missing gate term",
+      "_next": "kappa_l = the projector matrix element structure (function of zeta_l and the basis) -- measurable per element by FD, or computable analytically with our overlap engine (Gaussian projector integrals); then the atom-eigenvalue gate closes"
     }
   }
 }

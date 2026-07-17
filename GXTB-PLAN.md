@@ -618,3 +618,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - NOTE for the fix round: verify F1 = −µ_l·f − (Σµq)·f′ sign-by-sign against dε/dµ = −1.006,
   and re-derive Vx from E_x = −c_xΣL5·n² (∂/∂n_iσ = −2c_x·L5·n_iσ ✓ matches the FD) — then the
   shell offsets should collapse.
+
+### 2026-07-16 (twenty-eighth push) — the ACP was the missing term; layout decoded; gate closure at 99.7%
+
+- The eigenvalue-gate misses identified themselves: the ORIGINAL O-atom sweep had already shown
+  L9 (the ACPs) moving the electronic energy — atomic correction potentials are exactly
+  per-shell constants for an atom, the misses' signature.
+- **L9 layout decoded**: [c_s, c_p, c_d, c_f | ζ_s, ζ_p, ζ_d, ζ_f] — coefficients respond
+  linearly and shell-diagonally (O: ∂ε_s/∂c_s = +0.9236, ∂ε_p/∂c_p = +0.8773 Eh/unit; d/f
+  slots inert without d/f shells), exponents nonlinearly.
+- **The closure check**: κ_l·c_l accounts for the gate misses at 99.7% (s) and 98.4% (p) —
+  the ACP is confirmed as the one missing term. κ_l is the projector matrix-element structure:
+  measurable per element by FD, or computable analytically with our gated integral engine
+  (Gaussian projector overlaps — same machinery as Term 4). Next session: κ in place → the
+  atom-eigenvalue gate PASSES → extend across elements → diatomics.
