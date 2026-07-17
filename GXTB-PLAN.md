@@ -1309,3 +1309,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   to-do list, each item mechanical.
 - Next: generalize offsite-ES2 + µ-CN into the engine, extract-and-fit the O–H short
   pieces, re-gate H2O; then the engine graduates to the port.
+
+### 2026-07-18 (seventieth push) — the three-center test FAILS: the short-piece layer is the final decode
+
+- **The H2O remainder matrix** (one extraction, at the oracle's density): rem(H···H) =
+  −0.046 Eh where the H2 pair-law predicts ~−0.001 at that distance (40×) — the
+  short-piece layer is NOT pairwise-transferable; it responds to the molecular
+  environment. The pass-56 occupancy/opposite-spin carrier question is thereby promoted:
+  it is THE one remaining decode between the engine and transferable polyatomics.
+- Also measured: the engine's density over-polarizes (q(O) −0.949 vs the oracle's −0.658)
+  through the missing layer's self-consistent feedback — the eigenvalue miss and the
+  density miss are one defect, not two.
+- **Consequence for the port**: everything else transfers (metrics, kernels, potentials,
+  ACP, exchange skeleton — all validated across five systems); the short-piece layer
+  needs its universal law or per-environment treatment. The frontier is now exactly one
+  scientific question wide.

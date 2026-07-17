@@ -90,7 +90,12 @@ def build(zs, xyz_bohr, charge=0):
             h = -(E[zi]["L2"][li] + E[zj]["L2"][lj]) / 2
             H0[i, j] = a * h * float(Sh[i, j])
     A = f2_stretch.acp_matrix(list(zs), xyz, charge=charge)
-    return {"S": S, "H0": H0, "A": A, "meta": meta, "E": E, "zs": zs, "n": n}
+    nat = len(zs)
+    Rab = np.zeros((nat, nat))
+    for a in range(nat):
+        for b in range(nat):
+            Rab[a, b] = float(np.linalg.norm(xyz[a] - xyz[b]))
+    return {"S": S, "H0": H0, "A": A, "meta": meta, "E": E, "zs": zs, "n": n, "Rab": Rab}
 
 
 def fock(P, B):
@@ -106,6 +111,7 @@ def fock(P, B):
         z = B["zs"][at]
         q[(at, l)] = E[z]["ref"][l] - q[(at, l)]
     v = np.zeros(n)
+    Rab = B["Rab"]
     for i in range(n):
         at, z, l, _ = meta[i]
         v[i] += E[z]["MU"][l]
@@ -113,6 +119,16 @@ def fock(P, B):
             g2 = SRULE[z] * 2 * E[z]["U"][l] * E[z]["U"][l2] / \
                 (E[z]["U"][l] + E[z]["U"][l2])
             v[i] += g2 * q[(at, l2)]
+        # offsite ES2: the plain Klopman-Ohno kernel (k2x = 0; validated out-of-sample
+        # on HF), generalized to the N-atom sum
+        for bt in range(len(B["zs"])):
+            if bt == at:
+                continue
+            zb = B["zs"][bt]
+            for l2 in range(E[zb]["nsh"]):
+                gko = 1.0 / (Rab[at, bt] + 0.5 * (1.0 / E[z]["U"][l]
+                                                  + 1.0 / E[zb]["U"][l2]))
+                v[i] += gko * q[(bt, l2)]
         v[i] += 2 * E[z]["cx"] * E[z]["L5"][l] * m[i]
     return B["H0"] + B["A"] - 0.5 * S * (v[:, None] + v[None, :])
 
@@ -154,8 +170,13 @@ def main():
     ref = sorted(x / K.EV for x in r["eps_ev"])
     d = [a - b for a, b in zip(sorted(w), ref)]
     worst = max(abs(x) for x in d)
-    print(f"H2O (first polyatomic, pure law-prediction): worst |d| = {worst:.4f}  "
-          f"{'PASS' if worst <= 0.05 else 'MISS'} (bar 0.05, no O-H short pieces)")
+    B = build(zs, np.array(xyz))
+    m = np.diag((P / 2.0) @ B["S"])
+    qO = sum(K.REFOCC[8].values()) - 2 * sum(m[i] for i in range(B["n"])
+                                             if B["meta"][i][0] == 0)
+    print(f"H2O v2 (+offsite-ES2): worst |d| = {worst:.4f}  "
+          f"{'PASS' if worst <= 0.05 else 'MISS'} (bar 0.05; O-H short pieces + mu-CN "
+          f"still absent)   q(O) = {qO:+.3f}")
     for a, b, dd in zip(sorted(w), ref, d):
         print(f"    {a:+.4f}  vs {b:+.4f}   d {dd:+.4f}")
 
