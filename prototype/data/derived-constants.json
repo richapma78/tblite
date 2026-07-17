@@ -521,7 +521,8 @@
     "plateau": -0.1641,
     "tail_spread": 0.0179,
     "_next": "heteronuclear + multi-shell decide whether the scale is per-AO L4_l^2/2 or a pair rule",
-    "_reinterpreted": "hmetric (level-FD) shows the LEVEL channel rides the PRIMARY overlap (H2 Seff/S = 0.99-1.05), so 'exponents x L4^2/2' is the EFFECTIVE shape of the SUM (level channel + L4-owned channel), not a literal basis replacement for the level term. The FD fact (k* tracks (L4+d)^2/2) stands unchanged; the mechanism is sharpened."
+    "_reinterpreted": "hmetric (level-FD) shows the LEVEL channel rides the PRIMARY overlap (H2 Seff/S = 0.99-1.05), so 'exponents x L4^2/2' is the EFFECTIVE shape of the SUM (level channel + L4-owned channel), not a literal basis replacement for the level term. The FD fact (k* tracks (L4+d)^2/2) stands unchanged; the mechanism is sharpened.",
+    "_corrected_v2": "the pure level-metric decomposition (h0_forward v2: M = Seff/Pi vs S~(k, kb), degeneracy broken by the kb dimension, rms 0.01% of range) finds k = 1.110 ~ L4(H) = 1.094 DIRECT -- the k = L4^2/2 functional form was an artifact of fitting the level+mu MIXTURE, and the probe-2 single-delta FD could not separate 'tracks L4^2/2' from 'tracks L4 + offset'. L4 driving the scale STANDS (that is what the FD proved); the form is corrected."
    },
    "l17_channel": {
     "slot": "L1[7] = 0.0224 (NOT 0.8142 -- that is L1[6] = kU; a this-session prose misread, instruments were right)",
@@ -611,6 +612,19 @@
    "promising": "F2 ss with b=0 (F's k_shp = -0.0040 -> Pi ~ 1): C = 0.6680 vs the kW_s*kdiat_sigma(F) prediction 0.6708 -- 0.4%. NOT claimed (degeneracy); the honest check needs the metric measured shape-free",
    "polynomial_slopes_measured": "b(H2) = +0.033 (1/(rho/R) linear in R from the banked L1[7] responses, a = kshp_s(H-global)/Rcov = 0.280); Pi(F2) ~ 1 (k_shp(F) tiny)",
    "_next": "measure S~sc DIRECTLY as Seff/Pi(known) and match basis constructions (density-adapted vs k-tilde-adapted vs scaled exponents); then reassemble and re-gate"
+  },
+  "h0_forward_v2_GATE_PASSED": {
+   "_milestone": "the FIRST forward gate PASSED: H2 ss EHT(R) predicted at all 13 points to worst |diff| = 0.0094 Eh (pre-declared bar 0.01; stretch 0.006 NOT met, residual structure named)",
+   "assembly": "H0 = kW_s*kdiat_sigma(H)*(-L2)*Pi(b)*S~(k,kb) + mu-channel, with amplitude 2.0912 PURELY from file slots (G1[0]*L8[0](H)), level -L2, Pi from b = +0.0315 (measured from the L1[7] rho, not fitted), S~(k=1.110, kb=+0.17) the uniquely-determined metric, and the mu channel = mu*C_mu(R)*S_primary with C_mu measured at 7 R (exactly -1.000 at R>=4)",
+   "metric_decomposition": "M = Seff/Pi matched by S~(k, kb) at rms 9.9e-5 (0.01% of range); the (C,k,kb) minimum is SHARP (50-100x rms growth within +-0.05/+-0.10) -- v1's degeneracy broken by the kb (Eq-28 sqrt-CN Ham-adaptation) dimension",
+   "amplitude_check": "C*2.26 = 2.082 vs kW_s*kdiat_s(H) = 2.091: -0.4% -- the Eq-64 prefactor assembles from named slots (same 0.4% seen independently on F2 ss)",
+   "open": [
+    "k = 1.110 vs L4 = 1.094 (1.5%): real or kb-correlated -- refine after the kb slot is located",
+    "kb = 0.17 vs density b(H) = 0.2272: the k-tilde-2 slot NOT yet located (candidates G1[4]/L8[3]/L8[7] -- FD-vs-analytic shape round pending)",
+    "stretch-bar residuals: L3*CN (<= 0.005, R <= 1.4), the 0.4% amplitude gap, C_mu sparse between 2.5 and 4",
+    "F2 next: same decomposition per shell pair (Pi ~ 1 there), then spz/pzpz with the object added, then HF"
+   ],
+   "_instrument": "prototype/h0_forward.py (v2); data/mu-cmu-h2.json"
   }
  }
 }

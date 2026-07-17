@@ -849,3 +849,27 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   vs k̃-adapted vs scaled exponents) against the measured curve, locate the k̃ tilde slots,
   then reassemble and re-gate. The µ-law and the object's closed form slot straight into the
   eventual assembly unchanged.
+
+### 2026-07-17 (fortieth push) — THE FIRST FORWARD GATE PASSES: H2's off-diagonal predicted from the file
+
+- **The degeneracy breaker**: Eq. 28 (read clean from the PDF — no screenshots needed; layout
+  mode extracts the SI equations legibly) says the Ham basis adapts k̃0/k̃2/k̃3, and at q = 0
+  only k̃2·√CN survives. Adding that kb dimension to the metric match (M = Seff/Π vs
+  S̃(k, kb)) collapses v1's degenerate fits into a SHARP unique minimum: rms 9.9e-5 = 0.01%
+  of range (bar was 0.5%), rms growing 50–100× within ±0.05 in k or ±0.10 in kb.
+- **The L4 law corrected**: k = 1.110 ≈ L4(H) = 1.094 DIRECT. The old k = L4²/2 was an
+  artifact of fitting the level+µ mixture; the probe-2 single-δ FD proved L4 drives the scale
+  but could not separate the functional forms. Correction recorded in the anchor.
+- **kb = +0.17** (vs the density basis's 0.2272) — the Ham basis's own √CN coefficient,
+  measured; its slot not yet located (G1[4]/L8[3]/L8[7] candidates, FD-vs-analytic pending).
+- **The amplitude assembles**: C·2.26 = 2.082 vs k^W_s·k^diat_σ(H) = 2.091 — 0.4% (the same
+  0.4% F2-ss showed independently). Eq. 64's prefactor is now quantitative from named slots.
+- **THE GATE**: with C_µ(R) measured at 7 points (new short-R FDs; exactly −1.000 at R ≥ 4)
+  and Π's b = +0.0315 from the polynomial's own response, the forward assembly
+  H0 = k^W·k^diat·(−L2)·Π·S̃(k, kb) + µ·C_µ·S predicts H2's measured EHT at ALL 13 points,
+  worst |diff| 0.0094 Eh — **PASSED at the pre-declared 0.01 bar** (stretch 0.006 not met;
+  residual structure named: the dropped L3·CN term, the 0.4% amplitude gap, sparse C_µ
+  between 2.5 and 4).
+- Next: locate the k̃2 slot (FD vs analytic ∂S̃/∂kb shapes); the same decomposition on F2's
+  shell pairs (Π ≈ 1 there); the σ elements with the penetration object added; HF (the k̃0/k̃3
+  q-channels wake up on a polar molecule); then the full diatomic gate and SCF assembly.
