@@ -1001,3 +1001,10 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: the sympy symbolic-enumeration instrument over the wider form space (population,
   Mulliken-density, P-carried, and product structures), solved as exact rational identities
   per manifold against the four measured curve families.
+
+- Addendum (same push): **the onsite-kernel Fock part is IDENTIFIED** — F^X(onsite) =
+  −½S∘(v+v), v_A = γ_on·m_A^σ — unifying the atom anchor, the m-ladder, and both molecules'
+  off-diagonal asymptotics in one form. SCF re-gate with it alone: **R=2.5 passes fully**
+  (both eigenvalues ≤0.006); worst virtual miss down 0.33 → 0.10. The remaining misses are
+  the measured γ_off remainder, provably two pieces crossing at R≈2.3 (long branch =
+  −2c_x·γ_off·P12, flagged). The symbolic session takes the remainder; then the full gate.

@@ -94,20 +94,18 @@ def ex_energy(P, S, gam):
     return 2.0 * E
 
 
-def fock_x(P, S, gam, d=1e-6):
-    """F^X = the exact matrix gradient of the gated energy form (element-independent
-    convention; symmetric by the formula's symmetry). Convention-proof by construction:
-    eigenvalues become variationally consistent with the energy that already gates."""
-    n = P.shape[0]
-    F = np.zeros((n, n))
-    for a in range(n):
-        for b in range(n):
-            Pp = P.copy()
-            Pp[a, b] += d
-            Pm = P.copy()
-            Pm[a, b] -= d
-            F[a, b] = (ex_energy(Pp, S, gam) - ex_energy(Pm, S, gam)) / (2 * d)
-    return 0.5 * (F + F.T)
+def fock_x(P, S, gam):
+    """The MEASURED exchange-Fock skeleton (forty-seventh push): the onsite-kernel part is
+    IDENTIFIED as the Mulliken potential of v_A = gamma_on * m_A^sigma (own same-spin
+    population): F = -1/2 S o (v_mu + v_nu). This unifies the exact atom anchor, the
+    diagonal m-scaling ladder, and both molecules' off-diagonal asymptotics. The smaller
+    gamma_off-carried remainder (singlet long-R: -2*c_x*gamma_off*P12, flagged) is NOT yet
+    identified and NOT included -- the gate reports what the identified part alone gives.
+    NOTE: deliberately non-variational, as the binary's own Fock is."""
+    Ps = P / 2.0
+    m = np.diag(Ps @ S)                                # per-spin Mulliken populations
+    v = np.diag(gam) * m                               # onsite kernel x own population
+    return -0.5 * S * (v[:, None] + v[None, :])
 
 
 def scf(R, iters=40):
