@@ -1121,3 +1121,21 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: a third n=1 system with intermediate mixing (LiH⁺/BeH²⁺/H3⁺-linear), or bound the
   practical impact by re-gating the SCF with the n=2-law Fock and quantifying the n=1 term
   as the residual per system.
+
+### 2026-07-18 (fifty-sixth push) — the matched-pair experiment: the term sees beyond the same-spin density
+
+- The 3-term w-law (joint fit, 39 rows: (C2, a, b) = (−0.4438, −0.3666, +0.6480), rms
+  1.7e-3, all manifolds ≤0.0036 except HeH-He's 0.0056 wiggle) was assembled into the SCF
+  (v3) — and **regressed R=2.5** (+0.050), while the (PS−I) branch **closed R=4.0 fully**
+  (both eigenvalues ≤0.0044). The regression is the finding: at MATCHED overlap and
+  IDENTICAL per-spin density (singlet-neutral s=0.407 vs H2⁺-ion s=0.408), the singlet's
+  short piece is ~7× smaller — **the term sees beyond the same-spin density.** Three
+  candidates (β-occupancy, total-density deficit, EEQ-charge amplitude), each with one
+  counterexample; and the pass-53 "contamination" ruling on the singlet's short data was
+  partly wrong — its smallness is likely real.
+- v3 disabled behind a flag (kept for the record); the five-manifold-confirmed v2 skeleton
+  stays the default. The off-diagonal branch term is validated (R=4 closure).
+- The last unknown is now characterized as: (1−m)-carried, opposite-spin/charge-sensitive,
+  short-ranged, with six datasets bearing on it. Next: the singlet-vs-H2⁺ matched-s scan
+  (the cleanest discriminator: vary s at fixed structures) or β-occupied probe systems
+  (H2⁻? He2⁺-triplet?) to pin the opposite-spin dependence directly.

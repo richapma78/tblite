@@ -95,17 +95,50 @@ def ex_energy(P, S, gam):
 
 
 def fock_x(P, S, gam):
-    """The MEASURED exchange-Fock skeleton (forty-seventh push): the onsite-kernel part is
-    IDENTIFIED as the Mulliken potential of v_A = gamma_on * m_A^sigma (own same-spin
-    population): F = -1/2 S o (v_mu + v_nu). This unifies the exact atom anchor, the
-    diagonal m-scaling ladder, and both molecules' off-diagonal asymptotics. The smaller
-    gamma_off-carried remainder (singlet long-R: -2*c_x*gamma_off*P12, flagged) is NOT yet
-    identified and NOT included -- the gate reports what the identified part alone gives.
-    NOTE: deliberately non-variational, as the binary's own Fock is."""
+    """The exchange Fock v3 (fifty-sixth push): the measured skeleton + the working
+    short-piece laws, per spin channel (P^sigma = P/2 for the closed shell):
+
+      v_A   = gamma_on*m_A + w_A                       (per-atom Mulliken potential)
+      w_A   = C2*gbar*pm*m_B + a*gamma_B*s^2*(1-m_A) + b*gamma_A*pm*(1-m_A)
+              (C2, a, b) = (-0.4438, -0.3666, +0.6480); pm = (P^s_AA - m_A) = -P12*s
+      F     = -1/2 S o (v+v)  +  c_br * gamma_off o (D_Mull - I)|offdiag
+              c_br = -0.0985 (~ -2*c_x, flagged); D_Mull = (P^s S + S P^s)/2
+
+    STATUS (fifty-sixth push): v3 REGRESSED the R=2.5 gate (+0.050 virtual) -- the w-law,
+    fit on CHARGED 1-electron systems, over-predicts the NEUTRAL singlet's short piece 6x
+    at matched s and matched per-spin P: the term sees beyond the same-spin density
+    (beta-occupancy / charge / total-density -- three candidates, each with a
+    counterexample). v3 is kept here for the record but DISABLED (V3 = False): the default
+    is the v2 onsite-skeleton form, which passes mid-range and is five-manifold-confirmed.
+    Deliberately non-variational, as the binary's own Fock is."""
+    V3 = False
+    C2, a_, b_ = -0.4438, -0.3666, +0.6480
+    C_BR = -0.0985
+    if not V3:
+        Ps = P / 2.0
+        m = np.diag(Ps @ S)
+        v = np.diag(gam) * m
+        return -0.5 * S * (v[:, None] + v[None, :])
     Ps = P / 2.0
-    m = np.diag(Ps @ S)                                # per-spin Mulliken populations
-    v = np.diag(gam) * m                               # onsite kernel x own population
-    return -0.5 * S * (v[:, None] + v[None, :])
+    n = P.shape[0]
+    m = np.diag(Ps @ S)
+    gon = np.diag(gam)
+    gbar = 0.5 * (gon[:, None] + gon[None, :])
+    pm = np.diag(Ps) - m                               # = -P12*s per atom (2-AO identity)
+    s12 = S - np.eye(n)                                # off-diagonal overlap(s)
+    w = np.zeros(n)
+    for A in range(n):
+        B = 1 - A if n == 2 else A                     # the partner (diatomic scope)
+        s = s12[A, B]
+        w[A] = (C2 * gbar[A, B] * pm[A] * m[B]
+                + a_ * gon[B] * s * s * (1 - m[A])
+                + b_ * gon[A] * pm[A] * (1 - m[A]))
+    v = gon * m + w
+    F = -0.5 * S * (v[:, None] + v[None, :])
+    D = 0.5 * (Ps @ S + S @ Ps)
+    br = C_BR * gam * (D - np.eye(n))
+    np.fill_diagonal(br, 0.0)
+    return F + br
 
 
 def scf(R, iters=40):
