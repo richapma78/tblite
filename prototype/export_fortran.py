@@ -40,3 +40,83 @@ with open(os.path.join(OUT, "elem-reference.dat"), "w") as f:
             f.write(f"  {e['k'][l]:.14e} {e['L2'][l]:.14e} {e['MU'][l]:.14e} "
                     f"{e['U'][l]:.14e} {e['L5'][l]:.14e}\n")
 print(f"exported derived.dat + elem-reference.dat for z = {ZS}")
+
+
+# ---- U2a: shells + reference overlap matrices for the six gate systems ----------
+import math
+
+import numpy as np
+
+sys.path.insert(0, HERE)
+import adapt  # noqa: E402
+import basisq  # noqa: E402
+import constants as KK  # noqa: E402
+import overlap as OV  # noqa: E402
+
+BOHR = KK.BOHR
+ang = 104.5 * math.pi / 180
+r_oh = 0.9572 * BOHR
+W = [[0.0, 0.0, 0.0],
+     [r_oh * math.sin(ang / 2), 0.0, r_oh * math.cos(ang / 2)],
+     [-r_oh * math.sin(ang / 2), 0.0, r_oh * math.cos(ang / 2)]]
+a4 = 1.087 * BOHR / math.sqrt(3)
+r_nh = 1.012 * BOHR
+st, ct = 0.9262, -0.3770
+SYSTEMS = {
+    "h2": ([1, 1], [[0, 0, 0], [0, 0, 1.4]]),
+    "f2": ([9, 9], [[0, 0, 0], [0, 0, 2.668]]),
+    "hf": ([1, 9], [[0, 0, 0], [0, 0, 1.733]]),
+    "h2o": ([8, 1, 1], W),
+    "ch4": ([6, 1, 1, 1, 1],
+            [[0, 0, 0], [a4, a4, a4], [a4, -a4, -a4], [-a4, a4, -a4], [-a4, -a4, a4]]),
+    "nh3": ([7, 1, 1, 1],
+            [[0, 0, 0]] + [[r_nh * st * math.cos(2 * math.pi * k / 3),
+                            r_nh * st * math.sin(2 * math.pi * k / 3),
+                            r_nh * ct] for k in range(3)]),
+}
+Bq = basisq.parse()
+
+
+NL = chr(10)
+
+
+def dump_shells(fname, shells):
+    with open(os.path.join(OUT, fname), "w") as f:
+        f.write(f"{len(shells)}{NL}")
+        for sh in shells:
+            f.write(f"{sh['at'] + 1} {sh['l']} {len(sh['exp'])}{NL}")
+            for e_, c_ in zip(sh["exp"], sh["coef"]):
+                f.write(f"  {e_:.14e} {c_:.14e}{NL}")
+
+
+def dump_mat(fname, M):
+    with open(os.path.join(OUT, fname), "w") as f:
+        f.write(f"{M.shape[0]}{NL}")
+        for row in M:
+            f.write(" ".join(f"{x:.14e}" for x in row) + NL)
+
+
+for name, (zs, xyz) in SYSTEMS.items():
+    xyz = np.array(xyz, float)
+    # primary basis: the full adapted chain (EEQ -> q_eff), as engine build() uses it
+    sh1, _ = OV.build_shells(zs, xyz, charge=0)
+    S = OV.overlap(zs, xyz, shells=sh1, ao_order="oracle")
+    # secondary basis: metric-scaled exps + kb*sqrt(CN) contraction (build()'s sh)
+    cns = adapt.basis_cn(list(zs), xyz)
+    sh2 = []
+    for at, z in enumerate(zs):
+        e = GE.elem(z)
+        q_ = e["kb"] * math.sqrt(cns[at])
+        for l, prims in Bq[z]["shells"]:
+            ee = np.array([p[0] for p in prims])
+            c0 = np.array([p[1] for p in prims])
+            c1 = np.array([p[2] for p in prims])
+            sh2.append({"l": l, "at": at, "exp": ee * e["k"][l],
+                        "coef": (c0 + c1 * q_).copy()})
+    Sh = OV.overlap(zs, xyz, shells=sh2, ao_order="oracle")
+    dump_shells(f"shells1-{name}.dat", sh1)
+    dump_shells(f"shells2-{name}.dat", sh2)
+    dump_mat(f"S1-{name}.dat", S)
+    dump_mat(f"S2-{name}.dat", Sh)
+    print(f"  {name}: nao {S.shape[0]} exported (both bases)")
+print("U2a references exported")

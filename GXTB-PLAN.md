@@ -1517,3 +1517,15 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   the laws extrapolate off their H/He/O/F fitting domain.
 - **U1 shipped and gated**: the parameter parser + every element law in Fortran,
   **74 values matching python to 1e-10**. U2 (basis + overlap) is next.
+
+### 2026-07-17 (eighty-third push) — strategy set (tblite home, metals destination, solvation differentiator); U2a gated at machine precision
+
+- The user corrected the frame: tblite is the home so upstream's release can drop in;
+  **metals are the destination** (v0.1 neutrals is staging — the ES3/ion/UKS work is
+  critical path for v0.2+, deferred never dismissed); the **solvation layer** is our
+  planned differentiator (g-xTB is gas-phase; tblite already carries ALPB/CPCM).
+  PORT-PLAN.md now says so, with the staged scope v0.1 → v0.4.
+- **U2a shipped and gated**: the Fortran integral engine (Obara–Saika, PySCF norm
+  conventions, contracted normalization) reproduces S and S̃ for all six gate systems,
+  both bases, to ~1e-16. The adaptation chain (EEQ → CN → q_eff) rides as exported
+  shell specs until U2b.

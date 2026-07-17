@@ -1,13 +1,37 @@
-# The Fortran port: scope freeze and test ladder
+# The Fortran port: strategy, staged scope, and test ladder
 
-*(Eighty-second push. This document ends the decode-first phase: from here the default
-work is porting, and decode rounds happen only when a port gate demands one.)*
+*(Eighty-second push; strategy corrected eighty-third. This document ends the
+decode-first phase: from here the default work is porting, and decode rounds happen
+only when a port gate demands one.)*
 
-## The scope, frozen (v0.1)
+## Why this port, and why here (the strategy)
 
-**In scope**: closed-shell neutral molecules of H, C, N, O, F (+He as a calibration
-element). Eigenvalue spectra and the decoded energy layers. Everything the six-system
-gate + the C/N scope gate validated:
+1. **The home is tblite because upstream's will be.** The g-xTB group has said the
+   open-source release is coming and our investigation places it inside tblite. Building
+   our port behind tblite's native calculator interface means that when the official
+   code lands, swapping it in (if it proves better) is a drop-in replacement — and
+   until then, ours is the only working open implementation.
+2. **The destination is metals.** ChemRoutes is not an organics-only engine: the whole
+   reason it is going to g-xTB is coverage where GFN2 is unreliable — transition metals
+   (the ChemRoutes metals entry ticket), plus the ions and open shells that metal
+   chemistry lives on. The v0.1 scope below is **staging, not destination**; the
+   ES3/ion/UKS decode work is critical-path material for later rungs, deferred, never
+   dismissed.
+3. **The differentiator is solvation.** g-xTB ships gas-phase only. tblite already
+   carries solvation machinery (`src/tblite/solvation/` — ALPB/CPCM built for the GFN
+   methods); once the port matches the published executable, wiring and parameterizing
+   that layer for g-xTB is a capability upstream has not shipped. Route ranking in
+   ChemRoutes happens in solvent; this is the payoff step.
+
+## The staged scope
+
+**v0.1 (this ladder)**: closed-shell neutral molecules of H, C, N, O, F (+He as a
+calibration element). Eigenvalue spectra and the decoded energy layers.
+**v0.2**: ions and open shells (the ES3 composite, the UKS machinery — largely decoded,
+banked, waiting). **v0.3**: the metals rows, gated against the ChemRoutes
+`metal_dataset` checklist. **v0.4**: the solvent layer.
+
+Everything the six-system gate + the C/N scope gate validated:
 
 | system | worst |d| (all) | occupied-only | status |
 |---|---|---|---|
