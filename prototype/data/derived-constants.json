@@ -420,7 +420,9 @@
       "_finding": "BOTH atoms of a pair share the same C(R): Cl-side on HCl fits (keff 1.2484, rc 1.4742) vs H-side (1.2929, 1.4708) -- the mu-CN count is a PAIR property (the same bond counted from both ends), so per-element radii combine to the measured pair rc",
       "es1_closure_hcl": "forward model with measured pair C(R) (keff 1.2707, rc 1.4725 avg) + static drho offsite + KO kernel: worst |d| 2.4e-3 at R=2 (was 1.0e-2), mid/long range 1e-4..4e-4",
       "_remaining": "R=2 residual suspects: relaxation contamination in keff (~5%), f-linearization at |q|~0.33, offsite k2x screening"
-    }
+    },
+    "kU_shapes_hcl": "dES23/dkU on HCl: sqrt-CN-compatible (rc 1.46/1.60), magnitudes ~5% of the mu-CN signals -- the ES23 short-range residual belongs to offsite-E3/screening structure, not kU",
+    "f_smallq_regime": "long-R HCl f-extraction is corrupted by the soft-charge mode approaching the ionic jump (at R=10 the state ionizes fully, q_H = 1.00000, and f(1) = 1.0161 REPRODUCES the atomic-ion sample -- technique validated, regime unusable for small-q f)"
   },
   "si_text_findings": {
     "_source": "ChemRoutes reference/Supplement_Information_TextCopyOnly.txt (Richard's direct copy-paste extraction, 2026-07-16) + rendered-page reads",
@@ -428,5 +430,9 @@
     "exchange_kernel_form": "SI Eq. 149: gamma_MFX = [eta + (1-eta)*erf(omega*R_AB)] / ... -- textbook range separation; matches G1[5]'s R-independent FD signature (omega/eta candidates G1[0]/G1[5])",
     "eq55_print_vs_binary": "BOTH extractions print alpha_AB = aA*aB/(aA+aB); the binary implements 2x that (harmonic) -- measured by the repulsion gate (4.75e-9; the halved form refuted 150x by the H2 tail). Paper-vs-binary discrepancy, binary is authority.",
     "mu_cn_slope_gap": "measured dES1/dk1CN = 2.5x direct-term model: density relaxation (SCF q-response to the perturbation) is the prime suspect; testable by FD with population readout; second suspect: CN-dependence inside the hardcoded onsite s/c1 (charted at CN=0 only)"
+  },
+  "hamiltonian_anchors": {
+    "L2_levels": "H-atom FD: deps/dL2[0] = -1.00000 Eh/unit EXACT and delec/dL2[0] = -1.00000 (one electron) -- L2 = shell LEVELS with a MINUS sign convention (H0_diag includes -L2[l]); L3/L4/L1[7] exactly inert for the lone atom (molecular couplings only)",
+    "gradient_channel": "oracle -grad validated (parsed forces = FD of its total to ~1e-6); repulsion ANALYTIC gradient implemented incl. CN chain and gated at 3.9e-11 vs internal FD -- the port's first analytic force"
   }
 }

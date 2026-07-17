@@ -127,3 +127,98 @@ def _gate():
 
 if __name__ == "__main__":
     _gate()
+
+def gradient(zs, xyz, q, P=None, sign=+1, mean_rc=True, comb="harmonic"):
+    """ANALYTIC nuclear gradient of E_rep (Eh/Bohr), charges held fixed (their response is the
+    EEQ chain, carried separately). Chains through alpha(CN(R)) exactly (the erf-CN derivative).
+    GATE: matches finite differences of energy() to <= 1e-9 (test in __main__)."""
+    import numpy as _np
+    if P is None:
+        P = params.parse()
+    G = P["globals"]
+    xyz = _np.asarray(xyz, float)
+    n = len(zs)
+    cn = cn_eq47(zs, xyz, P, mean=mean_rc)
+    zeff, aa, r0, p1, kcn_el, a0 = (_np.empty(n) for _ in range(6))
+    for i, z in enumerate(zs):
+        e = P["element"][z]
+        zeff[i] = e["zeff0"] * (1.0 - e["kq_rep"] * q[i] - e["kq2_rep"] * q[i] ** 2)
+        a0[i] = e["alpha0"]
+        kcn_el[i] = e["kcn_rep"]
+        aa[i] = a0[i] * (1.0 + kcn_el[i] * math.sqrt(max(cn[i], 1e-300)))
+        r0[i] = e["r0"]
+        p1[i] = G["kpen1_hhe"] if z in (1, 2) else G["kpen1"]
+    kg = G["kcn_glob"]
+    # dCN_i/dx_k: pair counts c_ij depend on r_ij only
+    dcn = _np.zeros((n, n, 3))          # dCN_i / dR_k
+    for i in range(n):
+        for j in range(i):
+            ri = P["element"][zs[i]]["rcov_cn"]; rj = P["element"][zs[j]]["rcov_cn"]
+            rc = 0.5 * (ri + rj) if mean_rc else (ri + rj)
+            vec = xyz[i] - xyz[j]
+            r = float(_np.linalg.norm(vec))
+            dc_dr = (kg / rc) * math.exp(-(kg * (r - rc) / rc) ** 2) / math.sqrt(math.pi)
+            u = vec / r
+            dcn[i, i] += dc_dr * u; dcn[i, j] -= dc_dr * u
+            dcn[j, i] += dc_dr * u; dcn[j, j] -= dc_dr * u
+    grad = _np.zeros((n, 3))
+    for i in range(n):
+        for j in range(i):
+            vec = xyz[i] - xyz[j]
+            r = float(_np.linalg.norm(vec))
+            u = vec / r
+            if comb == "gauss":
+                a_ab = aa[i] * aa[j] / (aa[i] + aa[j])
+                da_di = (aa[j] / (aa[i] + aa[j])) ** 2
+                da_dj = (aa[i] / (aa[i] + aa[j])) ** 2
+            elif comb == "harmonic":
+                a_ab = 2.0 * aa[i] * aa[j] / (aa[i] + aa[j])
+                da_di = 2.0 * (aa[j] / (aa[i] + aa[j])) ** 2
+                da_dj = 2.0 * (aa[i] / (aa[i] + aa[j])) ** 2
+            else:
+                a_ab = math.sqrt(aa[i] * aa[j])
+                da_di = 0.5 * math.sqrt(aa[j] / aa[i])
+                da_dj = 0.5 * math.sqrt(aa[i] / aa[j])
+            r0_ab = math.sqrt(r0[i] * r0[j])
+            pen = (1.0 + (p1[i] + p1[j]) / (2.0 * r) + G["kpen2"] / r ** 2
+                   + G["kpen3"] / r ** 3 + G["kpen4"] / r ** 4)
+            dpen_dr = (-(p1[i] + p1[j]) / (2.0 * r ** 2) - 2.0 * G["kpen2"] / r ** 3
+                       - 3.0 * G["kpen3"] / r ** 4 - 4.0 * G["kpen4"] / r ** 5)
+            ex = math.exp(-a_ab * (r + sign * r0_ab) ** params.KEXP_REP)
+            zz = zeff[i] * zeff[j]
+            # explicit r-dependence
+            dE_dr = zz * ex * (dpen_dr - pen * a_ab * params.KEXP_REP
+                               * (r + sign * r0_ab) ** (params.KEXP_REP - 1.0))
+            grad[i] += dE_dr * u
+            grad[j] -= dE_dr * u
+            # CN chain: dE/da_ab * da_ab/daa_k * daa_k/dCN_k * dCN_k/dR
+            dE_da = -zz * pen * ex * (r + sign * r0_ab) ** params.KEXP_REP
+            for k, da in ((i, da_di), (j, da_dj)):
+                s = math.sqrt(max(cn[k], 1e-300))
+                daa_dcn = a0[k] * kcn_el[k] * 0.5 / s if cn[k] > 1e-12 else 0.0
+                coef = dE_da * da * daa_dcn
+                for m in range(n):
+                    grad[m] += coef * dcn[k, m]
+    return grad
+
+
+if __name__ == "__main__" and "--grad-test" in __import__("sys").argv:
+    import numpy as _np
+    import eeqbc
+    atoms, chg, uhf = eeqbc.PROBES["AcCl"]
+    zs = [eeqbc._SYM2Z[s.lower()] for s, _x, _y, _z in atoms]
+    xyz = _np.array([[x, y, z] for _s, x, y, z in atoms]) * BOHR
+    q = eeqbc.charges(zs, xyz, charge=chg)["q"]
+    P = params.parse()
+    g = gradient(zs, xyz, q, P)
+    worst = 0.0
+    h = 1e-5
+    for i in range(len(zs)):
+        for k in range(3):
+            xp = xyz.copy(); xp[i, k] += h
+            xm = xyz.copy(); xm[i, k] -= h
+            fd = (energy(zs, xp, q, P, sign=+1, mean_rc=True) - energy(zs, xm, q, P, sign=+1, mean_rc=True)) / (2 * h)
+            worst = max(worst, abs(fd - g[i, k]))
+    print(f"REPULSION ANALYTIC GRADIENT vs FD (fixed q): worst |d| = {worst:.2e}")
+    assert worst < 1e-9
+    print("REPULSION GRADIENT GATE PASSED")

@@ -555,3 +555,22 @@ the print can lie in different ways.
   4× tighter), mid/long range 1–4e-4. Remaining short-range suspects: relaxation haze in keff,
   the f-linearization at |q|~0.33, offsite screening. The first-order term is a whisker from
   closed on HCl.
+
+### 2026-07-16 (twenty-fourth push) — Richard's sequence: ES1/ES23 rounds, GRADIENTS exposed, Hamiltonian anchored
+
+- **ES1 sliver**: the small-q f-refinement hit a physical wall — the long-R extraction regime is
+  corrupted by the soft-charge mode (at R=10 HCl ionizes fully, q_H = 1.00000, and f(1) = 1.0161
+  REPRODUCES the atomic-ion sample: technique validated, regime unusable). ES1 stands at 2.4e-3
+  worst / 1–4e-4 mid+long; the refinement path is documented.
+- **ES2+3**: the kU CN-couplings measured on HCl (√CN-compatible, rc 1.46/1.60) — but at ~5% of
+  the µ-CN magnitudes they cannot carry the short-range residual; the offsite third-order/
+  screening structure is the remaining owner (next experiments named).
+- **GRADIENTS EXPOSED (two channels)**: (1) the oracle's `-grad` numerical forces validated
+  against FD of its own total (~1e-6 agreement — the reference channel for G4); (2) the PORT'S
+  FIRST ANALYTIC GRADIENT — repulsion forces with the full CN chain rule — gated at 3.9e-11
+  against internal FD (`repulsion.py --grad-test`). One defaults-mismatch bug caught by the gate
+  itself (mean_rc convention in the FD comparison).
+- **HAMILTONIAN ANCHORED**: H-atom FD gives dε/dL2[0] = −1.00000 Eh/unit EXACT (and per-electron
+  in the energy) — **L2 = the shell levels, minus-sign convention**; L3/L4/L1[7] exactly inert
+  for lone atoms (molecular couplings, as the map said). The eigenvalue-gate program has its
+  first measured anchor: ε(H) = −L2[0] + exchange/spin potentials (−0.2162 − 0.1918 Eh).
