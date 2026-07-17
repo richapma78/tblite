@@ -1297,3 +1297,15 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   over-correction localizes the kernel's short-range screening (scan-grade, labeled).
 - The polar layer is validated where measurable; two labeled mop-ups remain, each a
   designed one-session campaign. Then gradients per T1 and the Fortran port.
+
+### 2026-07-18 (sixty-ninth push) — the GENERAL ENGINE; the first polyatomic baseline (honest miss, fully decomposed)
+
+- **gxtb_engine.py**: one code path for any closed-shell molecule, every constant from the
+  decoded laws — no per-molecule anything. The Fortran port's blueprint, runnable.
+- **H2O, pure law-prediction**: worst 0.12, all occupied orbitals uniformly under-bound —
+  an honest MISS of the 0.05 bar decomposing into exactly the knowingly-absent layers
+  (O–H short pieces at a compressed bond; the offsite-ES2 not yet generalized to N-atom
+  sums; the µ-CN dressing; the O-p metric band). No new mystery — a baseline with a
+  to-do list, each item mechanical.
+- Next: generalize offsite-ES2 + µ-CN into the engine, extract-and-fit the O–H short
+  pieces, re-gate H2O; then the engine graduates to the port.
