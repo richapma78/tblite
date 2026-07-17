@@ -241,6 +241,11 @@
         "s": 1.89888,
         "p": 5.02125,
         "d": 0.07988
+      },
+      "53": {
+        "s": 1.92602,
+        "p": 4.98008,
+        "d": 0.0939
       }
     },
     "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far).",
@@ -392,6 +397,24 @@
       },
       "implied_per_pair": "solving x = k_eff*sqrt(CN(R; rc)) per pair: rc(HF)~0.99, rc(HCl)~1.465, rc(HBr)~1.82 with k_eff F~1.22, Cl~1.29, Br~1.50 (Br's constant to 0.3% over its scan)",
       "_verdict": "sqrt(CN)-family CONFIRMED per-pair, but the effective radii match NO decoded set (element diffs 0.475/0.355 vs L1[5] 0.783/0.508, Pyykko 0.662/0.283) and k_eff is partner-dependent -- either mu-CN has its own radius table (hardcoded) or a second CN-like term overlaps. Next discriminator: dense R-scans per pair for exact (k_eff, rc) + joint solve across many partners for a per-element radius table."
+    },
+    "mu_cn_own_table": {
+      "_conclusion": "the mu-CN uses its OWN hardcoded per-element geometry (the FOURTH hardcoded table): dense scans exclude every decoded radius set (L1[5], Pyykko, CEH, EEQBC-cov, vdW, Slater) under free-(keff,rc) fits, AND per-pair steepness varies (-2.39..-1.44) under fixed-radii fits -- no shared convention reproduces all pairs",
+      "measured_pair_rc": {
+        "HF": 0.9832,
+        "HCl": 1.4708,
+        "HBr": 1.8236,
+        "HI": 2.119
+      },
+      "measured_keff": {
+        "HF": 1.2309,
+        "HCl": 1.2929,
+        "HBr": 1.4882,
+        "HI": 1.3714,
+        "_caveat": "relaxation-contaminated ~5-10%; underlying constant plausibly ~1.3-1.4x k1(file)"
+      },
+      "fit_quality": "sqrt(CN) shape explains 99%+ per pair (worst resid 9e-4 for HBr)",
+      "_closure_design": "triangulation: perturb the PARTNER's k1CN in mixed X-Y pairs -> rc(X,Y) directly; enough pairs over-determine the per-element radius table (up to the combination convention); relaxation subtraction via restart-density charges throughout"
     }
   },
   "si_text_findings": {

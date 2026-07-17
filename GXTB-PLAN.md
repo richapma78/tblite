@@ -529,3 +529,18 @@ the print can lie in different ways.
   its own hardcoded radius table (like refocc and avg_cn) or a second CN-like term overlaps the
   signal. Dataset banked in derived-constants; next discriminator designed: dense per-pair
   R-scans → exact (k_eff, rc) pairs → joint per-element radius solve across many partners.
+
+### 2026-07-16 (twenty-second push) — the µ-CN's OWN TABLE established; I refocc measured
+
+- **Iodine's references FD-measured** (s 1.92602 p 4.98008 d 0.09390 — sum 7.00000 exact),
+  joining Br beyond the SI table.
+- **Dense scans (4 pairs × 6 points, restart-precision charges)**: √CN explains 99%+ per pair
+  (HBr worst-resid 9e-4). The fitted pair radii (HF 0.983, HCl 1.471, HBr 1.824, HI 2.119)
+  exclude EVERY decoded radius set, and fixed-radii/free-steepness refits need per-pair
+  steepness (−2.39..−1.44) — no shared convention survives. **Conclusion: the µ-CN carries its
+  own hardcoded per-element geometry — the FOURTH hardcoded table** (after refocc, avg_cn, the
+  onsite functions). k_eff per pair 1.23–1.49 (~5–10% relaxation contamination; underlying
+  ~1.3–1.4× the k1 slot).
+- **Closure designed — triangulation**: perturbing the PARTNER's k1CN in mixed X–Y pairs
+  measures rc(X,Y) directly; enough pairs over-determine the whole element table. Raw scans in
+  `data/mu-cn-scans.json`.
