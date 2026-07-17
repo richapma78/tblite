@@ -38,5 +38,6 @@
 # Python files
 __pycache__
 fortran/test_elem
+fortran/test_overlap
 fortran/*.mod
 fortran/*.o
