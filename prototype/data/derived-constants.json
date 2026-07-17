@@ -236,9 +236,15 @@
         "s": 2.032,
         "p": 5.927,
         "d": 0.039
+      },
+      "35": {
+        "s": 1.89888,
+        "p": 5.02125,
+        "d": 0.07988
       }
     },
-    "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far)."
+    "_note_al": "Al d 0.346/0.409 ambiguity in the pdftotext table column split: Mg row carries d 0.346? The SI layout puts d under Mg=0.346? No -- Mg has no d in table; 0.346/0.409/0.287 belong to Al/Si... Al d = 0.409 per column alignment; FD-verify before first use of Na..Ar rows beyond S/Cl (only C,N,O,F,Si,P,S,Cl are FD-verified so far).",
+    "_z35_note": "Br FD-measured 2026-07-16 (sum = 7.00000 exact); first beyond the SI table"
   },
   "oracle_conventions": {
     "_source": "restart.py measurements",
@@ -347,7 +353,46 @@
     "G2[1]": "offsite ES kernel global (k2x candidate; ES23 response ~constant R=3..5)",
     "_rejected": "a 5-parameter forward fit converged at k1CN~-23 (100x the SI scale) -- rejected as wrong-structure per house rules; slot identification by response SHAPES instead, magnitudes to be verified by forward model with FILE values",
     "_eq85_resolved": "VISUAL read of SI p.47-48 (rendered PNG): Eq.85 as PRINTED carries a subscript typo (l_B left, l_A right); intent per prose: drho_l = aufbau_l - refocc_l, static and per-shell small (near-cancelling atom sums). The fast-decaying stretch signal was the k1CN onsite term (L1[8]); the true offsite E1 is tiny. First-order term fully accounted for: mu=L7, k1CN=L1[8], f-switching globals hardcoded.",
-    "mu_cn_structure": "MEASURED (machine-precision FD via restart-density charges, HCl R=2..4): the mu CN-coupling is SQRT(CN)-structured -- direct/(mu*q) tracks sqrt(CN_mean) at ratio 1.07-1.21 across the range while every other candidate varies by factors. Same family as repulsion Eq. 56; the SI's Eq. 84 prints plain CN_A -- another paper-vs-binary divergence (pattern: Eq. 55 factor 2, Eq. 84 sqrt). OPEN: amplitude ~1.49x the file k1 value and a smooth 6% shape drift -- rc/amplitude separable by multi-partner stretches (HF/HBr), designed next."
+    "mu_cn_structure": "MEASURED (machine-precision FD via restart-density charges, HCl R=2..4): the mu CN-coupling is SQRT(CN)-structured -- direct/(mu*q) tracks sqrt(CN_mean) at ratio 1.07-1.21 across the range while every other candidate varies by factors. Same family as repulsion Eq. 56; the SI's Eq. 84 prints plain CN_A -- another paper-vs-binary divergence (pattern: Eq. 55 factor 2, Eq. 84 sqrt). OPEN: amplitude ~1.49x the file k1 value and a smooth 6% shape drift -- rc/amplitude separable by multi-partner stretches (HF/HBr), designed next.",
+    "mu_cn_multipartner": {
+      "_data": "x = dES1/dk1H/(mu_H*q_H) vs R for HF/HCl/HBr (restart-precision charges)",
+      "HF": {
+        "R": [
+          1.5,
+          1.7,
+          1.9
+        ],
+        "x": [
+          0.3662,
+          0.2164,
+          0.1103
+        ]
+      },
+      "HCl": {
+        "R": [
+          2.2,
+          2.7
+        ],
+        "x": [
+          0.4122,
+          0.1607
+        ]
+      },
+      "HBr": {
+        "R": [
+          2.5,
+          2.9,
+          3.4
+        ],
+        "x": [
+          0.6131,
+          0.3777,
+          0.1689
+        ]
+      },
+      "implied_per_pair": "solving x = k_eff*sqrt(CN(R; rc)) per pair: rc(HF)~0.99, rc(HCl)~1.465, rc(HBr)~1.82 with k_eff F~1.22, Cl~1.29, Br~1.50 (Br's constant to 0.3% over its scan)",
+      "_verdict": "sqrt(CN)-family CONFIRMED per-pair, but the effective radii match NO decoded set (element diffs 0.475/0.355 vs L1[5] 0.783/0.508, Pyykko 0.662/0.283) and k_eff is partner-dependent -- either mu-CN has its own radius table (hardcoded) or a second CN-like term overlaps. Next discriminator: dense R-scans per pair for exact (k_eff, rc) + joint solve across many partners for a per-element radius table."
+    }
   },
   "si_text_findings": {
     "_source": "ChemRoutes reference/Supplement_Information_TextCopyOnly.txt (Richard's direct copy-paste extraction, 2026-07-16) + rendered-page reads",

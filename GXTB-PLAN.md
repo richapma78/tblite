@@ -517,3 +517,15 @@ the print can lie in different ways.
 - Multi-partner round, first attempt: HF's CN window closes below R≈1.9 (F's small radius) —
   probe distances corrected; Br BLOCKED on its reference occupations (SI table ends at Ar) —
   the FD refocc measurement for Z>18 goes first. Both queued.
+
+### 2026-07-16 (twenty-first push) — Br refocc measured (sum exactly 7.00000); multi-partner µ-CN data
+
+- **Br's fractional reference occupations FD-measured** — the first element beyond the SI's
+  table: s 1.89888, p 5.02125, d 0.07988, sum 7.00000 EXACT (the electron-count identity is the
+  built-in check). Banked; the technique now covers any element the file parameterizes.
+- **Multi-partner stretches (corrected windows)**: per-pair the √CN shape holds (HBr's k_eff
+  constant to 0.3% over its scan) but the implied pair radii (HF 0.99, HCl 1.47, HBr 1.82) match
+  NO decoded radius set, and k_eff varies by partner (1.22/1.29/1.50) — the µ-CN either carries
+  its own hardcoded radius table (like refocc and avg_cn) or a second CN-like term overlaps the
+  signal. Dataset banked in derived-constants; next discriminator designed: dense per-pair
+  R-scans → exact (k_eff, rc) pairs → joint per-element radius solve across many partners.
