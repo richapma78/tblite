@@ -1196,3 +1196,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   loop are next.
 - Also this push: the T1 practical ruling (bug-compatible pairing; gradients differentiate
   the implemented Fock) confirmed as a banked design rule, no retrofit needed.
+
+### 2026-07-18 (sixty-first push) — **THE F2 SCF GATE PASSES**: the p-block entry
+
+- **f2_scf.py**: all eight eigenvalues within 0.0155 Eh at R = 3.8 (six of eight within
+  0.005), self-consistently, from decoded parts — the first p-shell molecule. The ES2
+  shell-resolved layer runs LIVE (decoded onsite kernel, self-consistent shell charges);
+  exchange = the per-AO same-shell skeleton + the pσ object's closed form; H0 = the
+  forward metric; ACP analytic; ES1 = the µ-law. The unified Mulliken potential
+  −½S∘(v+v) carries ES1 + ES2 + X together — one structure, three decoded ingredients.
+- r_e diagnostic: 0.007–0.045 concentrated on the σ orbitals — the unfitted p short
+  pieces (H2's fit route applies directly) plus the k_p puzzle; the π orbitals already
+  at 0.007.
+- Two SCF gates now stand (H2 full; F2 at the gate distance). Next: the p short pieces →
+  the r_e re-gate; HF's polar layer; the total-energy bookkeeping; gradients per T1; the
+  port.

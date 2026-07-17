@@ -699,6 +699,12 @@
   "f2_diagonal_probe": {
    "_verdicts": "TWO STRUCTURAL DECISIONS from the pz/px split probe (f2_diag_probe.py): (1) the exchange populations resolve PER-AO, not per-shell -- the per-AO prediction of the measured pz-px split lands within 0.006 at R=3.8 while per-shell misses by 0.148 (25x); the populations are chemistry-clean (sigma-bond pz m = 0.514, lone pairs px/py m = 1.0000 exactly); (2) the onsite exchange potential is SAME-SHELL-ONLY (v_l = gamma_ll * m_l, the atom-gate form) -- the cross-shell guess c_x*(L5_s+L5_p) overshoots the s-diagonal by 1.4 Eh, same-shell-only closes it to 0.018",
    "state": "all three F2 diagonals assemble from (level + analytic ACP + mu + same-shell per-AO exchange) to misses of +0.018/+0.005/-0.028 at r_e and +0.053/+0.024/+0.019 at 3.8 -- and the pending ES2 shell-resolved shifts (shell charges q_s = -0.117, q_p = +0.115; decoded onsite kernel predicts ~0.04 shifts) are exactly the remaining size. ES2-diag inclusion + the p short pieces + the SCF loop are the next assembly steps."
+  },
+  "scf_f2_GATE_PASSED": {
+   "_milestone": "THE F2 SCF GATE PASSES (sixty-first push): all EIGHT eigenvalues within 0.0155 Eh at R=3.8 (six of eight within 0.005), self-consistently, from decoded parts -- the first p-shell molecule. The ES2 shell-resolved layer runs LIVE in the loop (decoded onsite kernel gamma2 = s(F)*harmonic(U_l,U_l') with self-consistent shell charges); the exchange uses the per-AO same-shell skeleton + the p-sigma object's closed form; H0 the forward metric; ACP analytic; ES1 the mu-law.",
+   "re_diagnostic": "at r_e: 0.007-0.045, concentrated on the sigma orbitals -- the unfitted p short pieces (the H2-style fit route applies) + the k_p metric puzzle. The pi orbitals already sit at 0.007.",
+   "conventions_locked": "per-AO populations; same-shell-only onsite exchange; the unified Mulliken form -1/2 S o (v+v) carrying ES1 + ES2 + X potentials together",
+   "_next": "fit the p short pieces at short R (H2 route) -> re-gate at r_e; HF (polar ES; the q-channels k-tilde-0/3 wake); the total-energy bookkeeping gate; gradients (differentiate the implemented Fock, per T1); the Fortran port"
   }
  }
 }
