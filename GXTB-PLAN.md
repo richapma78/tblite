@@ -1563,3 +1563,22 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   repulsion. For those the decompilation is a **differential check** (is our formula
   the binary's, stock or modified?), not primary source.
 - Assets saved: memory `gxtb-decompilation-asset` (how to search it) + this map.
+
+### 2026-07-17 (eighty-sixth push) — is GFN2 bypassed under -gxtb? there is no GFN2 method to bypass (+ a decomp methodology correction)
+
+- **Answer to the literal question**: no. Zero GFN2/GFN1/GFN-FF method driver (no SCC,
+  no peeq, no GFN2 Hamiltonian). The only `gfn2` tokens are 49 hits inside the **dftd4
+  library** (`set_refalpha_gfn2`, `set_refq_gfn2` — D4's reference data tabulated at the
+  GFN2 level, standard D4 internals). Binary identity: "reading g-xTB parameter file" —
+  the dedicated single-method gxtb executable. No `-gfn2` path exists, so nothing is
+  bypassed; g-xTB is the only method.
+- **Methodology correction (retracts part of pass 85)**: the call-site grep `symbol_(`
+  returns zero for `xtb_aespot`, `dftd4`, AND `multicharge` alike — this is an ifort
+  `-ipo`/LTO build, so calls are inlined into MAIN__ and named call sites vanish while
+  Ghidra keeps out-of-line bodies. **Live-vs-dead cannot be judged from call sites here.**
+  The reliable liveness proof is the printed nonzero energy terms (H2O: ES multipole
+  0.00405, dispersion −0.00078). So AES and D4 are live g-xTB terms — not bypassed GFN2
+  leftovers — but the pass-85 phrasing "port the linked xtb_aespot module" is retracted:
+  gap #5 (a live AES term) stands, and its port sources from the g-xTB SI's AES formula
+  cross-checked against the printed value, not from assuming the linked module is called
+  verbatim.
