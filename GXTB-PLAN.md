@@ -1286,3 +1286,14 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The HF energy re-gate now needs: the µ-CN wiring (banked x-curves or the finished
   4th-table decode), the offsite γ2, the k̃0 term — bounded items, no mysteries. Then
   gradients per T1 and the Fortran port.
+
+### 2026-07-18 (sixty-eighth push) — **THE POLAR ES LAYER GATES OUT-OF-SAMPLE**
+
+- **hf_energy2.py**: at R = 2.7, with nothing calibrated — ES1 within 0.0013, ES2+3 within
+  0.0028 — from Mulliken shell charges + the plain Klopman–Ohno offsite kernel (k2x refit
+  = 0.00 on the banked HCl rows) + the Eq-86 Δρ⁰ term + the banked µ-CN x-curve (H side).
+- At r_e: ES1 closes to 0.00009 with ONE calibrated factor (the unmeasured F-side µ-CN;
+  in-sample, labeled — a 2-run FD campaign replaces it with data); ES2+3's −0.0145
+  over-correction localizes the kernel's short-range screening (scan-grade, labeled).
+- The polar layer is validated where measurable; two labeled mop-ups remain, each a
+  designed one-session campaign. Then gradients per T1 and the Fortran port.
