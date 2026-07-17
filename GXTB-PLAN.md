@@ -1008,3 +1008,14 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   (both eigenvalues ≤0.006); worst virtual miss down 0.33 → 0.10. The remaining misses are
   the measured γ_off remainder, provably two pieces crossing at R≈2.3 (long branch =
   −2c_x·γ_off·P12, flagged). The symbolic session takes the remainder; then the full gate.
+
+### 2026-07-18 (forty-eighth push) — the remainder characterized; the singlet's short-R data ruled contaminated
+
+- Trust correction: the singlet's short-range remainder is FORWARD-CONTAMINATED (it rides
+  the H0-forward's ~+0.01 gaps); the clean set is triplet + H2⁺ (spin-subtracted) + the
+  singlet tail. On it: H2⁺'s remainder = the −2c_x·γ_off·P12 law ±15% (R ≥ 2.5) plus a
+  small short piece; the triplet's is one negative fast-dying piece that resists every
+  one/two-factor product tried (all drift >25% — recorded, not tuned).
+- The symbolic-enumeration session now has everything it needs: three clean curve families,
+  the identified onsite form, the lawful long branch, and the crossing structure. Then the
+  full H2 gate → F2/HF → energies → the port.
