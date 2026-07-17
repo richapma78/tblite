@@ -712,6 +712,11 @@
    "assembly_notes": "heteronuclear H0 (harmonic kdiat = 2.446, arithmetic level means, mixed per-element metrics, one-sided Pi b_H = 0.021 band); per-element exchange constants (c_x(H), c_x(F)); onsite ES2 per element with self-consistent shell charges; ACP analytic.",
    "residual_layer_honest": "HF's residual layer is LARGER than F2's and visibly carries real physics: the diagonal curves are big and flat-tailed (d_Hs +0.08, d_Fs -0.14 nearly R-constant) -- the absorbed OFFSITE-ES2 (atomic-charge electrostatics, kernel half-decoded) + the k-tilde q-channels; diagonal fit rms ~0.02 is coarse but the gate passes. REFINEMENT TARGET: decode the offsite gamma2 kernel properly and shrink the residual layer to F2-grade.",
    "_next": "the total-energy bookkeeping gate (E from the validated per-term formulas at the gated densities, vs the printed decomposition); gradients per T1; the port"
+  },
+  "energy_gate_h2_PASSED": {
+   "_milestone": "THE TOTAL-ENERGY BOOKKEEPING GATE PASSES ON H2 (sixty-fourth push): the electronic energy assembles from the ENERGY formulas (Tr(H0_fwd P) + Tr(ACP P) + the 4-index Ex; E1/E23/AES/spin = 0 at q=0 by the method's own structure) to +0.0162/-0.0046/-0.0014 Eh at R=1.4/2.5/4.0 vs the printed decomposition; repulsion at 4e-10..2e-9 (its own gate held); Ex exact; increments/dispersion pass-through (dispersion = revD4, not decoded, labeled). The 1.4-gap is the H0-forward's known short-range budget through Tr(H0 P).",
+   "significance": "H2 now gates END-TO-END: orbitals (SCF, 0.001-0.006) AND total energy (0.001-0.016) -- the quantity ChemRoutes actually consumes. The T1 bookkeeping rule (energies from energy formulas, never eigenvalue sums) is operational and correct.",
+   "_next": "F2/HF energy gates (need the ES2/E3 energy terms live at q != 0 and the shell-charge E2 for F2); the offsite-gamma2 decode; gradients; the port"
   }
  }
 }

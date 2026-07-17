@@ -1236,3 +1236,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   the residual to F2-grade.
 - Next: the total-energy bookkeeping gate (the validated per-term formulas at the gated
   densities vs the printed decomposition), gradients per T1, the Fortran port.
+
+### 2026-07-18 (sixty-fourth push) — **THE ENERGY GATE PASSES ON H2**: end-to-end
+
+- **energy_gate.py**: the electronic energy assembles from the ENERGY formulas —
+  Tr(H0_fwd·P) + Tr(ACP·P) + the 4-index Ex, with E1/E2+3/AES/spin vanishing at q=0 by
+  the method's own structure — to +0.0162/−0.0046/−0.0014 Eh at R = 1.4/2.5/4.0 against
+  the printed decomposition. Repulsion holds its own gate (4e-10–2e-9); Ex exact;
+  increments exact; dispersion pass-through (revD4 undecoded, labeled).
+- **H2 gates END-TO-END**: orbitals (0.001–0.006) and total energy (0.001–0.016) — the
+  quantity ChemRoutes consumes. The T1 bookkeeping rule (energies from energy formulas,
+  never eigenvalue sums) is operational.
+- Next: the F2/HF energy gates (the q≠0 ES energy terms go live), the offsite-γ2 decode,
+  gradients per T1, the Fortran port.
