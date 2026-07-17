@@ -1080,3 +1080,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   give. The (m−1)-carrier candidate fits here (+0.081, the −0.08-family again) but would
   vanish on the triplet, which has its own extra — the unified short-piece law is still the
   one open item. restart.py + fock_recon.py now carry UKS natively.
+
+### 2026-07-18 (fifty-third push) — the n=2 short-piece law UNIFIED; two refutations
+
+- **Triplet HeH⁺** (2α, heteronuclear, P = S⁻¹ to 1e-8): the short-piece potential is
+  ELEMENT-BLIND — wHe = wH to four digits at every R (He's constants are 2.5× H's: every
+  per-element weighting refuted) — and the γ_off-weighting is REFUTED 24× (the tiny cross
+  kernel predicts −0.012; measured −0.284).
+- **THE UNIFICATION**: both triplet systems obey rem11 = −0.45·γ̄_on·(P_AA − m_A) with
+  γ̄_on the PAIR-MEAN onsite kernel (HeH⁺ ±0.6%; H2 ±3%); c ≈ −4/9 flagged. The off-diagonal
+  keeps the pure Mulliken-potential pattern (rem12 = s·rem11) on both.
+- The n=1 manifolds carry a structurally different piece (small-population-localized,
+  sign-opposed to (P−m)) — a SEPARATE term, still lawless: the last unknown in the entire
+  Hamiltonian is now one n=1 short-range term with four clean datasets bearing on it.
