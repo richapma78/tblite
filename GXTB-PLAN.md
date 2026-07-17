@@ -1249,3 +1249,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   never eigenvalue sums) is operational.
 - Next: the F2/HF energy gates (the q≠0 ES energy terms go live), the offsite-γ2 decode,
   gradients per T1, the Fortran port.
+
+### 2026-07-18 (sixty-fifth push) — F2's energy gate PASSES per-term; HF localizes the polar decode targets
+
+- **F2 PASSES**: ES1 within 0.0007; ES2+3 within 0.00001 — the decoded onsite
+  shell-resolved kernel is essentially EXACT (Mulliken-based shell charges); EHT+ACP
+  within 0.0122 (the k_p budget). Two molecules now hold energy gates (H2 end-to-end,
+  F2 per-term).
+- **HF fails informatively**: the ES terms miss because polar systems are NOT driven by
+  raw Mulliken charges (ES1 +0.031 off with q_Mulliken = +0.41 vs EEQ +0.12) — the
+  atom/shell charge-partition rule is the decode target, invisible on homonuclear systems
+  where the two definitions coincide at zero. The omitted k̃0·q Ham-adaptation plausibly
+  carries the EHT+ACP misses; the offsite-γ2 omission shows as the labeled ES2+3 gap.
+- Three cleanly-localized polar decode targets remain: the charge-partition rule, the
+  k̃0 slot (L8[4] candidate), the offsite γ2 kernel. Then the HF energy re-gate, gradients,
+  the port.
