@@ -66,3 +66,23 @@ exists.
 `prototype/chart_onsite2.py` + the ion scans, D3 by the restart-precision FD scripts (raw data
 in the plan's status log). If upstream publishes source or errata, diff against this registry
 first.*
+
+## D4 — Eq. 149: the MFX exchange kernel's Hubbard placement
+
+- **Paper**: γ^MFX = [α + (1−α)erf(ωR)] / (R + favg(U^MFX)·exp(−(k1+k2R)·R)) — the shell
+  Hubbards (U^MFX = the L5 row, the only shell-wise row left) in the DENOMINATOR screening:
+  |Ex| would shrink as L5 grows.
+- **Binary** (measured): ONSITE Ex is EXACTLY linear-increasing in L5 (dEx/dL5 = −0.049268
+  constant to six digits over a 16× range — and equal to the master function c_x = s/9.59);
+  OFFSITE Ex saturates in L5 (F2 pσ at R=6: L5→0 limit +0.043 of +0.077 pristine, linear-fit
+  residual 9.4e-3) — L5 in the numerator AND denominator.
+- **Mathematical analysis**: a denominator-only U cannot produce onsite linearity through
+  zero intercept (measured exact) under any parameter choice; the onsite channel is the
+  separate Sec-1.16 correction with a hardcoded scale (no global moves the atom's Ex — all
+  20 give exact zeros), and the offsite kernel carries U multiplicatively with a U-dependent
+  screening. The paper's Eq. 149 most plausibly describes an earlier form, or the U-placement
+  moved between fit generations; the printed form cannot reproduce the binary.
+- **Verdict**: binary (numerator-U onsite-linear + saturating offsite); the measured 17-point
+  γ_off(R) curve is the implementation target. CONSEQUENCE: the L5-Euler X-subtraction used
+  by the off-diagonal decomposition is exact ONLY onsite/for the tangent part — its offsite
+  saturation remainder is what the campaign called "the pzpz object", now reinterpreted.

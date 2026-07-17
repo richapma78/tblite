@@ -584,7 +584,8 @@
     "a_identified": "a = G2[8] = 0.2347: the G2[8] FD response equals c*(2/sqrt(pi))*exp(-a^2 R^2) within 9% at R=6 and 20% at R=2.67 -- shape-corroborated, so G2[8] = the penetration range global",
     "c_candidate_FLAGGED": "c ~ 3*|drho_p(F)| = 3*0.144 = 0.432 (3% off). FLAGGED numerology, but it SURVIVES its first falsification: REFOCC(H) = 1.0 exactly -> drho(H) = 0 -> predicts the object's measured H2-absence. Next test: another p element (Cl blocked by eps window; O/N via their homodiatomics are open-shell; consider CO/N2 partial inversions or HF)",
     "interpretation_FLAGGED": "a reference-density PENETRATION correction outside Eq 64 (the SI admits: 'part of the penetration effects ... is not fully captured') -- sigma-selective (p_sigma points along the axis), drho0-carried, erf-Coulomb ranged"
-   }
+   },
+   "_REINTERPRETED": "the object IS the OFFSITE MULLIKEN-EXCHANGE EULER REMAINDER. Evidence chain (forty-second push): (1) the offsite exchange saturates in L5 (F(pzpz'; L5_p) at R=6: linear-fit resid 9.4e-3, L5->0 limit +0.043, saturating toward +0.080 -- L5 in the kernel numerator AND denominator), so the L5-Euler subtraction removes only the tangent line (2.207*0.0121 = +0.027 of +0.077) and the saturation gap survives as 'the object'; (2) the object's global knobs G1[6]/G1[7]/G2[8] ARE offsite-exchange globals (the all-20 sweep: only G1[4]/G1[6]/G1[7]/G2[8] move H2's offsite Ex; NOTHING moves the atom's -- alpha hardcoded); (3) sigma-selectivity = the P^2 bond-order weighting (pi bond order 0, s pairs closed); (4) the Coulomb-ish tail = the measured kernel gamma_off(R) (glacial decay, 0.44->0.38 over R=1..20); (5) L4_p's ownership routes through the density (s-p sigma hybridization of the stretched-RKS P). The 'reference-density penetration' interpretation and the 3*drho_p numerology are SUPERSEDED (kept for the record); the 0.42*erf(0.23R)/R closed form remains valid as the measured curve's parametrization."
   },
   "eht_globals_named": {
    "_instrument": "atlas_globals.py: all 20 globals + the L8 quartet at short R (the R=6 nullsweep was blind to S-shaped responses); data/atlas-globals.json",
@@ -642,6 +643,13 @@
    "consequence": "the FD-decomposition method's clean domain is HOMONUCLEAR; the polar layer (ES off-diagonal, k-tilde-0/3 wake-up) must be closed SELF-CONSISTENTLY -- forward-model the full Fock with the decoded kernels, converge, gate on converged observables",
    "residual": "EHT - forward(mixed metric, nothing refit) = +0.071/+0.082 Eh at R=1.4 falling to +0.006/+0.026 at 4.5 -- large, not proportional to S*q (correlate drifts 0.72->1.44 / -1.1->-4.2); recorded as the polar-layer target for the SCF stage",
    "_data": "data/hf-stretch.json (9 rows: base + 11-slot FDs + ACP + EEQ q(R))"
+  },
+  "mfx_exchange": {
+   "_structure": "ONSITE: Ex = -c_x*L5*n^2 with c_x = s/9.59 (EXACTLY linear: dEx/dL5 = -0.049268 constant to 6 digits over L5 = 0.5..8 = c_x(H); the separate Sec-1.16 onsite correction, hardcoded scale). OFFSITE: MNKO-family kernel with L5 in numerator AND denominator (saturating; D4 refutes Eq 149's pure-denominator printing)",
+   "kernel_curve": "gamma_off(R) MEASURED on H2 at 17 points (data/ex-kernel.json + ex-tail): 0.4366@0.9 rising to 0.4657@3.0 falling to 0.3773@20 -- glacial decay, gamma*R still rising at R=20; the (a,b,w,c,k1,k2) MNKO fit reaches rms 9.9e-4 but grid-edge-pinned/degenerate over this window -- the CURVE is the deliverable, the form stays open",
+   "globals": "offsite movers: G1[4] (-0.264, strongest), G1[7] (-0.113), G2[8] (-0.067), G1[6] (-0.052) on H2@2.5 Ex -- four movers for the SI's four kernel globals (alpha hardcoded: all 20 globals give EXACT ZERO on the atom's Ex). G1[4]'s old 'H2-ss-heavy unknown' resolved",
+   "eq151_checks": "the Eq-151 contraction with idempotent P gives A = B = -0.2500 EXACTLY at every R (invariants) -- the Mulliken structure confirmed; extraction of gamma from printed Ex is exact for H2's 2-AO case",
+   "_next": "F2/heteronuclear kernel generalization (element pairs, favg); the SCF's exchange Fock = Eq 153 with the onsite-linear + offsite-kernel-curve pieces"
   }
  }
 }

@@ -892,3 +892,27 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   closed SELF-CONSISTENTLY. The forward residual (+0.07 Eh at short R, not ∝ S·q) is banked
   as the SCF stage's target. Pivoting to the SCF assembly (the roadmap's endpoint anyway):
   read Sec 1.9.2/1.10.2/1.15.2 Fock forms, assemble H2 first, gate on converged observables.
+
+### 2026-07-18 (forty-second push, overnight) — THE OBJECT WAS THE EXCHANGE; D4; the kernel measured
+
+- **D4 registered** (mfx_chart.py): the binary's onsite Ex is EXACTLY linear in L5 —
+  dEx/dL5 = −0.049268 constant to SIX DIGITS over L5 = 0.5–8, and it equals the master
+  function c_x = s/9.59 — refuting Eq. 149's denominator-U printing. Offsite Ex SATURATES
+  in L5 (numerator AND denominator). The onsite channel is the separate Sec-1.16 correction,
+  hardcoded scale: the all-20 global sweep gives EXACT ZEROS on the atom's Ex (α hardcoded).
+- **The exchange kernel MEASURED** (ex_extract.py): H2's printed Ex + restart P + our S
+  invert Eq. 151 exactly (the idempotency invariants A = B = −0.2500 at every R confirm the
+  Mulliken structure); γ_off(R) = 0.437→0.466 (max at R≈3) →0.377 at R=20 — glacial decay,
+  γ·R still rising at 20. The MNKO form-fit reaches 9.9e-4 but is grid-edge degenerate over
+  this window: the CURVE is the deliverable. Offsite globals found: G1[4] (strongest),
+  G1[6], G1[7], G2[8] — four movers for the SI's four kernel globals.
+- **THE OBJECT REINTERPRETED — mystery closed**: the pzpz object IS the offsite-exchange
+  Euler remainder. The L5-Euler subtraction is exact only for degree-1 content; the offsite
+  kernel saturates, so the subtraction removes the tangent line (+0.027 of +0.077 at R=6)
+  and the saturation gap survives — with every signature now explained: σ-only (bond-order
+  P² weighting; π and s pairs closed), the kernel's slow tail, the exchange globals as its
+  knobs, L4_p through the density's s-pσ hybridization. The "penetration"/3·Δρ⁰ readings are
+  SUPERSEDED (recorded); the 0.42·erf(0.23R)/R form survives as the curve's parametrization.
+- Consequence for the assembly: the SCF's exchange Fock = Eq. 153 with onsite-linear +
+  offsite-kernel-curve pieces; the F2 p-element forward gaps (spz/pzpz/pxpx) are expected to
+  be largely THIS remainder — re-gate after the exchange is forward-modeled.
