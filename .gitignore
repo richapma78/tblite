@@ -37,3 +37,6 @@
 
 # Python files
 __pycache__
+fortran/test_elem
+fortran/*.mod
+fortran/*.o
