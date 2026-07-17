@@ -1093,3 +1093,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - The n=1 manifolds carry a structurally different piece (small-population-localized,
   sign-opposed to (P−m)) — a SEPARATE term, still lawless: the last unknown in the entire
   Hamiltonian is now one n=1 short-range term with four clean datasets bearing on it.
+
+### 2026-07-18 (fifty-fourth push) — the n=1 term cornered structurally: it is MO-RESOLVED
+
+- The systematic enumeration (38 rows, five manifolds) found no ≤2-term law in the
+  P-scalar space for the n=1 extras (pre-declared bar not met; the n=2 generalization
+  −0.44·γ̄·(P−m)·m_B keeps self-selecting and stays triplet-consistent).
+- **Spin suspicion executed by reading**: SI Eq. 121 makes the entire spin term k_W-linear
+  (element slot × hardcoded reference constants) — the W-slot FD subtraction was COMPLETE;
+  the n=1 extras are genuinely exchange.
+- **The structural constraint won**: no P-functional can split n=1 from n=2 beyond P itself
+  (and the exact P's are in hand) ⟹ the last unknown is MO-RESOLVED — per-orbital
+  SIC-type structures (Σ|c|⁴ class: P-expressible for one electron, different for two) are
+  the natural candidates. Charge-driven forms were already excluded (triplet-HeH⁺ is
+  charged and lawful). Next: MO-resolved candidates vs the four n=1 curve families, with
+  the n=2 invariance as the cross-check.
