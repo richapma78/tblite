@@ -1472,3 +1472,19 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next decomposition: subtract the c=1 fold from the ion Euler parts, re-test
   Q-weighting on the residue — state-invariant τ_Q would close the offsite ES3
   completely.
+
+### 2026-07-17 (eightieth push) — the offsite third order decomposed: fold + Q-term; the v1 table's failure explained
+
+- Residue analysis (measured parts minus the parameter-free fold) against total-charge
+  weighting: **the O-side Q-term is state-invariant across a charge-sign flip**
+  (τ_Q = +1.14 anion vs +1.00 cation, 13%) — the Q-lead is quantitative. The
+  **H2+ → H3+ transfer miss halves** (20% → 10%): most of the pass-76 "three-body"
+  signal was fold contamination; a ~10% residual stays labeled.
+- The H|H Q-kernel is a measured curve (node ~2.05, negative tail); kernels are
+  per-pair-side, as a two-U pair kernel should be. Sub-floor signals stay inconclusive.
+- **The composite third order, assembled**: onsite closed form + U(q) fold (c = 1) +
+  explicit Q-weighted term with measured radial kernels. This also EXPLAINS pass-77's
+  charge-state inconsistency: the v1 table lumped fold+Q into one number, which cannot
+  transfer because the two pieces scale with different charges.
+- Next: engine v2 ES3 (fold + Q-term replacing the v1 table), re-gate the six systems,
+  then the clean grand-law re-fit.
