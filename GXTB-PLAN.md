@@ -1264,3 +1264,14 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Three cleanly-localized polar decode targets remain: the charge-partition rule, the
   k̃0 slot (L8[4] candidate), the offsite γ2 kernel. Then the HF energy re-gate, gradients,
   the port.
+
+### 2026-07-18 (sixty-sixth push) — the polar charge probe: an instrument limit confirmed, the next instrument designed
+
+- **hf_es_probe.py**: the µ-FD "operative charge" on H flips sign between distances while
+  every candidate stays positive — the density-relaxation chain dominates energy-FDs on
+  polar systems (the pass-52 wall, now confirmed for energies; instrument limit banked).
+- Designed next: the FROZEN-DENSITY forward comparison — ES1 candidates from the fixed
+  restart density under each (charge definition × shell partition), against the printed
+  value, no perturbation anywhere. New suspect for the ES1 miss: the Eq-86 offsite Δρ⁰
+  term, negligible at EEQ-scale charges (the old "tiny" ruling) but miss-sized at
+  Mulliken scale. Plus: SI Sec 1.9's exact q_lA definition, L8[4] as k̃0, the offsite γ2.
