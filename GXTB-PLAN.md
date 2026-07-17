@@ -986,3 +986,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - NEXT: the algebra task — derive the Ref-62 four-matrix Fock formula's 2×2 element
   structure symbolically per manifold (the binary's loop conventions leave few candidates)
   and match against the measured curves; then rebuild fock_x, re-gate scf_h2, F2/HF.
+
+### 2026-07-18 (forty-seventh push) — the great elimination: the whole SPS-sandwich space is dead; two new asymptotic laws
+
+- **The six-pairing solve** (all six possible kernel index-pairings in F = −ΣSPS·γ_pair,
+  free coefficients, 57 equations over four manifolds): rms 5.2e-2, unphysical coefficients,
+  diagonals missed by 0.08–0.13 — the ENTIRE sandwich space is eliminated, every loop
+  convention. The Mulliken-density form γ∘(PS+SP)/2 also dies (triplet off-diagonal would
+  vanish; measured −0.48).
+- **Two new asymptotic laws**: X12(triplet)/S → −γ_on exactly at long R; X12(singlet, R≥4)
+  = −γ_on·S·m̄ − 2c_x·γ_off·P12 within 0.6–2% — the 2c_x = 0.0985 factor appears uninvited
+  (flagged; c_x is the onsite exchange scale, so a mechanism is plausible). Short-R still
+  refuses every closed form tried; recorded, not tuned.
+- Next: the sympy symbolic-enumeration instrument over the wider form space (population,
+  Mulliken-density, P-carried, and product structures), solved as exact rational identities
+  per manifold against the four measured curve families.
