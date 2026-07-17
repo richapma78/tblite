@@ -1457,3 +1457,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Instrument limit logged: H2O²⁺ is not fully invertible (window 5 < 6) — read oracle
   populations instead. The installed v1 τ table stays gate-valid (measured at the gate
   states) but must NOT be transferred to new charge states.
+
+### 2026-07-17 (seventy-ninth push) — the U(q) fold, parameter-free: Γ IS dU/dq, in the offsite KO kernel
+
+- The neutral H-side extras fall to a **zero-parameter prediction**: fold U_l(q) = U_l +
+  Γ_A·q_A into the OFFSITE KO second-order kernel — the chain constant is exactly 1,
+  Γ_A literally the dU/dq the SI names it. OH· −0.00233 vs −0.00266 (12%); H2O
+  −0.00511 vs −0.00442 (16%). Every other scope/chain variant is refuted on the
+  H-sides; the O-side tests sit below the instrument floor (sub-millihartree signals
+  under 4–17% subtraction constants) — inconclusive, labeled.
+- The composite third order: onsite explicit closed form (pass 75) + offsite U(q) fold
+  (c = 1) + an explicit total-charge-weighted term alive only on ions (the fold alone
+  gives the wrong sign for OH−'s O-part, so pass-78's Q-lead is a separate real term).
+- Next decomposition: subtract the c=1 fold from the ion Euler parts, re-test
+  Q-weighting on the residue — state-invariant τ_Q would close the offsite ES3
+  completely.
