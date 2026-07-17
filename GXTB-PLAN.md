@@ -544,3 +544,14 @@ the print can lie in different ways.
 - **Closure designed — triangulation**: perturbing the PARTNER's k1CN in mixed X–Y pairs
   measures rc(X,Y) directly; enough pairs over-determine the whole element table. Raw scans in
   `data/mu-cn-scans.json`.
+
+### 2026-07-16 (twenty-third push) — the µ-CN is a PAIR function; ES1 closes 4× tighter
+
+- **Both atoms of a pair share the same coupling function**: the Cl-side measurement on HCl fits
+  (keff 1.2484, rc 1.4742) vs the H-side's (1.2929, 1.4708) — the µ-CN count is a PAIR property
+  (one bond, counted from both ends), collapsing the "per-element table" into pair radii that
+  per-element values must combine to.
+- **ES1 forward model with the measured pair C(R)**: worst |d| = 2.4e-3 at R=2 (was 1.0e-2 —
+  4× tighter), mid/long range 1–4e-4. Remaining short-range suspects: relaxation haze in keff,
+  the f-linearization at |q|~0.33, offsite screening. The first-order term is a whisker from
+  closed on HCl.

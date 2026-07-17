@@ -415,6 +415,11 @@
       },
       "fit_quality": "sqrt(CN) shape explains 99%+ per pair (worst resid 9e-4 for HBr)",
       "_closure_design": "triangulation: perturb the PARTNER's k1CN in mixed X-Y pairs -> rc(X,Y) directly; enough pairs over-determine the per-element radius table (up to the combination convention); relaxation subtraction via restart-density charges throughout"
+    },
+    "mu_cn_pair_function": {
+      "_finding": "BOTH atoms of a pair share the same C(R): Cl-side on HCl fits (keff 1.2484, rc 1.4742) vs H-side (1.2929, 1.4708) -- the mu-CN count is a PAIR property (the same bond counted from both ends), so per-element radii combine to the measured pair rc",
+      "es1_closure_hcl": "forward model with measured pair C(R) (keff 1.2707, rc 1.4725 avg) + static drho offsite + KO kernel: worst |d| 2.4e-3 at R=2 (was 1.0e-2), mid/long range 1e-4..4e-4",
+      "_remaining": "R=2 residual suspects: relaxation contamination in keff (~5%), f-linearization at |q|~0.33, offsite k2x screening"
     }
   },
   "si_text_findings": {
