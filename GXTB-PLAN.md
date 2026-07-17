@@ -1168,3 +1168,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   resolution in the exchange/ES machinery — the one structural question the diagonal
   assembly needs answered.
 - Then: the F2 SCF loop and gate; HF's polar ES; the energy bookkeeping.
+
+### 2026-07-18 (fifty-ninth push) — the math-vs-physics round (user-requested): two verdicts, one elimination
+
+- **D4 adjudicated by theory**: Klopman–Ohno physics demands the kernel's onsite limit grow
+  with hardness — the binary's U-linear exchange is physically CORRECT; the paper's printed
+  denominator form is inverted physics, i.e., a misprint. Registry updated.
+- **T1 registered (binary-vs-theory)**: the exact-energy + population-Fock pairing is the
+  known TB "Mulliken shift" shortcut; the SCF is stationary for neither functional, and
+  gradients must differentiate the IMPLEMENTED Fock — consistent with the SI deferring
+  gradients everywhere. Our replication is knowingly bug-compatible here.
+- **One elimination**: the short pieces are NOT (true gradient − shortcut) — ratios drift
+  170× — killing every fixed blend of the two functionals. The triplet's striking
+  matrix-parallelism is symmetry-forced, honestly noted. The coefficients stay
+  measured-not-derived; the derivation attempts continue alongside the assembly work.

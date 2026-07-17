@@ -86,3 +86,29 @@ first.*
   γ_off(R) curve is the implementation target. CONSEQUENCE: the L5-Euler X-subtraction used
   by the off-diagonal decomposition is exact ONLY onsite/for the tangent part — its offsite
   saturation remainder is what the campaign called "the pzpz object", now reinterpreted.
+
+## D4 addendum — the THEORY adjudication (per the standing request: compare the math to physics)
+
+- The Pariser/Klopman–Ohno tradition defines the exchange-type kernel's onsite limit as the
+  chemical hardness: γ(0) ≈ U — the kernel MUST grow with U. The binary's measured onsite
+  exchange (exactly linear-increasing in L5, slope = the master function c_x) obeys this;
+  the paper's printed denominator-U form (γ(0) = α/U, shrinking with hardness) is
+  physically inverted. THEORY VERDICT: the binary implements the physically correct
+  convention; Eq. 149 as printed is a misprint, not an alternative model.
+
+## T1 — a binary-vs-THEORY classification (not paper-vs-binary): the non-variational E/F pairing
+
+- Measured: the binary's exchange ENERGY is the exact Mulliken 4-index form (validated on
+  four density manifolds to all digits), while its Fock is provably NOT that energy's
+  gradient (machine-exact numerical gradients fail the measured Fock on every manifold; the
+  population-potential skeleton fits instead). This is the known tight-binding "Mulliken
+  shift" shortcut: E from one functional, F from a population approximation.
+- CONSEQUENCE (theory-named): the SCF converges to a stationary point of neither
+  functional; analytic gradients become inconsistent unless derived against the
+  implemented F. The SI's every-section "nuclear gradients will be part of a future
+  version" is CONSISTENT with the authors knowing this. Our replication reproduces the
+  pairing bug-compatibly (E-formula and F-formula separately), and our future gradient
+  work must differentiate the IMPLEMENTED Fock, not the energy.
+- Eliminations from the theory tests (fifty-ninth push): the measured short pieces are NOT
+  the (true-gradient minus shortcut) difference (ratio drifts 170x across the stretch), so
+  the binary's F is not any fixed blend of the two either.
