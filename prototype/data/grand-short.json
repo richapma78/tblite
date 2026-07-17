@@ -4436,16 +4436,30 @@
   ]
  },
  "offdiag_best": {
-  "rms": 0.010745416625303164,
+  "rms": 0.0107,
   "terms": [
    "gb_p_s2",
    "s",
    "p"
   ],
   "coefs": [
-   3.0150788720409487,
-   -0.07739352982632361,
-   -0.2119490299302536
+   3.0151,
+   -0.0774,
+   -0.2119
   ]
+ },
+ "offdiag_obj": {
+  "rms": 0.009188369373982075,
+  "terms": [
+   "gb_p_s2",
+   "s",
+   "obj_p"
+  ],
+  "coefs": [
+   2.6238508226347452,
+   -0.07138727512732515,
+   -2.0744604115371823
+  ],
+  "note": "better rms (0.0092) and H2 in-sample, but the HF top virtual crosses the 0.05 bar when installed (gate 2/4 vs 3/4) -- needs the sigma/pi class split before install"
  }
 }

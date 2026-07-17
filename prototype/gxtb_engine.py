@@ -18,6 +18,7 @@ import os
 import sys
 
 import numpy as np
+from scipy.special import erf as erf_np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -153,8 +154,20 @@ def fock(P, B):
              + GRAND_D["mi_S_gb_s2"] * m * np.sum(gb * S2, axis=1)
              + GRAND_D["S_gb_s4"] * np.sum(gb * S2 * S * S, axis=1))
         F += np.diag(d)
-        F += cross * (GRAND_O["gb_p_s2"] * gb * Ps * S2
-                      + GRAND_O["s"] * S + GRAND_O["p"] * Ps)
+        RAB = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                RAB[i, j] = B["Rab"][meta[i][0], meta[j][0]]
+        with np.errstate(divide="ignore", invalid="ignore"):
+            obj = np.where(cross, 0.42 * erf_np(0.2347 * RAB)
+                           / np.where(RAB > 0, RAB, 1.0) - 0.048 * S, 0.0)
+        # term-agnostic evaluator: whichever law set is banked applies; unknown
+        # term names must fail loudly, not silently skip
+        OFFF = {"gb_p_s2": gb * Ps * S2, "s": cross * S, "p": cross * Ps,
+                "obj_p": obj * Ps, "obj_s": cross * 0.42
+                * erf_np(0.2347 * RAB) / np.where(RAB > 0, RAB, 1.0) * S}
+        for t, cf in GRAND_O.items():
+            F += cf * OFFF[t]
     return F
 
 

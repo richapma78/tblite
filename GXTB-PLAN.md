@@ -1342,3 +1342,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   sole miss being the LUMO. The energy-relevant manifold is integration-grade on all four.
 - Next: put the OBJ into the engine and re-fit the off-diagonal channel clean; chase the
   water LUMO; then the engine goes to Fortran.
+
+### 2026-07-17 (seventy-second push) — the OBJ belongs to the off-diag channel, density-dressed; not yet installable
+
+- Predicted from the bank before fitting: F2's flat ~0.09 off-diagonal tail equals the
+  bare OBJ closed form at that R. The fit confirms: obj·P enters at −2.07, rms
+  0.0107 → 0.0092, H2's in-sample error nearly halves.
+- But installed, HF's top virtual crosses the 0.05 bar (gate 2/4 vs 3/4), and H2-holdout
+  still fails: the channel lumps ss/sp/pσ/pπ classes while the OBJ was decoded on pσ.
+  **The pre-declared gate is the arbiter: NOT installed.** Both laws banked
+  (`offdiag_best` = v1 installed, `offdiag_obj` = measured); the engine's off-diag
+  evaluator is now term-agnostic so the bank, not the code, decides which law ships.
+- Gate re-confirmed 3/4 with v1. Next: the σ/π class-resolved off-diagonal round, which
+  is where the OBJ should install cleanly and where the water LUMO likely lives.
