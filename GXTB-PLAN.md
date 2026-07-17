@@ -873,3 +873,22 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: locate the k̃2 slot (FD vs analytic ∂S̃/∂kb shapes); the same decomposition on F2's
   shell pairs (Π ≈ 1 there); the σ elements with the penetration object added; HF (the k̃0/k̃3
   q-channels wake up on a polar molecule); then the full diatomic gate and SCF assembly.
+
+### 2026-07-18 (forty-first push, overnight autonomous run) — L8[3] = the k̃2 knob; F2-ss forward PASSES; the polar wall found
+
+- **kb-slot hunt (kb_slot.py)**: L8[3] IS the Ham-basis √CN adaptation knob — its response
+  tracks the analytic ∂F/∂kb at constant ratio (±5%) where every alternative swings by
+  factors; L8[2]'s numerology executed (exact zeros). kb = 0.4223·L8[3] (linear-through-zero
+  consistent: predicts 0.179 vs fitted 0.17–0.18); the 0.4223's globality flagged.
+- **F2 forward v3** (channels now MEASURED at all 10 points, f2_channels.py): **ss PASSES**
+  (0.0092; k_s = 0.730 vs L4_s = 0.7246 — L4-direct on a second shell at 0.7%; amplitude
+  1.0% from k^W·k^diat). The p-elements keep structural short-range gaps (spz worst 0.053):
+  k_p fits 7% above L4_p with amplitude 12–17% high — the π/p channel carries something
+  unidentified; recorded, not tuned.
+- **HF (hf_stretch.py + hf_analysis.py): the polar wall.** On a polar molecule every FD
+  response carries first-order density relaxation (homonuclear symmetry had pinned q = 0):
+  the Eq-64 weight tests fail with R-drift (µ H/F ratio 1.7–2.0 vs the 1.004 f(q)
+  prediction). The FD-decomposition's clean domain is homonuclear; the polar layer must be
+  closed SELF-CONSISTENTLY. The forward residual (+0.07 Eh at short R, not ∝ S·q) is banked
+  as the SCF stage's target. Pivoting to the SCF assembly (the roadmap's endpoint anyway):
+  read Sec 1.9.2/1.10.2/1.15.2 Fock forms, assemble H2 first, gate on converged observables.

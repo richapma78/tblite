@@ -625,6 +625,23 @@
     "F2 next: same decomposition per shell pair (Pi ~ 1 there), then spz/pzpz with the object added, then HF"
    ],
    "_instrument": "prototype/h0_forward.py (v2); data/mu-cmu-h2.json"
+  },
+  "kb_slot_L8_3": {
+   "_identified": "L8[3] IS the Ham-basis sqrt(CN) adaptation knob (k-tilde-2): its H2 response tracks the analytic dF/dkb at ratio 0.440/0.424/0.403 over R = 0.9/1.4/2.0 (+-5%) while G1[4] and L8[7] swing by factors and L8[2] is exactly dead (that numerology EXECUTED)",
+   "law": "kb = 0.4223 * L8[3] locally; linear-through-zero consistent (predicts kb(H) = 0.179 vs the fitted 0.17-0.18). The 0.4223 factor: H-calibrated, globality FLAGGED (F-side lever too weak to test on F2; HF FD pending)",
+   "note": "L8[7] and G1[4] remain unnamed (CN-family and H2-heavy responses; not this knob)"
+  },
+  "f2_forward_v3": {
+   "_state": "ss PASSES (worst 0.0092; k_s = 0.730 vs L4_s = 0.7246 -- the L4-direct law on a second shell at 0.7%; C 0.664 vs pred 0.671); spz/pzpz/pxpx FAIL with short-range structure (worst 0.053/0.035/0.032, all converging to <= 0.004 at long R -- amplitudes and long-range metric right, short-range p-channel structure missing)",
+   "k_p_puzzle": "k_p fits 1.205-1.22 vs L4_p = 1.1269 (7% high) with C 12-17% above kW_p*kdiat_pi -- the pi channel carries an unidentified ingredient; kb undetermined on F2 (weak CN lever; the v1 P-2 'FAIL' was underdetermination)",
+   "channels": "mu/L3/k1cn channels now MEASURED at all 10 points (data/f2-channels.json) -- interpolation eliminated; the residual gaps are structural, not interpolation",
+   "spz_metric": "predicted C 0.7219 vs measured 0.792 (+9.7%, 3.6% drift) -- the s-p sigma prefactor is ~10% above the arithmetic (kW_s+kW_p)/2 * kdiat_sigma"
+  },
+  "hf_heteronuclear_first_reading": {
+   "_wall": "on POLAR HF the FD responses are contaminated by first-order density relaxation (q != 0 breaks the symmetry protection homonuclear systems had): the Eq-64 weight tests FAIL with R-drift (L2H/L2F 1.16->1.37 on HsFs, 0.86->11 on HsFpz; mu H/F 1.66->1.99 vs the ~1.004 f(q) prediction)",
+   "consequence": "the FD-decomposition method's clean domain is HOMONUCLEAR; the polar layer (ES off-diagonal, k-tilde-0/3 wake-up) must be closed SELF-CONSISTENTLY -- forward-model the full Fock with the decoded kernels, converge, gate on converged observables",
+   "residual": "EHT - forward(mixed metric, nothing refit) = +0.071/+0.082 Eh at R=1.4 falling to +0.006/+0.026 at 4.5 -- large, not proportional to S*q (correlate drifts 0.72->1.44 / -1.1->-4.2); recorded as the polar-layer target for the SCF stage",
+   "_data": "data/hf-stretch.json (9 rows: base + 11-slot FDs + ACP + EEQ q(R))"
   }
  }
 }
