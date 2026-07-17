@@ -605,3 +605,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   H gives w̃_ss = 0.2005, N implies w̃_pp = 0.0797 vs O's 0.0895 — the shell-pair weights carry
   remaining element structure (next charting target).
 - The atom-eigenvalue gate is now one W-matrix away.
+
+### 2026-07-16 (twenty-seventh push) — the atom-eigenvalue gate: first run, spin EXACT, one term to fix
+
+- The first assembled gate (H + O, all 10 eigenvalues from file values + decoded structures):
+  **the spin physics is exactly right** — H's α/β splitting predicted 7.64 eV vs oracle 7.64
+  (both channels miss by the IDENTICAL offset), O's channel splittings likewise consistent.
+- The misses are clean per-shell constants (H +3.24 eV both channels; O s +13.34, p +4.5–4.8) —
+  the signature of a sign/bookkeeping slip in ONE term (prime suspect: the µ-potential F1's
+  sign chain through q = refocc − pop; second: the Vx occupied-branch magnitude vs the −2c_x
+  measurement). The gate machinery itself works; the fix is localized.
+- NOTE for the fix round: verify F1 = −µ_l·f − (Σµq)·f′ sign-by-sign against dε/dµ = −1.006,
+  and re-derive Vx from E_x = −c_xΣL5·n² (∂/∂n_iσ = −2c_x·L5·n_iσ ✓ matches the FD) — then the
+  shell offsets should collapse.
