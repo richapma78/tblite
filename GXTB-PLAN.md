@@ -824,3 +824,28 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   inversions or HF's s-p σ), close G1[6]/G1[7]'s entry mode by SET-scans, the H0 forward
   model (all pieces now named: K^W·H̄·Π·S̃sc + object), then HF's polar ES and the diatomic
   gate.
+
+### 2026-07-17 (thirty-ninth push) — the µ-channel LAW; the first forward gate FAILS honestly
+
+- **Eq. 64 read EXACTLY from the PDF** (layout mode): H0 = [(k^W_A+k^W_B)/2]·[(H_A+H_B)/2]·
+  Π·S̃sc off-diagonal; same-atom blocks purely diagonal (orthonormality kills onsite
+  off-diagonals — consistent with our measured 3.8% onsite null being NON-H0).
+- **A decoded law (h0_forward.py part 1)**: the ES1 off-diagonal channel = −µ̄·S_primary with
+  coefficient −1.0000 MEASURED to 3–4 digits at long R on every element type — the Mulliken
+  ½S(v_A+v_B) form at exactly unit weight. The old drifting µ-rho is fully explained: µ rides
+  the PRIMARY overlap while the levels ride Π·S̃sc; the short-range deviation is the µ-CN
+  (4th-table) + f(q) structure.
+- **The polynomial slopes fall out of banked data**: 1/(rho_L17/R) is linear in R → b(H2) =
+  +0.033; fluorine's k^shp = −0.0040 makes Π(F2) ≈ 1 — F2's Seff fits must run b≈0, and the
+  free-fit b = +0.14 was compensating an S̃-shape error (caught).
+- **THE FIRST FORWARD GATE: FAILED** — pre-declared |diff| ≤ 0.01 Eh at 13 points; worst
+  0.028. Causes named: (a) the (C, b, k) Seff fits are degenerate, so amplitude checks
+  against k^W·k^diat are not robust from shape fits; (b) under the honest-b constraint H2's
+  metric misses ~1% systematically — the Ham basis's k̃-adapted CONTRACTION coefficients
+  (SI Eq. 28 tilde set) are unmodeled and live exactly where CN varies; (c) C_µ extrapolated
+  below R=1.4. One tantalizing number, NOT claimed: F2-ss constrained-fit C = 0.6680 vs the
+  k^W_s·k^diat_σ(F) prediction 0.6708 (0.4%) — the degeneracy forbids the claim.
+- Next: measure S̃sc SHAPE-FREE as Seff/Π(known), match basis constructions (density-adapted
+  vs k̃-adapted vs scaled exponents) against the measured curve, locate the k̃ tilde slots,
+  then reassemble and re-gate. The µ-law and the object's closed form slot straight into the
+  eventual assembly unchanged.

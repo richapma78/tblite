@@ -595,6 +595,22 @@
    "L1[7]": "k_shp element amplitude: rho LINEAR in R on both molecules (slope 1.28-1.32 on F2 pzpz, ~0.5 on H2) -- supersedes 'hbasis'",
    "k_shp_l_globals": "NOT located: no global shows the rho~R signature on ss -- possibly hardcoded (fifth hidden table candidate)",
    "unnamed": "G1[4] (H2-ss-heavy 0.31, F2 short-range), L8[3] (weak short-range), L8[7] (strong short-range all-element, CN-family decay)"
+  },
+  "mu_channel_law": {
+   "_law": "the ES1 OFF-DIAGONAL Fock channel = -mu_bar * S_primary, coefficient -1.0000 MEASURED (resp_mu/S_prim at long R: H2 -0.99972/-1.00004; F2 ss -1.00117/-1.00411; F2 pxpx -1.00491/-1.00271) -- the Mulliken (1/2)S(v_A+v_B) form with v = -mu, exactly unit coefficient",
+   "short_range": "the deviation (-1.35 at H2 R=1.4, -1.05 at F2 R=2) is the mu-CN coupling (k1cn on the 4th hidden radius table) + f(q) factors -- the OLD drifting mu-rho on ss elements is fully explained: mu rides S_primary while the level rides Pi*S~sc",
+   "_instrument": "h0_forward.py PART 1, banked atlas responses"
+  },
+  "h0_forward_v1": {
+   "_state": "FIRST FORWARD GATE: FAILED honestly (worst 0.028 Eh vs the pre-declared 0.01 bar, H2 ss, 13 points) -- the failure decomposes into named causes",
+   "causes": [
+    "(a) the (C, b, k) Seff fits are DEGENERATE (rms barely separates families) -- amplitude checks against kW*kdiat are not robust from shape fits alone",
+    "(b) H2's Seff shape misses ~1% systematically under the honest-b constraint (b=+0.033 from the L1[7] rho): the Ham basis's own k-tilde-adapted CONTRACTION coefficients (SI Eq 28 tilde set) are unmodeled -- they differ from the density basis exactly where CN varies",
+    "(c) C_mu extrapolated below R=1.4 (only 4 measured points)"
+   ],
+   "promising": "F2 ss with b=0 (F's k_shp = -0.0040 -> Pi ~ 1): C = 0.6680 vs the kW_s*kdiat_sigma(F) prediction 0.6708 -- 0.4%. NOT claimed (degeneracy); the honest check needs the metric measured shape-free",
+   "polynomial_slopes_measured": "b(H2) = +0.033 (1/(rho/R) linear in R from the banked L1[7] responses, a = kshp_s(H-global)/Rcov = 0.280); Pi(F2) ~ 1 (k_shp(F) tiny)",
+   "_next": "measure S~sc DIRECTLY as Seff/Pi(known) and match basis constructions (density-adapted vs k-tilde-adapted vs scaled exponents); then reassemble and re-gate"
   }
  }
 }
