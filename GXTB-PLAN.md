@@ -670,3 +670,15 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   spin term off).
 - **Decomposition designed**: perturb L5 and re-invert → the exchange part of F12 (L5-linear)
   subtracts out, leaving pure H0_12(R) to chart against K·h·S̃ candidates with scaled bases.
+
+### 2026-07-16 (thirty-second push) — the Hückel prefactor MEASURED: H0 = K·S within 0.6%
+
+- The exchange-subtraction decomposition ran: X12 = L5·(dF12/dL5) is 32–47% of the raw
+  off-diagonal, and the remainder obeys **H0_12 = −0.400·S12 to ±0.6% across R = 2..4** (the
+  raw ratio drifted 50%). The Hückel rule is K·S to first order, prefactor measured.
+- Edges (R=1: −0.360; R=5: −0.422) carry the remaining distance-polynomial / basis-scaling
+  structure; the ζ-scaled candidate overlap was slightly WORSE than the primary S — the primary
+  basis carries the off-diagonal at this order.
+- Next: express −0.400 as K·(h1+h2)/2 with the decoded diagonals → locate K among the remaining
+  globals; heteronuclear pairs (HF/HCl Fock inversions on the s-block) discriminate the
+  averaging rule; then the edge polynomial.

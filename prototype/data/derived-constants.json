@@ -493,6 +493,11 @@
       "_instrument": "H2's printed eigenvalue pair + our machine-exact S12 invert to the FULL 2x2 Fock at every R: F11 = ((1+S)e_bond + (1-S)e_anti)/2, F12 = ((1+S)e_bond - (1-S)e_anti)/2 -- the off-diagonal EHT rule is now directly measurable (data/h2-fock.json, R = 1..5)",
       "first_readings": "F12/S12 drifts smoothly -0.53..-0.79 over the stretch -> not constant K*h*S: the Hamiltonian-basis scaling (L1[7]/L4) and/or a distance polynomial are in play. F11(R->5) sits 0.141 Eh above the atom anchor -- the density-dependent terms (exchange halved by delocalization, spin off in the closed shell) account for the shift structure",
       "_next": "decompose F12 = H0_12 + X_12 by perturbing L5 and re-inverting (the exchange part is L5-linear); chart the pure H0_12(R) against K*h*S-tilde candidates built with scaled-exponent bases; locate K and the scalings among the remaining slots"
+    },
+    "h2_h0_offdiagonal": {
+      "_result": "exchange-subtracted (X12 = L5 * dF12/dL5, 32-47% of F12): H0_12/S12 = -0.400 +- 0.6% over R = 2..4 (raw F12/S12 drifted 50%) -- the Hueckel rule is K*S to first order with the measured effective prefactor -0.400 Eh for H-H",
+      "_edges": "R=1 gives -0.360, R=5 gives -0.422 -- the remaining structure is the distance polynomial / Ham-basis k-scalings (the zeta-scaled candidate S was slightly worse than the primary S)",
+      "_data": "data/h2-h0.json; next: express -0.400 as K*(h_1+h_2)/2 with the decoded diagonal levels -> locate K among the remaining globals; heteronuclear pairs discriminate the averaging rule"
     }
   }
 }
