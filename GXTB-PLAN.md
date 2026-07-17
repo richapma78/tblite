@@ -1649,3 +1649,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   term, documented not tuned.
 - R0 confirmed per-element universal (the H2O run holds C/N/F-pair radii absent from
   water). Gap #5 (AES) is functionally CLOSED for the port; residual refinement noted.
+
+### 2026-07-17 (ninety-first push) — the exchange (MFX) decoded: structure + parameters (gap #1, the biggest term)
+
+- Printed "Ex (Mulliken)" = E_lr,MFX (range-separated Mulliken Fock exchange, SI Sec 1.15)
+  + E_OFX (onsite Dominguez correction, Sec 1.16). Energy = the VALIDATED 4-index Mulliken
+  form (scf_h2.ex_energy). Kernel = Eq 149 range-separated screened interaction.
+- **Parameters, gdb-extracted from named parcom arrays** and confirmed live at
+  `setgab_lrao_` (0x539ee0, the MFX gamma builder): α=0.15 and ω=0.2347 (=G2[8]) via the
+  code defaults (alpha_fx/omega_fx both read 0); U^MFX = gp3_gam2 (the standard ES Hubbard
+  U, matches elem()) CN-scaled; screening constants G1[4]=0.0789, G1[5]=1.7996. Identified
+  gp3_gam1=L5, gp3_gam2=U, and mapped the parcom global addresses.
+- Reusable capability confirmed: `nm` exposes named parcom globals, gdb reads them live.
+- Remaining: implement the CN-scaled favg kernel + OFX (Eq 155), call the 4-index energy,
+  4-point gate vs printed Ex; then the symmetric Fock (Eq 153) for the SCF.
