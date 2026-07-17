@@ -1051,3 +1051,18 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   −γ_on(He) with dEx/dL5 = −0.19224 = −2c_x(He) EXACTLY (self-consistent): c_x(He) =
   0.09612, s(He) = 0.9218 — a NEW element datum giving the s-rule its period-1 line
   (a = 0.4492, b = 0.0234). The heteronuclear spin-subtraction campaign opens next session.
+
+### 2026-07-18 (fifty-first push) — heteronuclear inversion bug caught; the UKS restart DECODED
+
+- **Bug caught before it bit**: the symmetric 2×2 eigenvalue inversion assumes F11 = F22 —
+  invalid heteronuclear (two eigenvalues cannot determine three unknowns). heh_fock.py's
+  first-run X columns are flagged INVALID in the JSON (the giveaway: "F12" = −0.44 between
+  decoupled fragments). All homonuclear results stand — symmetry guaranteed their inversion.
+- **The UKS restart layout is decoded and verified**: rec0 = P_α‖P_β packed (β all-zero for
+  one-electron systems), rec1 = C_α‖C_β column-major — H2⁺'s P11 = 1/(2(1+s)) and the
+  bonding/antibonding columns reproduced exactly. The per-spin full reconstruction
+  F_σ = S·C_σ·ε_σ·C_σᵀ·S is unlocked; the heteronuclear campaign reruns properly next.
+- Also learned: HeH²⁺'s electron sits ~fully on He at every R (m_He = 0.98–1.0) — the
+  system is weakly mixing for cross-kernel purposes; alternatives (LiH⁺-type) noted.
+- He calibration stands (γ_on(He) = 0.8992, slope-exact); γ_cross(HeH) ≈ +0.06–0.08 mid-R
+  (weakly determined, no inversion involved).

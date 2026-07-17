@@ -40,7 +40,7 @@ import constants as K  # noqa: E402
 import overlap  # noqa: E402
 import restart  # noqa: E402
 
-_SYM2Z = {"h": 1, "c": 6, "n": 7, "o": 8, "f": 9, "si": 14, "p": 15, "s": 16, "cl": 17,
+_SYM2Z = {"h": 1, "he": 2, "c": 6, "n": 7, "o": 8, "f": 9, "si": 14, "p": 15, "s": 16, "cl": 17,
           "br": 35, "i": 53, "pd": 46}
 
 
