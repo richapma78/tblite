@@ -520,7 +520,8 @@
     "k_star": 0.602,
     "plateau": -0.1641,
     "tail_spread": 0.0179,
-    "_next": "heteronuclear + multi-shell decide whether the scale is per-AO L4_l^2/2 or a pair rule"
+    "_next": "heteronuclear + multi-shell decide whether the scale is per-AO L4_l^2/2 or a pair rule",
+    "_reinterpreted": "hmetric (level-FD) shows the LEVEL channel rides the PRIMARY overlap (H2 Seff/S = 0.99-1.05), so 'exponents x L4^2/2' is the EFFECTIVE shape of the SUM (level channel + L4-owned channel), not a literal basis replacement for the level term. The FD fact (k* tracks (L4+d)^2/2) stands unchanged; the mechanism is sharpened."
    },
    "l17_channel": {
     "slot": "L1[7] = 0.0224 (NOT 0.8142 -- that is L1[6] = kU; a this-session prose misread, instruments were right)",
@@ -531,6 +532,31 @@
    "acp_relaxation": "the c_s FD response exceeds the bare analytic matrix element at short R: +0.6% (R=2.0) -> +4.4% (R=0.9), zero on the tail -- the SCF density-relaxation channel, isolated; the decomposition subtracts the BARE element by construction",
    "short_range_ingredient": "OPEN -- probe 3 pre-declared bar (rms 2x under runner-up AND max resid <= 2x tail noise) NOT met: CN best (rms 0.0032, a = -0.61, ~50% core suppression at CN~0.8) vs sqrt(CN) 0.0038; candidates collinear over one homonuclear stretch, and the short-range chart carries the ACP-relaxation systematic. Heteronuclear stretches de-collinearize; that is the next instrument",
    "_supersedes": "h2-h0.json (unlabeled; its col4 retro-identified as the raw L5 slope -- matches dF12_dL5 to 15 digits)"
+  },
+  "fock_reconstruction": {
+   "_instrument": "fock_recon.py: F = S C diag(eps) C^T S from restart MOs + printed eps + our overlap. GATES PASSED: ortho 4.4e-16 (H2) / 6.4e-9 (HF) / 2.4e-9 (F2); density exact; H2 tie to the 2x2 inversion 2.3e-9; pi zeros EXACT (1.5e-16)",
+   "p_order_pinned": "the exact pi zeros pin the oracle p ordering = (x, y, z) (m=2 is p_z) -- the restart Mulliken gate was provably blind to within-shell permutations, this is not",
+   "scope": "printed eps window = n_occ + 2, so complete inversion needs nsao <= n_occ + 2: H2, HF, F2, H2O in; HCl OUT (d shell starves virtuals; no verbosity flag)",
+   "pairing_caveat": "the density gate is invariant under equal-occupancy column permutations; F is not. F2 R=6 checked: diag +- cross = -0.325/-0.479 reproduces the printed sigma pair (-0.3299/-0.4717) -- pairing is positionally correct there"
+  },
+  "f2_stretch": {
+   "_instrument": "f2_stretch.py (X = Euler over L5_s/L5_p; ACP = full analytic V diag(c) V^T, tail-validated 2.9e-3); data/f2-stretch.json",
+   "per_ao_transfer_REFUTED": "scaling F's exponents by L4_l^2/2 flattens NOTHING (tail spreads 81-147%); the 2-D (k_s,k_p) scan argmin (0.86, 0.98) is far from the per-AO prediction (0.2625, 0.6350) -- pre-declared verdict NEITHER",
+   "onsite_null": "EHT(Fs,Fpz) onsite = 3.8% of the two-center at r_e -- PASS (< 5% bar)",
+   "center_swap": "max|EHT(s,pz') + EHT(pz,s')| = 2.1e-12",
+   "pzpz_long_range_channel": {
+    "observation": "EHT(pz,pz') has a Coulomb-tailed long-range component: +0.065 Eh at R=6 (a real 3.9 eV sigma split, confirmed in the printed eigenvalues); decay rate FALLS with R (non-Gaussian)",
+    "owner": "L4_p(F): slope dF/dL4_p = -0.719 at R=6; L1[7](F) participates (slope +3.72, tiny slot); L2_p minor (+0.017)",
+    "excluded_by_FD_at_R6": "U_s/U_p (L6), mu_s/mu_p (L7), G2[1] offsite-ES, G2[6]/G2[7] multipole, G1[0]/G1[5] exchange, G1[3] kpen1, G2[2] kpen2, L2_s, L3_p, L4_s -- all contents <= 0.015 vs the 0.065 anomaly"
+   }
+  },
+  "hmetric_level_channel": {
+   "_instrument": "hmetric.py: S_eff_munu = -dF_munu/dL2 / K (K=2.26) -- the binary's own Hamiltonian metric, read out by level-FD; data/hmetric.json",
+   "level_rides_primary_overlap": "H2: Seff/S_primary = 0.989..1.054 over R=0.9..6 -- the level channel is PRIMARY-overlap-shaped, not diffuse-scaled",
+   "sp_sigma_CLOSES": "F2 EHT(s,pz')/Seff(s,pz') is flat to +-8% over the WHOLE stretch (+-3% for R=3..5.2), ratio ~ -0.92..-0.96 -- first multi-shell element fully explained by the metric",
+   "two_channel_structure": "EHT = [level channel ~ S_primary shape] + [L4-owned channel, slower-than-overlap decay: H2 drift -0.096->-0.373 matches the L1[7]-channel growth; F2 pzpz blows up -1.04->-8.6 (the Coulomb tail); pxpx drifts opposite -0.66->-0.16]",
+   "via_weights": "Seff(spz) via L2_s vs via L2_p differ 6-13% (w_s != w_p mildly) -- the level-averaging weights are near-equal but not exactly 1/2; calibration to K*h-bar deferred until the second channel is decoded",
+   "_next": "chart channel_el(R) = EHT_el - T_lvl*Seff_el across H2/F2/HF -- ONE undecoded off-diagonal object remains"
   }
  }
 }

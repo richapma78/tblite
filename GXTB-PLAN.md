@@ -737,3 +737,34 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   level-averaging rule and the L4 pair-vs-AO question in the same runs; then the diatomic gate.
 - Housekeeping: WSL home had lost ~/.basisq and ~/.eeq (oracle failed on startup) — restored
   from /opt/gxtb-v1; the pristine parameter file verified byte-identical to the release asset.
+
+### 2026-07-17 (thirty-sixth push) — the FULL Fock reconstructed; F2 breaks the naive law open; the metric instrument
+
+- **fock_recon.py, gated**: F = S·C·diag(eps)·C^T·S from the restart MO matrix + printed
+  eigenvalues + our overlap. Ortho 4.4e-16 (H2)/2.4e-9 (F2), density exact, ties to the 2×2
+  inversion at 2.3e-9, and the EXACT π zeros pin the oracle's p ordering = (x,y,z) — something
+  the Mulliken gate was provably blind to. Scope measured: the eps print is a window of
+  n_occ+2, so H2/HF/F2/H2O invert completely; HCl does not (d shell). Housekeeping: the
+  density gate cannot see equal-occupancy column mispairing, but F can — checked at F2 R=6
+  (diag ± cross reproduces the printed σ pair) before trusting anything.
+- **F2 first, HF second, by design**: homonuclear q=0 kills the polar ES off-diagonal exactly
+  as in H2, and fluorine's two shells (L4_s 0.7246 vs L4_p 1.1269) carry the per-AO-vs-per-pair
+  question inside one molecule. HF's residual will later BE the ES measurement.
+- **f2_stretch.py verdicts (pre-declared)**: per-AO transfer of the L4²/2 law REFUTED (nothing
+  flattens, spreads 81–147%; 2-D argmin far from prediction); onsite s-pσ null PASS (3.8%);
+  center-swap 2.1e-12; ACP matrix (V diag(c) V^T, all projectors, zero case-work) tail-validated
+  2.9e-3.
+- **The pσ anomaly and its owner**: EHT(pz,pz') keeps a Coulomb-tailed +0.065 Eh at R=6 — a real
+  3.9 eV σ split sitting in the printed eigenvalues, with a FALLING decay rate no Gaussian
+  overlap can produce. Seventeen slots FD-excluded (U, µ, offsite-ES, multipole, exchange
+  globals, kpen, levels, L4_s, L3); **L4_p owns it** (slope −0.719), L1[7] participates.
+- **hmetric.py — ask the binary for its own metric**: S_eff = −(dF/dL2)/K. The LEVEL channel
+  rides the PRIMARY overlap (H2 Seff/S = 0.99–1.05) — so the push-34/35 "diffuse Hamiltonian
+  basis" is the effective shape of a SUM, not a basis replacement; the L4²/2 FD fact stands,
+  reinterpreted as the L4-owned SECOND channel's signature. **F2's s-pσ element CLOSES on the
+  metric** (flat ±8% full range, ±3% mid) — the first multi-shell element fully explained.
+  Structure now explicit: EHT = level·S_eff + channel(L4, L1[7]); on H2 the channel is the old
+  26–36% L1[7] content, on F2-pσ it is the Coulomb-tailed object.
+- Next: chart channel_el(R) = EHT − T_lvl·S_eff across H2/F2 (+HF) and decode its closed form —
+  ONE undecoded off-diagonal object remains. Then the level weights (w_s ≠ w_p by 6–13%), then
+  HF's polar ES, then the diatomic gate.

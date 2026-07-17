@@ -45,6 +45,26 @@ import constants as _K
 KEXP_REP = _K.REPULSION_KEXP    # from data/derived-constants.json (SI Sec. 1.6)
 
 
+def write_perturbed(edits, path=os.path.expanduser("~/.gxtb"),
+                    pristine=os.path.join(HERE, "data", "gxtb_parameters.pristine")):
+    """Write the pristine parameter file with slot edits applied, any element or global row.
+    edits: {(z, row_offset_from_element_header, col): value} with offsets 1=L1 .. 9=L9, or
+    {("g", 1|2, col): value} for the two global rows (the first two non-blank lines);
+    {} writes the pristine file. (eht_h2.py carries its own H-only editor, gated there.)"""
+    lines = open(pristine).read().splitlines(keepends=True)
+    idx = [i for i, l in enumerate(lines) if l.strip()]
+    for (z, off, col), val in edits.items():
+        if z == "g":
+            li = idx[off - 1]
+        else:
+            hdr = next(i for i in idx if lines[i].split() == [str(z)])
+            li = idx[idx.index(hdr) + off]
+        t = lines[li].split()
+        t[col] = f"{val:.10f}"
+        lines[li] = "      " + "      ".join(t) + "\n"
+    open(path, "w").writelines(lines)
+
+
 def parse(path=DEFAULT):
     lines = [l for l in open(path).read().splitlines() if l.strip()]
     glb, blocks, cur = [], {}, None

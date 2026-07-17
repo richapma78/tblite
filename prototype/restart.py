@@ -82,7 +82,12 @@ def converged_state(atoms, charge=0, uhf=0):
                     r"^##\s+\d+\s+([A-Za-z]{1,2})\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)"
                     r"\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)",
                     r.stdout, re.M)]
-    state = {"nsao": nsao, "records": recs, "pops": pops}
+        _f = lambda s: [float(x) for x in  # noqa: E731
+                        re.findall(r"-?\d+\.\d+(?:[eEdD][+-]?\d+)?", s)]
+        eps_ev = sum((_f(l) for l in re.findall(r"^ eps  :(.*)$", r.stdout, re.M)), [])
+        occ = sum((_f(l) for l in re.findall(r"^ occ\. :(.*)$", r.stdout, re.M)), [])
+    state = {"nsao": nsao, "records": recs, "pops": pops,
+             "eps_ev": eps_ev, "occ": occ, "raw": r.stdout}
     ntri = nsao * (nsao + 1) // 2
     for rec in recs:
         vals = np.frombuffer(rec, dtype="<f8")
