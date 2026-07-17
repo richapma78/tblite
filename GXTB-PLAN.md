@@ -682,3 +682,17 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: express −0.400 as K·(h1+h2)/2 with the decoded diagonals → locate K among the remaining
   globals; heteronuclear pairs (HF/HCl Fock inversions on the s-block) discriminate the
   averaging rule; then the edge polynomial.
+
+### 2026-07-16 (thirty-third push) — the off-diagonal COMPOSITION table; G1[2] numerology executed
+
+- The K = G1[2] hypothesis (a 0.5% numerical match!) was killed properly: dF12/dG1[2] = 0.00000
+  exactly. Measurement over numerology, once more.
+- **K = 2.26 measured directly** (the element-L2 perturbation shifts BOTH centers: dF12 = −K·S).
+- **The composition table** (Fock-inversion FDs, R = 2.5): the level enters h̄ at weight ~1;
+  µ at ~0.45; L3 inert; **L4 is an off-diagonal-ONLY parameter** (dF11 = 0); **L1[7] is purely
+  off-diagonal and the strongest mover** (−1.17; the SI's "decouple overlap from Hamiltonian"
+  scaling, now localized); **the ACP has a two-center off-diagonal part** (+0.565 =
+  ⟨AO1|g⟩⟨g|AO2⟩ — analytic with our engine, like the diagonal κ).
+- Structure: F12 = EHT-core (K, levels/µ, L1[7]/L4) + ACP_12 (analytic) + X12 (exchange,
+  separable). Next session: compute ACP_12 analytically → subtract → decode the EHT core's
+  exact form → the diatomic gate.

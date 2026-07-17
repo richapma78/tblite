@@ -498,6 +498,19 @@
       "_result": "exchange-subtracted (X12 = L5 * dF12/dL5, 32-47% of F12): H0_12/S12 = -0.400 +- 0.6% over R = 2..4 (raw F12/S12 drifted 50%) -- the Hueckel rule is K*S to first order with the measured effective prefactor -0.400 Eh for H-H",
       "_edges": "R=1 gives -0.360, R=5 gives -0.422 -- the remaining structure is the distance polynomial / Ham-basis k-scalings (the zeta-scaled candidate S was slightly worse than the primary S)",
       "_data": "data/h2-h0.json; next: express -0.400 as K*(h_1+h_2)/2 with the decoded diagonal levels -> locate K among the remaining globals; heteronuclear pairs discriminate the averaging rule"
+    },
+    "h0_offdiagonal_composition": {
+      "_probe": "dF11/dF12 per slot on H2 at R=2.5 (Fock-inversion FDs); K = 2.26 measured via the element-L2 response (-K*S, both centers shift)",
+      "G1[2]_refuted": "the 1.1995 numerology killed properly: dF12/dG1[2] = 0.00000 exactly",
+      "composition": {
+        "L2 level": "weight ~1 in h-bar (diagonal -1 exact)",
+        "L3 cn-level": "inert at this geometry",
+        "L4": "OFF-DIAGONAL-ONLY parameter (dF11 = 0, dF12 = +0.133) -- the shell-wise off-diagonal scaling candidate",
+        "L7 mu": "enters h-bar at ~0.45 weight (diagonal full -1.01)",
+        "L9 ACP": "diagonal response 0.999 (q_eff-adapted molecular kappa) and OFF-DIAGONAL +0.565 = the TWO-CENTER ACP cross integral <AO1|g><g|AO2> -- computable analytically with our engine",
+        "L1[7] hbasis": "PURELY off-diagonal and the strongest mover (dF12 = -1.170, dF11 = 0) -- the SI's 'decouple overlap from Hamiltonian' scaling, localized"
+      },
+      "_structure": "F12 = EHT(K~2.26, levels + mu-weights, L1[7]/L4 scalings) + ACP_12(analytic two-center) + X12(exchange, separable) -- next: compute ACP_12 analytically, subtract, decode the EHT core"
     }
   }
 }
