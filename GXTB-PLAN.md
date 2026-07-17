@@ -768,3 +768,31 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Next: chart channel_el(R) = EHT − T_lvl·S_eff across H2/F2 (+HF) and decode its closed form —
   ONE undecoded off-diagonal object remains. Then the level weights (w_s ≠ w_p by 6–13%), then
   HF's polar ES, then the diatomic gate.
+
+### 2026-07-17 (thirty-seventh push) — the EULER HOMOGENEITY LAW; the last object cornered and mapped
+
+- **offdiag_atlas.py**: the perturbation map extended to off-diagonal Fock elements —
+  rho-normalized slot responses (K and metric cancel). Levels partition EXACTLY by shell pair;
+  on (s,pσ) the two level weights SUM TO 1.0000 at every R (0.478+0.522…) — a true weighted
+  mean, p slightly heavy. L3/L1[8] are h̄ members with CN(R)-shaped weights — the short-range
+  h̄ structure probe 3 was hunting. L4/L1[7] grow with R on every element: channel knobs.
+- **THE LAW (closure v2, f2_tail.py)**: the core is DEGREE-1 HOMOGENEOUS in (level, µ) —
+  Euler over (L2, L7) closes H2 ss to ±0.006 Eh and F2 ss/spσ/pπ to ≤0.004/0.031/0.013 across
+  13 distances. THREE of four element types are now fully explained with no model and no fit.
+- **The one survivor** (F2 pσ-pσ): +0.093 Eh at R=2 → +0.064 at 6 → REAL zero crossing
+  (σ split smooth through it) → −0.041 at 10 with |obj|·R → 0.41 Eh·Bohr. Its complete
+  parameter map: L4_p owns the shape; THREE NEW GLOBALS G1[6]/G1[7]/G2[8] (σ-only:
+  spz/ss/π dead to 3e-4 at R=6; G1[7] R-flat) plus L1[7]; ~35 other slots FD-dead. The zero
+  crossing + Coulomb asymptote fit a TWO-PART form (overlap-shaped + minus 0.41·γ) — flagged
+  hypothesis; 0.41 ≈ 6·c_x(F) is numerology, unbelieved per the G1[2] rule.
+- **SI cross-read (Sec 1.3/1.7/1.8)**: Eq 64 H0 = K̄·H̄·Π·S̃sc — diatomic-frame σ/π/δ-scaled
+  overlap (Eq 31: harmonic element pairs), shell polynomial Π growing linearly in R (Eq 67),
+  shell-wise ζ exponent scales (= L4, our ²/2 convention) and element k̃ charge-adaptations
+  (= the L1[7] family) — ALL H̄-multiplied, so Euler kills every Eq-64 form: the object lives
+  OUTSIDE Eq 64. Sec 1.8: the g-xTB ACP is NON-LOCAL ONLY — our projector decode is the
+  COMPLETE ACP (the ECP-local hypothesis executed by reading, not by fitting).
+- F2 tail extended to R=10 (gap-gated, all healthy ≥2.46 eV); hbar FDs completed at all 13 R.
+- Next: L8[0..3] as k^diat σ/π/δ candidates (probe at SHORT R — the nullsweep's R=6 blinds
+  S̃-shaped responses); locate Eq 67's k^shp element slot; fit the two-part object form; the
+  H2-absence constraint on its amplitude (p-specific? drho-carried?); then HF's polar ES and
+  the diatomic gate.

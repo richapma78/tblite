@@ -557,6 +557,22 @@
    "two_channel_structure": "EHT = [level channel ~ S_primary shape] + [L4-owned channel, slower-than-overlap decay: H2 drift -0.096->-0.373 matches the L1[7]-channel growth; F2 pzpz blows up -1.04->-8.6 (the Coulomb tail); pxpx drifts opposite -0.66->-0.16]",
    "via_weights": "Seff(spz) via L2_s vs via L2_p differ 6-13% (w_s != w_p mildly) -- the level-averaging weights are near-equal but not exactly 1/2; calibration to K*h-bar deferred until the second channel is decoded",
    "_next": "chart channel_el(R) = EHT_el - T_lvl*Seff_el across H2/F2/HF -- ONE undecoded off-diagonal object remains"
+  },
+  "euler_homogeneity_law": {
+   "_law": "the off-diagonal EHT core is DEGREE-1 HOMOGENEOUS in the (L2 level, L7 mu) slots: object_el = EHT_el - sum slot*dF/dslot closes H2 ss to +-0.006 Eh (R 1.4..6) and F2 ss/spz/pxpx to <=0.004/0.031/0.013 Eh across 13 distances (closure v2, data/f2-tail.json)",
+   "_instrument": "offdiag_atlas.py (rho-normalized slot responses) + f2_tail.py (closure v2)",
+   "level_weights_sp": "on F2 (s,pz'): w_s + w_p = 1.0000 EXACTLY at every R (0.478+0.522, 0.469+0.531, 0.474+0.526, 0.482+0.518) -- a true weighted mean, p slightly heavy, +-1% R-drift",
+   "mu_weights": "mu enters h-bar at ~0.42 (H2 tail), 0.25/0.31 (F2 spz s/p), R-drifting on ss/pzpz via the channel share -- per-shell-pair weights, not one constant",
+   "cn_slots": "L3 (CN-level) and L1[8] (k1CN) are h-bar members with CN(R)-shaped weights (die by R=2.5 H / 3.8 F) -- the short-range h-bar structure probe 3 was looking for lives HERE",
+   "shell_selectivity": "L4_s dead on pzpz (rho 0.019->0.001), L4_p dead on ss -- exact per-shell separation"
+  },
+  "pzpz_object": {
+   "_state": "the ONE Euler-surviving off-diagonal object (F2 p-sigma only): +0.093 Eh at R=2 declining to +0.064 at 6, REAL zero crossing between 6 and 7 (sigma split and diagonals smooth through it: 0.142/0.128/0.113 Eh at 6/7/8), then -0.041 at 10 with |obj|*R -> 0.41 Eh*Bohr (0.382/0.399/0.405/0.409 at 6/7/8/10)",
+   "parameter_map": "owners: L4_p (slope -0.719 at R=6), G1[6]/G1[7]/G2[8] (NEW globals: slopes +0.045/+0.104/+0.060 at R=6; G1[7] R-FLAT 2.67->6; G2[8] decays 4.5x), L1[7] (slope +3.72, tiny slot); DEAD: levels, mu, U, offsite-ES G2[1], multipole G2[6]/[7], exchange G1[0]/[5], kpen G1[3]/G2[2..4], dispersion G1[9]/G2[9], L8 all (at R=6), L1 rest, L9 zeta/d/f, G2[0]/[3]/[4]/[5], G1[1](weak +0.010)/[2]/[4]/[8]",
+   "sigma_selectivity": "G1[6]/G1[7]/G2[8] move pzpz ONLY at R=6 (spz/ss/pxpx dead to 3e-4); pi dead to 2e-4 even at r_e",
+   "shape_hypothesis_FLAGGED": "the zero crossing + 1/R asymptote fit a TWO-PART form: A*(overlap-shaped, +) - 0.41*gamma(R); no single overlap or kernel crosses zero. HYPOTHESIS -- needs the closed-form fit. The numerology 0.41 ~ 6*c_x(F)=0.419 is FLAGGED UNBELIEVED (G1[2] rule)",
+   "si_reading": "SI Sec 1.7: H0 = (K_W avg)*(H avg)*Pi_shellpoly*S-tilde(diat-frame sigma/pi/delta-scaled, Eq 31-32) -- ALL H-multiplied, so Euler kills every Eq-64 form: the object is OUTSIDE Eq 64. Sec 1.8: g-xTB ACP is NON-LOCAL ONLY (no ECP Coulomb) -- our projector decode is the COMPLETE ACP; the local-potential hypothesis is EXECUTED",
+   "candidate_slots_next": "L8[0..3] = (2.11, 2.40, 1.07, 0.15) as k^diat sigma/pi/delta candidates -- probe at SHORT R (nullsweep only covered R=6 where S-shaped responses die); Eq 67 shell-polynomial k^shp element slot unlocated"
   }
  }
 }
