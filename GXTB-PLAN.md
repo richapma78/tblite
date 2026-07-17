@@ -968,3 +968,8 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Off-diagonal first reading: X12 ≈ −½S·γ_on·(m1+m2) within 10–18%. Next: the joint lsq
   across (atom, H2⁺, H2) pins the S² term and the off-diagonal exactly → rebuild fock_x →
   re-gate the SCF → F2/HF.
+
+- Addendum (same push): the off-diagonal X12 is NOT S-proportional (a P12-carried piece
+  dominates at long R); the 4-term {S, P12}×{γ_on, γ_off} fit reaches 3.1e-4 on the clean
+  H2⁺ curve but with degenerate coefficients — measured, not identified. Next instruments:
+  joint cross-system fits (H2-neutral + F2 spin probes) or the diagonal-first SCF re-gate.

@@ -666,7 +666,8 @@
    "s2_correction": "the diagonal's short-range extra = X11 + gamma_on*m: ratio to S12^2 constant ~ -0.065 for R <= 3 (H2+); H2-neutral shows the same structure at ~ -0.049 -- the remaining sub-term to pin (offline joint fit, both systems, atom-constrained)",
    "off_diagonal_first_reading": "X12(H2+) ~ -1/2*S12*gamma_on*(m1+m2) within 10-18% -- the S-weighted onsite-kernel form; exact sub-structure pending the joint fit",
    "spin_term": "atom spin part +0.0793 = W-linear (measured); H2+ diagonal spin content +0.0397 R-independent",
-   "_next": "joint lsq (H2+, H2, atom) for the S2 term and the off-diagonal exact form -> rebuild fock_x -> re-gate scf_h2 -> F2/HF"
+   "_next": "joint lsq (H2+, H2, atom) for the S2 term and the off-diagonal exact form -> rebuild fock_x -> re-gate scf_h2 -> F2/HF",
+   "offdiag_status": "X12 is NOT S-proportional (X12/(S/2) drifts -0.35 -> -2.9 on H2+): a P12-carried piece dominates at long R. The {S, P12} x {gamma_on, gamma_off} 4-term fit reaches rms 3.1e-4 on the clean H2+ curve BUT the subset scan shows heavy coefficient degeneracy (several 3-term models near 1e-3 with wildly different coefficients) -- the form is MEASURED, not identified. Cross-system discrimination is the next instrument: H2-neutral X12_req jointly + F2's spin-resolved channels (F2+ / triplet probes), or the diagonal-first SCF re-gate (the diagonal skeleton is exact; the off-diagonal error budget then isolates)."
   }
  }
 }
