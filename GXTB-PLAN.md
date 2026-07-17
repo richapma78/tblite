@@ -1529,3 +1529,19 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   conventions, contracted normalization) reproduces S and S̃ for all six gate systems,
   both bases, to ~1e-16. The adaptation chain (EEQ → CN → q_eff) rides as exported
   shell specs until U2b.
+
+### 2026-07-17 (eighty-fourth push) — PARITY FIRST: the Fortran ladder pauses; the gap ledger becomes the campaign
+
+- The user ruled the port premature, and the logic is decisive once solvation is
+  centered: the binary is gas-phase-only, so it can never be the production engine —
+  parity + our solvent layer is the only path, which makes parity the critical path.
+  Fortran pauses at U2a (nothing lost); the python reference is where gaps close.
+- **The gap ledger** (`energy_parity.py`): every printed term vs ours, six neutrals.
+  Core increments measured and EXACT (H 0 / C −34.9378 / N −50.3003 / O −69.0180 /
+  F −92.3159 — additive to 0.000 mEh on all six molecules). The ranked defects:
+  general Ex γ-matrix (blocks `electronic`; even H2's naive γ is 22 mEh off) →
+  ES1 polar wiring ~30 mEh (µ-CN pairs) → the ES2+3 **Γ-blind residual** ~18 mEh
+  (the Euler instrument was Γ-selective by design; the ledger sees what it couldn't) →
+  repulsion heteronuclear ~4 mEh → AES (undecoded) ~7 mEh → dispersion (unported).
+- Substitution-grade bars pre-declared: per-term ≤ 1 mEh, then reaction-ΔE ≤ 1–2
+  kcal/mol on a declared set. The campaign attacks in ledger order, Ex first.
