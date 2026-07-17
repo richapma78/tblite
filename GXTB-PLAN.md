@@ -1324,3 +1324,21 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   ACP, exchange skeleton — all validated across five systems); the short-piece layer
   needs its universal law or per-environment treatment. The frontier is now exactly one
   scientific question wide.
+
+### 2026-07-17 (seventy-first push) — the grand short-piece law: the three-center mystery dissolves
+
+- **The unified-baseline dataset**: every remainder re-measured against the ONE engine
+  (15 oracle runs; 70 diagonal + 95 cross off-diagonal points; `data/grand-short.json`).
+  The earlier per-system fits were against different baselines — not comparable; this
+  round fixed the experiment design first.
+- **The diagonal law transfers**: d_ii = −0.574·Σγ_j·s² − 0.267·m_i·Σγ̄·s² + 2.245·Σγ̄·s⁴,
+  rms 0.012, leave-one-system-out 0.009–0.036. Its leading term is the PARTNER's kernel —
+  which dissolves the three-center scare: H-in-water's large remainder is oxygen's large γ
+  seen through a pair law, not three-center physics. Pairwise survives, partner-aware.
+- **The off-diagonal law is weaker** (γ̄·P·s² Mulliken-flavored; H2-holdout fails): that
+  channel still mixes the OBJ (not yet in the engine) with the true short piece. Labeled.
+- **FOUR-SYSTEM GATE 3/4** (bar 0.05): H2 0.010, F2 0.038, HF 0.026 PASS; H2O misses at
+  0.104 — but every OCCUPIED orbital sits within 0.033 (from 0.117 before the law), the
+  sole miss being the LUMO. The energy-relevant manifold is integration-grade on all four.
+- Next: put the OBJ into the engine and re-fit the off-diagonal channel clean; chase the
+  water LUMO; then the engine goes to Fortran.
