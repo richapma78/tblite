@@ -973,3 +973,16 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   dominates at long R); the 4-term {S, P12}×{γ_on, γ_off} fit reaches 3.1e-4 on the clean
   H2⁺ curve but with degenerate coefficients — measured, not identified. Next instruments:
   joint cross-system fits (H2-neutral + F2 spin probes) or the diagonal-first SCF re-gate.
+
+### 2026-07-18 (forty-sixth push) — the triplet manifold: m-scaling confirmed, a clean triplet law, the algebra task queued
+
+- **h2triplet_fock.py** (the 4th manifold; β empty again, α holds BOTH MOs: m = 1,
+  P12 = −S/(1−S²) sign-flipped): the diagonal's m-scaling CONFIRMED (X11 → −γ_on exactly at
+  dissociation with m = 1, completing the atom/H2⁺/triplet ladder m = 1, ½, 1), and a clean
+  law: the triplet's diagonal extra = −0.154·S·P12, constant ±2% across the stretch.
+- The four-manifold joint subset fits (atom + H2⁺ + triplet + singlet, closed-form
+  descriptors) reach rms 4–5e-3 with system-structured residuals — the product basis is
+  still not the binary's true form. Recorded, not tuned.
+- NEXT: the algebra task — derive the Ref-62 four-matrix Fock formula's 2×2 element
+  structure symbolically per manifold (the binary's loop conventions leave few candidates)
+  and match against the measured curves; then rebuild fock_x, re-gate scf_h2, F2/HF.
