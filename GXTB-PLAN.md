@@ -1677,3 +1677,36 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   the shell-level offsite).
 - Remaining: close the onsite residual + the shell→AO transform, generate p4, gate all
   systems, add OFX (Eq 155). The biggest gap is most of the way cracked.
+
+### 2026-07-17 (ninety-third push) — MFX γ generation SOLVED, gate-verified bit-exact
+
+- **The biggest gap on the parity ledger is now generated from physics and verified to
+  machine precision.** The kernel was NOT the naive Eq-149 I had guessed. I opened
+  `setgab_lrao_` in the Ghidra body (209902–209915) and decoded `uwe_av_` (227133), then —
+  because Ghidra mis-parenthesizes the final division — **read the xmm registers at the two
+  `divsd` (0x53a624, 0x53a65a)** to pin the exact form:
+
+  `γ_AB = [α + (1−α)·erf(ω·R)] / [ R + exp(−R·(B_AB·k2' + k1')) / (favg(x_lA,x_lB,ξ)·L) ]`
+
+  with `x_l = T25[Z][l]·ipse[Z]` (CN-FREE), `ξ = max(lA,lB)+1`, `L = 1.39` on the atomic
+  self-pair else `√(c_lA·c_lB)` (c_s=0.0789), `k1'=−0.5960`, `k2'=0.2140`, `B_HH=2.1823`.
+- **Three traps the extraction corrected**, each of which had been a residual:
+  1. `favg·L` **divides** the screening exp (not `favg·exp`), so onsite γ = α·favg·L, not
+     α/favg — that inversion was the old 14% onsite residual.
+  2. `L` is **1.39 on the diagonal but √(c·c) off it** — assuming 1.39 everywhere left the
+     offsite 5.4× too big.
+  3. The favg input is **CN-free** `T25·ipse`. The CN-scaled U I had been chasing feeds the
+     p2/p3 intermediates; line 209826 reassigns `local_190 = local_158` before the pair
+     loop, so the energy γ reads the atomic constant. Proof: the uwe_av arg stayed
+     **1.7272410098 constant** across an H2 sweep while CN swung 0.744→0.0.
+- **Gates (no fitting — every constant gdb-extracted):** the generated γ reproduces the
+  binary's own extracted p4(R) over 7 bond lengths + onsite to **worst 5.2e-11**
+  (`prototype/mfx_gamma_gate.py`, a permanent regression that needs no binary); end-to-end
+  `2·ex_energy(P,S,γ) = printed Ex(H2) = −0.202347` to <1e-6 (the ×2 is the α+β spin sum).
+  Kernel lives in `prototype/mfx.py`.
+- **Reusable capability**: to disambiguate a Ghidra-decompiled arithmetic expression, break
+  at the `divsd`/`mulsd` and read `$xmmN.v2_double[0]` — the register values resolve operator
+  precedence and operand identity that the C rendering gets wrong.
+- Remaining for polyatomics: extract the per-element `T25/ipse/c` tables (C,N,O,F) + the
+  bond table (confirm `B == AES R0`), implement **OFX** (Eq 155, onsite different-l), then
+  gate the full energy on h2o/hf/f2/ch4/nh3.

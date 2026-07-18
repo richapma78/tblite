@@ -1,21 +1,32 @@
 """mfx.py -- the range-separated Mulliken-approximated Fock exchange (gap #1), SI Sec 1.15.
-Energy = the validated 4-index Mulliken form; kernel = Eq 149 with gdb-extracted params.
+Energy = the validated 4-index Mulliken form; kernel = the EXACT setgab_lrao_ form, decoded
+from the Ghidra body (line 209902-209915) + uwe_av_ (227133) and gate-verified against the
+binary's own AO gamma matrix (4th arg of setgab_lrao_) to 5e-11 across an H2 bond sweep.
 
-  gamma_lAlB = [alpha + (1-alpha) erf(omega R)] / [R + favg(U_lA,U_lB,xi) exp(-(k1+k2 R)R)]
-  favg(X,Y,xi) = 2^(xi-1) (XY)^(xi/2) / (X+Y)^(xi-1)   (Eq 150; xi=1 valence, 2 polar)
-  alpha=0.15, omega=0.2347047181 (defaults, gdb-confirmed at setgab_lrao_);
-  U^MFX = the standard ES Hubbard U (gp3_gam2 = elem U), CN-scaled (line 209715).
+  gamma_AB = [alpha + (1-alpha) erf(omega R)] / [R + exp(-R (B_AB k2' + k1')) / (favg . L)]
+  favg(x,y,xi) = uwe_av = 2^(xi-1) (x y)^(xi/2) / (x+y)^(xi-1)   (xi = max(lA,lB)+1)
+  x = U_l = T25[Z][l] . ipse[Z]        # per-shell, CN-FREE (a pure atomic constant)
+  L    = 1.39                          # atomic self-pair (i==j)
+       = sqrt(c[lA] c[lB])             # off-diagonal;  c[s] = 0.0788775224
+  B_AB = per-element-pair bond param (0x3be6080 table; B_HH = 2.1823, == AES R0 -- verify)
+  alpha=0.15  omega=0.2347047181  k1'=-0.5959929766  k2'=0.2140456651  (defaults, gdb-pinned)
 
-GATE strategy: H2 has only s shells -> OFX = 0 -> printed Ex(H2) = MFX alone, so H2 gates
-the KERNEL directly. Polyatomics with p shells also carry OFX (Sec 1.16), added later.
-Sweeps the uncertain pieces (k1/k2 roles, favg xi, CN-scaling) against the H2 gate.
+Two traps this decode corrected: (1) favg . L DIVIDES the screening exp -- it is NOT
+favg . exp -- so onsite gamma = alpha . favg . L, not alpha/favg (that inversion was the
+14% onsite residual); (2) L is 1.39 on the diagonal but sqrt(c.c) off it -- assuming 1.39
+everywhere left the offsite 5.4x too big. The favg input is T25.ipse (CN-free); the CN-scaled
+U (line 209715) feeds the p2/p3 intermediates, NOT the energy gamma.
+
+GATE: H2 has only s shells -> OFX = 0 -> printed Ex(H2) = MFX alone, and the kernel
+reproduces the extracted p4(R) curve to 5e-11.  Polyatomics need the per-element T25/ipse/c
+tables (C,N,O,F) + OFX (Sec 1.16) -- the documented next step.
 """
 import math
 import re
 import sys
 
 import numpy as np
-from scipy.special import erf
+from math import erf
 
 sys.path.insert(0, "/mnt/c/Projects/tblite-gxtb/prototype")
 import constants as K  # noqa: E402
@@ -26,8 +37,24 @@ import restart  # noqa: E402
 BOHR = K.BOHR
 SYM = {1: "H", 6: "C", 7: "N", 8: "O", 9: "F"}
 ALPHA, OMEGA = 0.15, 0.2347047181
-K1, K2 = 0.0788775224, 1.7995847408          # G1[4], G1[5] (candidate screening)
+K1P, K2P = -0.5959929766, 0.2140456651        # DAT_03be6350, DAT_03be6358 (screening)
+L_DIAG = 1.39                                 # atomic self-pair L factor
 PURE_S = {"h2"}                               # OFX = 0 (no onsite different-l)
+
+# per-element MFX atomic constants, gdb-extracted at Z offsets (com_mp_ipse_+0x198+Z*8;
+# T25 table 0x3be25c0 + Z*0x20 + l*8).  ONLY H populated; C/N/O/F await extraction.
+ATOMIC = {
+    1: {"ipse": 0.4725928903, "T25": [3.6548180166]},          # H: s only
+}
+C_OFF = [0.0788775224]                         # c[l]; l=0 (s) extracted, l=1 (p) TODO
+# bond param B[Z][Z'] (0x3be6080 + Z*0x338 + Z'*8); hypothesis: == AES R0 table (H-H matches)
+BOND = {(1, 1): 2.1823}
+
+
+def u_shell(z, l):
+    """favg input for a shell: T25[Z][l] . ipse[Z], CN-free (setgab_lrao_ local_158)."""
+    a = ATOMIC[z]
+    return a["T25"][l] * a["ipse"]
 
 
 def systems():
@@ -73,7 +100,12 @@ def ex_energy(P, S, gam):
     return 2.0 * E
 
 
-def gamma_matrix(zs, xyz, meta, U, xi_val=1, k1=K1, k2=K2, ucn=None):
+def bond_param(za, zb):
+    return BOND.get((za, zb), BOND.get((zb, za)))
+
+
+def gamma_matrix(zs, xyz, meta):
+    """The exact decoded setgab_lrao_ AO exchange gamma. meta[i] = (atom, Z, l, ...)."""
     n = len(meta)
     Rab = np.zeros((len(zs), len(zs)))
     for a in range(len(zs)):
@@ -82,25 +114,24 @@ def gamma_matrix(zs, xyz, meta, U, xi_val=1, k1=K1, k2=K2, ucn=None):
     gam = np.zeros((n, n))
     for i in range(n):
         ai, zi, li, _ = meta[i]
-        Ui = (ucn[i] if ucn is not None else U[i])
         for j in range(n):
             aj, zj, lj, _ = meta[j]
-            Uj = (ucn[j] if ucn is not None else U[j])
-            xi = xi_val
-            fa = favg(Ui, Uj, xi)
-            if ai == aj:                                   # onsite (R=0)
-                gam[i, j] = ALPHA / fa
-            else:
-                R = Rab[ai, aj]
-                num = ALPHA + (1 - ALPHA) * erf(OMEGA * R)
-                den = R + fa * math.exp(-(k1 + k2 * R) * R)
-                gam[i, j] = num / den
+            xi = max(li, lj) + 1
+            fa = favg(u_shell(zi, li), u_shell(zj, lj), xi)
+            L = L_DIAG if i == j else math.sqrt(C_OFF[li] * C_OFF[lj])
+            R = Rab[ai, aj]
+            num = ALPHA + (1 - ALPHA) * erf(OMEGA * R)
+            screen = math.exp(-R * (bond_param(zi, zj) * K2P + K1P))
+            gam[i, j] = num / (R + screen / (fa * L))
     return gam
 
 
-def run(k1=K1, k2=K2, xi_val=1, verbose=True):
+def run(verbose=True):
+    """Gate the energy on systems whose elements are populated in ATOMIC (H2 today)."""
     worst_s = 0.0
     for name, (zs, xyz) in systems().items():
+        if any(z not in ATOMIC for z in zs):
+            continue                                       # element table not yet extracted
         atoms = [(SYM[z], x / BOHR, y_ / BOHR, zc / BOHR)
                  for z, (x, y_, zc) in zip(zs, xyz)]
         st = restart.converged_state(atoms)
@@ -109,11 +140,8 @@ def run(k1=K1, k2=K2, xi_val=1, verbose=True):
                                   st["raw"]).group(1))
         B = GE.build(zs, np.array(xyz, float))
         S, meta = B["S"], B["meta"]
-        # U^MFX per AO = the standard ES Hubbard U (gam2 = elem U)
-        U = np.array([B["E"][meta[i][1]]["U"][meta[i][2]] for i in range(len(meta))])
-        gam = gamma_matrix(zs, np.array(xyz, float), meta, U, xi_val=xi_val,
-                           k1=k1, k2=k2)
-        e = ex_energy(P, S, gam)
+        gam = gamma_matrix(zs, np.array(xyz, float), meta)
+        e = 2.0 * ex_energy(P, S, gam)         # x2 = the alpha+beta closed-shell spin sum
         d = e - printed
         tag = "  [OFX=0, pure MFX gate]" if name in PURE_S else "  (+OFX missing)"
         if name in PURE_S:
@@ -121,8 +149,7 @@ def run(k1=K1, k2=K2, xi_val=1, verbose=True):
         if verbose:
             print(f"  {name:4s} ours {e:+.6f}  printed {printed:+.6f}  d {d:+.6f}{tag}")
     if verbose:
-        print(f"  H2 (pure-MFX) |d| = {worst_s:.6f}  "
-              f"[k1={k1:.4f} k2={k2:.4f} xi={xi_val}]")
+        print(f"  H2 (pure-MFX) energy |d| = {worst_s:.6f} Eh")
     return worst_s
 
 
