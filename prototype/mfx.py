@@ -32,37 +32,34 @@ sys.path.insert(0, "/mnt/c/Projects/tblite-gxtb/prototype")
 import constants as K  # noqa: E402
 import gxtb_engine as GE  # noqa: E402
 import overlap as OV  # noqa: E402
+import paramfile  # noqa: E402
 import restart  # noqa: E402
 
 BOHR = K.BOHR
 SYM = {1: "H", 6: "C", 7: "N", 8: "O", 9: "F"}
-ALPHA, OMEGA = 0.15, 0.2347047181
-K1P, K2P = -0.5959929766, 0.2140456651        # DAT_03be6350, DAT_03be6358 (screening)
-L_DIAG = 1.39                                 # atomic self-pair L factor
-PURE_S = {"h2"}                               # OFX = 0 (no onsite different-l)
+# ALL the MFX constants come from the parsed parameter file (paramfile.py): the globals plus
+# every element's T25 -- so the gamma works for all 79 parameterised elements (Z 1..92,
+# transition metals included), not a hardcoded few. ipse is the one derived piece (data/
+# gxtb_ipse.json, gdb-extracted -- not stored in gxtb_parameters).
+_P = paramfile.load()
+_ELEM = _P["elements"]
+ALPHA = 0.15                                   # range-separation floor (code default)
+OMEGA = _P["omega"]                            # g2[8]
+K1P, K2P = _P["g1"][6], _P["g1"][7]            # screening exponent (0x3be6350/58)
+C_OFF = _P["c"]                                # c[l] = g1[4+l]; off-diagonal L
+L_DIAG = 1.39                                  # atomic self-pair L factor
+PURE_S = {"h2"}                                # OFX = 0 (no onsite different-l)
 
-# per-element MFX atomic constants, gdb-extracted at Z offsets (ipse: com_mp_ipse_+0x198+Z*8;
-# T25 table 0x3be25c0 + Z*0x20 + l*8).  These live in gxtb_parameters (ASCII): T25 = the 4th
-# shell-row of each element block; a full-periodic-table parse supersedes this dict (TODO).
-ATOMIC = {
-    1: {"ipse": 0.4725928903, "T25": [3.6548180166]},                 # H : s
-    6: {"ipse": 0.4219541252, "T25": [3.1541670118, 2.3521912659]},   # C : s,p
-    7: {"ipse": 0.5043819547, "T25": [5.6891941778, 1.8783447306]},   # N : s,p
-    8: {"ipse": 0.5869186521, "T25": [8.6375010152, 1.8397908212]},   # O : s,p
-    9: {"ipse": 0.6693134904, "T25": [5.8665628795, 2.2071162860]},   # F : s,p
-}
-C_OFF = [0.0788775224, 1.7995847408]           # c[l] = G1[4+l] (0x3be6340+l*8); off-diagonal L
-# bond param B[Z][Z'] per ATOM-PAIR (0x3be6080 + Z*0x338 + Z'*8), ASYMMETRIC. HF uses B[1][9].
-# Only R=0-relevant / HF pairs here; full pairwise table + the ordering rule are the remaining
-# gap (a general molecule with atom-order != Z-order will pin the rule).
+# bond param B[Z][Z'] per ATOM-PAIR is a SEPARATE pairwise table, NOT in gxtb_parameters; still
+# hardcoded for the gated pairs. ASYMMETRIC; ordering rule for asymmetric pairs is TODO.
 BOND = {(1, 1): 2.1823, (1, 9): 2.0646, (9, 9): 2.7664,
         (1, 8): 2.1768, (8, 8): 2.4817}       # O-H symmetric; H-F asymmetric (ordering TODO)
 
 
 def u_shell(z, l):
-    """favg input for a shell: T25[Z][l] . ipse[Z], CN-free (setgab_lrao_ local_158)."""
-    a = ATOMIC[z]
-    return a["T25"][l] * a["ipse"]
+    """favg input for a shell: T25[Z][l] * ipse[Z], CN-free (setgab_lrao_ local_158)."""
+    e = _ELEM[z]
+    return e["T25"][l] * e["ipse"]
 
 
 def systems():

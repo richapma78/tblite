@@ -1736,3 +1736,26 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   decode the ChemRoutes TODO flagged as the largest unknown.
 - Remaining: **OFX** (Eq 155) for the full polyatomic *energy*; the bond-ordering rule; and
   parsing the param file for all Z.
+
+### 2026-07-17 (ninety-fifth push) — the parameter file is decoded and parsed (all 79 elements)
+
+- **`gxtb_parameters` is now a parsed source, not a black box** (`prototype/paramfile.py`).
+  Layout: two global rows of 10 (the G1 array with c₀/c₁/k1'/k2', and the AES S-kernel + ω),
+  then a uniform **10-line block per element** — Z header; a 10-value row0 (col6 = Γ); six
+  shell rows of 4 (s,p,d,f) with **shell[3]=T25, shell[4]=T32** (the ES Hubbard U); two rows
+  of 8 (row8[5] = the atomic core-energy increment, e.g. F −92.3159). It holds **79 elements,
+  Z=1..92** (H..U — skips most lanthanides and Th/Pa, but **includes every transition metal
+  plus gold and uranium**). The block size is uniform, so the parse is drift-free (verified:
+  the Z headers come out a clean monotonic integer sequence).
+- **Gate:** parsed T25 == the gdb-extracted values for H,C,N,O,F **bit-identically (0.00)**;
+  `mfx.py` now sources *all* its constants from the parser, and the γ gates still pass
+  unchanged (H₂ 5e-11, HF 4e-11, H₂O 1.2e-10).
+- **`ipse` is the one MFX quantity not stored** in the file (derived at load). Extracted for
+  all 79 Z in one `binprobe` call → `data/gxtb_ipse.json` (Fe 0.2467, Au 0.4685). So the MFX
+  **atomic constants now exist for every parameterised element** — the scaling win, and the
+  concrete road to the metals.
+- **What the parse does *not* yet give for the metals γ**: the d-shell off-diagonal L
+  constant (c[2] — `c[l]=g1[4+l]` holds only for l=0,1) and ξ for d shells, both pinnable
+  from *one* d-containing-molecule trace exactly as HF pinned the p-shell; plus the separate
+  bond pairwise table and OFX. The non-T25/T32 rows are structurally parsed but not all named
+  (they carry H0/ES/repulsion terms — the broader engine decode).
