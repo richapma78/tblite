@@ -1812,3 +1812,16 @@ offsite as an **S-contraction** (`param_9 × param_10 → param_14`) whose error
 count. So the onsite is *validated*; the remaining work is decoding that offsite S-contraction
 (+ a computed in-engine CN). The hardcoded-CN validation was reverted to keep `energy_parity.py`
 clean. (task #36)
+
+**Update 2 — the onsite is *validated to sub-mEh* (SI + memory read caught a q↔CN swap).**
+Prompted to recheck the supplement and watch memory, I found the first wiring had q and CN
+**swapped**. SI Eq 83b is explicit: the erf switching function takes the **atomic charge** q_A,
+and CN enters the linear μ factor. Reading the erf argument inside `set1espot_` (break
+0x5525a8) confirmed it — HF's two atoms gave **±0.412** (opposite signs = charge; CN would be
++0.306 on both). The correct onsite:
+`μ_eff = μ_l·(1 + CN_A·kcn[Z])·(1 + 0.012·(erf(q_A−2/3)+erf(q_A+2/3)))`, kcn = row0[8]. With q
+and CN in the right places it **gates HF −0.32 / H₂O −0.23 mEh** (from +27.9/+30.5) — **ES1 is
+now within substitution grade.** HF alone (q≈CN≈0.3) had hidden the swap; H₂O (q≠CN) exposed
+it. Remaining is within-grade polish: the g-xTB covalent CN is a different convention than
+`repulsion.cn_eq47` (HF 0.306 vs 0.735), so productionising needs that specific CN function,
+plus the small offsite S-contraction residual.

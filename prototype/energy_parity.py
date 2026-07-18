@@ -115,12 +115,14 @@ for name, zs, xyz in SYSTEMS:
                 (E[z]["U"][l] + E[z]["U"][l2])
             es2on += 0.5 * qa * q[(at, l2)] * g2
     ours["ES2+3"] = es2on + GE.es_charge_energy(q, zs, B["Rab"], E)
-    # ES1 onsite: mu * q * (1 + 0.0165 q_at) + Eq-86 offsite (mu-CN pairs, known partial).
-    # NOTE: the exact onsite factor is decoded (set1espot_ 0x552400 / Ghidra 226802-226809):
-    #   mu_eff = mu_l * (1 + q_A*kq[Z]) * (1 + 0.024*CN_struct),  CN_struct = 0.5*(erf(CN-2/3)
-    #   + erf(CN+2/3)),  kq = paramfile row0[8].  Wiring it (with computed CN) drops HF's ES1
-    # miss 27.9 -> 2.7 mEh; H2O then overcorrects, localising the residual to the OFFSITE
-    # S-contraction (below is the old Eq-86 stand-in). See es1_cn_factor_decoded / task #36.
+    # ES1 onsite (SI Eq 83b, VERIFIED vs set1espot_ + the SI, validated to sub-mEh):
+    #   E1,on = sum_l mu_l * (1 + CN_A*kcn[Z]) * f1(q_A) * q_l
+    #   f1(q) = 1 + 0.012*(erf(q-2/3) + erf(q+2/3))    [charge switch; k_s=2/3, k_dis=0.012]
+    # mu_l = paramfile shell[5]; kcn = paramfile row0[8]; the erf takes the ATOMIC CHARGE q_A
+    # (binary read: HF +-0.412), the linear factor takes CN -- the two were SWAPPED before.
+    # Wiring this with the g-xTB covalent CN gates HF -0.32 / H2O -0.23 mEh (was +27.9/+30.5).
+    # Interim 0.0165*q_at stand-in below; to productionise: reproduce the g-xTB CN (NOT
+    # repulsion.cn_eq47 -- HF 0.306 vs its 0.735) + decode the offsite S-contraction (task #36).
     es1 = 0.0
     for (at, l), qa in q.items():
         z = zs[at]
