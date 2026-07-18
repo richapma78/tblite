@@ -1781,3 +1781,22 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   Gates: `mfx_gamma_poly_gate.py` (HF/H₂O/F₂ to 1e-10), `mfx.py` energy gate (1.5e-8 Eh).
 - **Caveat**: OFX is untested for open-shell/metals; and R0 currently reuses `aes.py`'s H..F
   subset — a full-precision R0 for all elements is the metals to-do (alongside d-shell γ).
+
+### 2026-07-17 (ninety-seventh push) — ES1 polar miss decoded (next ledger gap)
+
+- **The next ledger gap, ES1 ("charge SIE", ~30 mEh), is now diagnosed to its root.** Measured
+  per-molecule: ours is too high by HF +27.9, H₂O +30.5 mEh; F₂ +0.78, H₂ 0.0 — it tracks
+  **polarity**. The cause is in `set1espot_` (0x552400): the ES1 `μ` carries a **μ–CN factor**
+  the current assembly gets wrong on both counts.
+  1. A **CN-structure factor** `0.5·(erf(CN−2/3)+erf(CN+2/3))` — a smooth 0→1 function of the
+     coordination number — that the model **omits entirely**.
+  2. A **per-element charge factor** `1 + q·kq[Z]`, where `kq = row0[8]` of each element block
+     in `gxtb_parameters` (H 0.7749747393 … F −0.0684592505) — the exact analog of the model's
+     ad-hoc single `0.0165·q_at`.
+- The erf-pair's `exp((CN±2/3)²)` terms are the CN-**gradient** (forces), not the energy.
+- **Sanity check**: HF onsite ES1 (+0.075) × CN-factor(CN≈1)=0.67 → +0.050 ≈ printed +0.047 —
+  the factor brackets the miss. So the physics is identified; the finding is banked.
+- **To close** (next pass): pull CN (`param_12` = the covalent CN the MFX path uses as setgab
+  arg1), work out exactly how the two factors enter the `μ·q` potential (`set1espot_` fills the
+  potential into param_14/15; ES1 energy = Tr(P·V)), wire it, and gate vs printed ES1
+  (HF +0.047231, H₂O +0.060652, CH₄ +0.015301, NH₃ +0.045128).
