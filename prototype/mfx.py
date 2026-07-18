@@ -29,6 +29,7 @@ import numpy as np
 from math import erf
 
 sys.path.insert(0, "/mnt/c/Projects/tblite-gxtb/prototype")
+import aes  # noqa: E402
 import constants as K  # noqa: E402
 import gxtb_engine as GE  # noqa: E402
 import overlap as OV  # noqa: E402
@@ -50,10 +51,10 @@ C_OFF = _P["c"]                                # c[l] = g1[4+l]; off-diagonal L
 L_DIAG = 1.39                                  # atomic self-pair L factor
 PURE_S = {"h2"}                                # OFX = 0 (no onsite different-l)
 
-# bond param B[Z][Z'] per ATOM-PAIR is a SEPARATE pairwise table, NOT in gxtb_parameters; still
-# hardcoded for the gated pairs. ASYMMETRIC; ordering rule for asymmetric pairs is TODO.
-BOND = {(1, 1): 2.1823, (1, 9): 2.0646, (9, 9): 2.7664,
-        (1, 8): 2.1768, (8, 8): 2.4817}       # O-H symmetric; H-F asymmetric (ordering TODO)
+# The MFX screening bond param IS the AES R0 table (gp3_aesr0) -- SYMMETRIC (keyed min,max),
+# reused from aes.py. Confirmed on F2: R0[F,F]=2.2996 matches the trace; the earlier
+# "asymmetric B[9][9]=2.7664" was a wrong-address read (there is no ordering rule -- it's
+# symmetric). Full-precision R0 for ALL elements remains a separate extraction (metals).
 
 
 def u_shell(z, l):
@@ -106,7 +107,7 @@ def ex_energy(P, S, gam):
 
 
 def bond_param(za, zb):
-    return BOND.get((za, zb), BOND.get((zb, za)))
+    return aes.R0.get((min(za, zb), max(za, zb)))
 
 
 def gamma_matrix(zs, xyz, meta):
@@ -126,17 +127,23 @@ def gamma_matrix(zs, xyz, meta):
             L = L_DIAG if same_shell else math.sqrt(C_OFF[li] * C_OFF[lj])
             R = Rab[ai, aj]
             num = ALPHA + (1 - ALPHA) * erf(OMEGA * R)
-            screen = math.exp(-R * (bond_param(zi, zj) * K2P + K1P))
+            b = bond_param(zi, zj) or 0.0          # onsite (R=0) ignores b; offsite needs it
+            screen = math.exp(-R * (b * K2P + K1P))
             gam[i, j] = num / (R + screen / (fa * L))
     return gam
 
 
 def run(verbose=True):
-    """Gate the energy on systems whose elements are populated in ATOMIC (H2 today)."""
-    worst_s = 0.0
+    """ENERGY gate: printed Ex(Mulliken) must equal 2*ex_energy(P,S,gamma) for every system.
+    It does, to the printed precision, on all six closed-shell H..F molecules -- so the SI's
+    OFX onsite correction is empirically zero here (the onsite different-l exchange is already
+    carried by gamma's onsite off-diagonal blocks). i.e. the exchange ENERGY is closed."""
+    worst = 0.0
     for name, (zs, xyz) in systems().items():
-        if any(z not in ATOMIC for z in zs):
-            continue                                       # element table not yet extracted
+        if any(z not in _ELEM for z in zs):
+            continue                                       # element not parameterised
+        if any(bond_param(a, b) is None for a in set(zs) for b in set(zs)):
+            continue                                       # a bond pair not yet extracted
         atoms = [(SYM[z], x / BOHR, y_ / BOHR, zc / BOHR)
                  for z, (x, y_, zc) in zip(zs, xyz)]
         st = restart.converged_state(atoms)
@@ -146,17 +153,18 @@ def run(verbose=True):
         B = GE.build(zs, np.array(xyz, float))
         S, meta = B["S"], B["meta"]
         gam = gamma_matrix(zs, np.array(xyz, float), meta)
-        e = 2.0 * ex_energy(P, S, gam)         # x2 = the alpha+beta closed-shell spin sum
-        d = e - printed
-        tag = "  [OFX=0, pure MFX gate]" if name in PURE_S else "  (+OFX missing)"
-        if name in PURE_S:
-            worst_s = max(worst_s, abs(d))
+        mfx = 2.0 * ex_energy(P, S, gam)       # x2 = the alpha+beta closed-shell spin sum
+        d = abs(printed - mfx)                 # = OFX; empirically 0 to printed precision
+        worst = max(worst, d)
         if verbose:
-            print(f"  {name:4s} ours {e:+.6f}  printed {printed:+.6f}  d {d:+.6f}{tag}")
+            print(f"  {name:4s} MFX {mfx:+.6f}  printed {printed:+.6f}  |printed-MFX| {d:.1e}")
+    ok = worst < 1e-5                          # printed carries 6 decimals; OFX is below it
     if verbose:
-        print(f"  H2 (pure-MFX) energy |d| = {worst_s:.6f} Eh")
-    return worst_s
+        print(f"\n  worst |printed - MFX| = {worst:.1e} Eh  "
+              f"{'PASS -- exchange energy closed' if ok else 'FAIL'}")
+    return ok
 
 
 if __name__ == "__main__":
-    run()
+    import sys
+    sys.exit(0 if run() else 1)

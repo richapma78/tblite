@@ -1759,3 +1759,25 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   from *one* d-containing-molecule trace exactly as HF pinned the p-shell; plus the separate
   bond pairwise table and OFX. The non-T25/T32 rows are structurally parsed but not all named
   (they carry H0/ES/repulsion terms — the broader engine decode).
+
+### 2026-07-17 (ninety-sixth push) — the exchange ENERGY is closed (gap #1 done, H..F)
+
+- **The biggest term on the parity ledger is now matched end-to-end.** For all six
+  closed-shell H..F molecules — H₂, HF, H₂O, F₂, CH₄, NH₃ — **`printed Ex(Mulliken) =
+  2·ex_energy(P,S,γ)` to ~1e-8 Eh** (`mfx.py` `run()` is the energy gate; worst 1.5e-8).
+  That is ~10⁵× below substitution grade.
+- **The anticipated OFX onsite correction (Eq 155) is empirically zero here (~1e-9).** The
+  onsite different-l exchange the SI describes is already carried by the γ matrix's onsite
+  off-diagonal blocks (e.g. [Fs,Fp]=0.136), which the 4-index `ex_energy` sums over — there is
+  **no separate term to add** for the closed-shell scope.
+- **Two fixes got here, both closing phantom "open items":**
+  1. **The MFX screening bond param IS the AES R0 table** — *symmetric* (`aes.R0`, keyed
+     min/max), reused from the AES port. Confirmed on F₂: R0[F,F]=2.2996 matches the trace's
+     2.29953. The earlier "asymmetric B[9][9]=2.7664" was a **wrong-address read** — so there
+     is **no bond-ordering rule** to find; it was never asymmetric.
+  2. **F₂ exposed the p–p *offsite* γ block** (both l=1, different atoms) that H₂/HF/H₂O never
+     had. It gates bit-exact (4e-11) once the bond param is right — now in the regression.
+- `mfx.py` sources bond from `aes.R0` and every atomic/global constant from `paramfile`.
+  Gates: `mfx_gamma_poly_gate.py` (HF/H₂O/F₂ to 1e-10), `mfx.py` energy gate (1.5e-8 Eh).
+- **Caveat**: OFX is untested for open-shell/metals; and R0 currently reuses `aes.py`'s H..F
+  subset — a full-precision R0 for all elements is the metals to-do (alongside d-shell γ).
