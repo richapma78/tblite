@@ -114,6 +114,11 @@ for name, zs, xyz in SYSTEMS:
             g2 = GE.SRULE[z] * 2 * E[z]["U"][l] * E[z]["U"][l2] / \
                 (E[z]["U"][l] + E[z]["U"][l2])
             es2on += 0.5 * qa * q[(at, l2)] * g2
+    # ES2 = es2on (onsite, SRULE) + offsite gamma2 (SI Eq 101: 1/[R + 0.5(1/U2A+1/U2B)
+    #   exp(-k2x R)], U2 = T32*(1+Gamma*CN), k2x ~ 0.6) + ES3. VALIDATED on F2 (ES3~=0): es2on +
+    #   the exact offsite = printed +0.002576 EXACTLY. For HF/H2O the remainder (+0.019/+0.062)
+    #   is ES3. The line below is the interim v2 (folded-KO offsite conflated with ES3); the
+    #   clean close = es2on + Eq-101 offsite + a SEPARATED ES3. See es2_gamma_blind_diagnosed.
     ours["ES2+3"] = es2on + GE.es_charge_energy(q, zs, B["Rab"], E)
     # ES1 onsite (SI Eq 83b, VERIFIED vs set1espot_ + the SI, validated to sub-mEh):
     #   E1,on = sum_l mu_l * (1 + CN_A*kcn[Z]) * f1(q_A) * q_l
