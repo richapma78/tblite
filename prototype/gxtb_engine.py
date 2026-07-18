@@ -25,6 +25,7 @@ sys.path.insert(0, HERE)
 import adapt  # noqa: E402
 import basisq  # noqa: E402
 import constants as K  # noqa: E402
+import eeqbc  # noqa: E402
 import es2_energy  # noqa: E402
 import f2_stretch  # noqa: E402
 import oracle  # noqa: E402
@@ -254,9 +255,19 @@ def build(zs, xyz_bohr, charge=0):
     xyz = np.array(xyz_bohr, float)
     S = overlap.overlap(list(zs), xyz, charge=charge, ao_order="oracle")
     cns = adapt.basis_cn(list(zs), xyz)
+    # SI Eq 28 basis effective charge: q^eff = k0*q + k1*q^2 + k2*sqrt(CN) + k3*CN*q, with
+    # q = EEQBC charges, k0=1, [k1,k2,k3]=gp3_kqvszp_=l8[2,3,4]. GE ships only the k2*sqrt(CN)
+    # term (kb*sqrt(CN)); the CHARGE terms (zero for neutral atoms, so H2/F2 unaffected) are
+    # the candidate for the POLAR H0 overshoot. Env GXTB_BASISQ=1 adds them (needs H0V2=1).
+    _bq = os.environ.get("GXTB_BASISQ") == "1"
+    _qeeq = eeqbc.charges(list(zs), xyz, charge=charge)["q"] if _bq else None
     sh, meta = [], []
     for at, z in enumerate(zs):
         q_ = E[z]["kb"] * math.sqrt(cns[at])
+        if _bq:
+            qb = _qeeq[at]
+            l8 = P_["element"][z]["l8"]
+            q_ += qb + l8[2] * qb * qb + l8[4] * cns[at] * qb
         for l, prims in Bq[z]["shells"]:
             e_ = np.array([p[0] for p in prims])
             c0 = np.array([p[1] for p in prims])

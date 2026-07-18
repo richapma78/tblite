@@ -58,27 +58,42 @@ per-element H0 pieces (`gp3_lev_`, `gp3_lev_cn_`, `gp3_poly_`, `gp3_rad_`) and c
 
 ### 1. Core Hamiltonian (H0) — the #1 gap (electronic, up to 322 mEh)
 
-**Structure fully decoded** to SI Eq 64-67. GE.build's H0 drops two pieces:
-- **CN-dependent shell levels** (Eq 65): `H_lA = L2 − LEVCN·CN`, with `LEVCN = gp3_lev_cn_ = shells[1]`, `CN` = the internal (`es2_energy.coordination`) one. Sign VERIFIED (the flip is 5-9× worse).
-- **Shell polynomial** (Eq 66-67): `Π = π_lA·π_lB`, `π = 1 + k^shp·k^(shp,l)·(R/Rcov)`, with `k^shp = gp3_poly_ = l1[7]`, `Rcov = gp3_rad_ = l1[5]`.
+**Structure decoded to SI Eq 64-67; three of the four pieces are now SETTLED, and the last is a
+diagnosed multi-error tangle.** Detail: `derived-constants.json` → `h0_electronic_gap_ROADMAP`
+(entries `v3_*`, `v4_*`, `v5_*`). The v2/v3 implementation lives env-gated in `gxtb_engine.py`
+(`GXTB_H0V2=1`, default OFF — v1 ships untouched); patch also at `data/h0_v2_CN_levels_and_poly.patch`.
 
-**Implemented + measured** (patch: `data/h0_v2_CN_levels_and_poly.patch`): the total error
-across the six halved (785→283 mEh), CH4/NH3 improved several-fold — but the polar pair (HF/H2O)
-regressed. **Reverted** (GE.build is load-bearing for the SCF; a mixed change with an unsourced
-global must not ship).
+SETTLED this arc:
+- **Shell polynomial (Eq 66-67):** the per-shell factor is the named `gp3_pln_` array (per-element
+  `shells[2]`), *not* a hidden g1/g2 global. With it + the CN-levels, **H2 closes +47→+0.3 mEh**, no
+  fit. `π = 1 + gp3_poly[Z]·gp3_pln[Z][l]·(R/Rcov)`.
+- **CN-dependent levels (Eq 65):** `H_lA = L2 − LEVCN·CN`, `LEVCN = gp3_lev_cn_ = shells[1]`. Sign
+  verified; CN = `es2_energy.coordination`, **verified correct** (matches the binary's setgab CN,
+  HF 0.307 vs 0.3062 extracted).
+- **Offdiagonals confirmed right:** the new `mfx.exchange_fock` (variational F_x, Euler-verified) +
+  `fock_reconstruct.py` isolate the binary's H0 — its offdiagonals are within ~0.01 of ours, so the
+  poly/kdiat *structure* is right.
 
-**What's left:** (a) the 4 `k^(shp,l)` globals — mixed into g1/g2, *not* cleanly separable, must
-be extracted not fit; (b) the σ/π `kdiat` treatment (currently a v1 harmonic mean with a crude
-switch — the likely cause of the polar regression).
+THE REMAINING PIECE — the polar overshoot (HF/H2O), a **compensating multi-error tangle**, not one
+wrong parameter:
+- Restricting the CN-level to s-shells flips HF −87→+107 — so the p-shell level is a big lever — but
+  the CN and LEVCN are the binary's *exact* values, so it's not a wrong CN.
+- The basis EEQBC charge terms (SI Eq 28, `gp3_kqvszp_ = l8[2,3,4]`) were tested (`GXTB_BASISQ=1`)
+  and **ruled out** — HF barely moves, H2O/NH3 worsen.
+- Read: v1's bare baseline is already off for polar (HF −21 before any v2), and the *correct*
+  CN-level+Π then over-amplify it. The ledger can't disentangle this (every knob moves several
+  molecules at once).
 
-**Recommended route — extract the binary's H0 via the eigensolver:** g-xTB pre-transforms then
-calls mkl **DSYEVR** (`0x5a0ee0`, standard symmetric, 3 hits = SCF iterations). Arg `r8` = the
-orthogonalized Fock `Xᵀ F X`. Tested this cycle: the *first* call is **not** bare H0+ACP (it
-carries the EEQ guess density / a non-Löwdin transform — naive reconstruction missed by ~1 Eh).
-So: read A at each of the 3 calls, match eigenvalues to the printed `eps` to find the converged
-one, determine the transform (require un-transform to be symmetric), then subtract the electron
-terms we already have (ES1/ES2/ES3/Ex/AES). Full note: `derived-constants.json` →
-`h0_electronic_gap_ROADMAP.extract_H0_via_DSYEVR`.
+**The clean way forward, and its blocker:** read the binary's *bare* H0 per element and subtract.
+`fock_reconstruct.py` gives the exact converged Fock; `H0 = F_ao − ACP − F_x − F_ES`. But the
+binary's exchange Fock is **non-variational** (a shortcut potential; `scf_h2.fock_x`), while our
+`mfx.exchange_fock` is the exact variational one — so the isolation is clean off-diagonally but the
+diagonal (the levels, which is exactly what the polar tangle needs) carries that contamination
+(H2 isolates to +0.107). **So the true next step is decoding the binary's non-variational exchange
+potential** — then `F_ao − ACP − F_x_nonvar − F_ES = H0` exactly and the tangle reads off directly.
+Alternatively, find a pre-SCF bare-Hamiltonian diagonalize (none found so far in the 3 DSYEVR calls).
+Also still open and independent: the p-poly *source* for CH4/NH3 (per-element `gp3_pln` overshoots
+them; a smaller global helps but that's tuning — resolve via the same clean H0 readout).
 
 ### 2. ES3 energy contraction (ES2+3, 3.2 mEh on water)
 
