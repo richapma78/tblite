@@ -144,10 +144,17 @@ for name, zs, xyz in SYSTEMS:
     # Wiring this with the g-xTB covalent CN gates HF -0.32 / H2O -0.23 mEh (was +27.9/+30.5).
     # Interim 0.0165*q_at stand-in below; to productionise: reproduce the g-xTB CN (NOT
     # repulsion.cn_eq47 -- HF 0.306 vs its 0.735) + decode the offsite S-contraction (task #36).
+    # WIRED (was interim 1+0.0165*qat, +27.9 mEh): the full Eq-83b/84 onsite --
+    #   mu_l*(1 + k1CN[Z]*CN_A)*f1(q_A)*q_l, CN_A the internal L2/sqrt CN, k1CN=row0[8],
+    #   f1(q)=1+k_dis(erf(q-k_s)+erf(q+k_s)) [k_dis=0.012, k_s=2/3], erf takes ATOMIC charge.
+    CN1 = es2_energy.coordination(zs, xyz)
+    KDIS, KS = 0.012, 2.0 / 3.0
     es1 = 0.0
     for (at, l), qa in q.items():
         z = zs[at]
-        es1 += E[z]["MU"][l] * qa * (1 + 0.0165 * qat[at])
+        kcn1 = es2_energy._P["elements"][z]["row0"][8]
+        f1 = 1.0 + KDIS * (math.erf(qat[at] - KS) + math.erf(qat[at] + KS))
+        es1 += E[z]["MU"][l] * (1.0 + kcn1 * CN1[at]) * f1 * qa
     for (at, l), qa in q.items():
         for bt in range(len(zs)):
             if bt == at:
@@ -155,8 +162,10 @@ for name, zs, xyz in SYSTEMS:
             zb = zs[bt]
             for lb in range(E[zb]["nsh"]):
                 dr = AUFBAU[zb][lb] - E[zb]["ref"][lb]
-                gko = 1.0 / (float(B["Rab"][at, bt])
-                             + 0.5 * (1.0 / E[zs[at]]["U"][l] + 1.0 / E[zb]["U"][lb]))
+                R = float(B["Rab"][at, bt])   # offsite uses the FULL Eq-101 gamma2 kernel
+                gko = 1.0 / (R + 0.5 * (1.0 / es2_energy._U(zs[at], l, CN1[at])
+                                        + 1.0 / es2_energy._U(zb, lb, CN1[bt]))
+                             * math.exp(-es2_energy.K2X * R))
                 es1 -= dr * gko * qa
     ours["ES1 (charge SIE)"] = es1
     # EHT+ACP electronic piece (no Ex): Tr((H0+A) P)
