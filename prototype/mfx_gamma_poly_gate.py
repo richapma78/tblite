@@ -1,0 +1,59 @@
+"""mfx_gamma_poly_gate.py -- regression: mfx.gamma_matrix must reproduce the binary's AO
+exchange gamma for POLYATOMICS with p-shells, bit-for-bit. Extends the H2 gate to the
+different-l blocks (onsite s-p, offsite s-p) that H2 cannot exercise.
+
+References are the binary's own p4 (4th arg of setgab_lrao_), gdb-extracted via binprobe.
+HF pins F's tables + the s/p L-branch; H2O adds oxygen, a 3-atom case, and the non-bonded
+H-H pair. Needs no binary to run -- a frozen regression.
+"""
+import numpy as np
+
+import mfx
+
+HF_REF = [0.3601297506, 0.064222692, 0.1331300797, 0.1331300797, 0.1331300797,
+          0.064222692, 0.8186897778, 0.1361093912, 0.1361093912, 0.1361093912,
+          0.1331300797, 0.1361093912, 0.308007189, 0.308007189, 0.308007189,
+          0.1331300797, 0.1361093912, 0.308007189, 0.308007189, 0.308007189,
+          0.1331300797, 0.1361093912, 0.308007189, 0.308007189, 0.308007189]
+H2O_REF = [1.0569929294, 0.1322239818, 0.1322239818, 0.1322239818, 0.073862567, 0.073862567,
+           0.1322239818, 0.2251398739, 0.2251398739, 0.2251398739, 0.1251205229, 0.1251205229,
+           0.1322239818, 0.2251398739, 0.2251398739, 0.2251398739, 0.1251205229, 0.1251205229,
+           0.1322239818, 0.2251398739, 0.2251398739, 0.2251398739, 0.1251205229, 0.1251205229,
+           0.073862567, 0.1251205229, 0.1251205229, 0.1251205229, 0.3601297506, 0.0526228759,
+           0.073862567, 0.1251205229, 0.1251205229, 0.1251205229, 0.0526228759, 0.3601297506]
+
+SYSTEMS = {
+    "HF": {  # H_s, F_s, F_px, F_py, F_pz
+        "zs": [1, 9],
+        "xyz": np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 1.733]]),
+        "meta": [(0, 1, 0, None), (1, 9, 0, None),
+                 (1, 9, 1, None), (1, 9, 1, None), (1, 9, 1, None)],
+        "ref": HF_REF,
+    },
+    "H2O": {  # O_s, O_px, O_py, O_pz, H1_s, H2_s
+        "zs": [8, 1, 1],
+        "xyz": np.array([[0.0, 0.0, 0.0], [1.43013, 0.0, 1.10755], [-1.43013, 0.0, 1.10755]]),
+        "meta": [(0, 8, 0, None), (0, 8, 1, None), (0, 8, 1, None), (0, 8, 1, None),
+                 (1, 1, 0, None), (2, 1, 0, None)],
+        "ref": H2O_REF,
+    },
+}
+
+
+def run():
+    worst = 0.0
+    for name, s in SYSTEMS.items():
+        n = len(s["meta"])
+        ref = np.array(s["ref"]).reshape(n, n)
+        gam = mfx.gamma_matrix(s["zs"], s["xyz"], s["meta"])
+        d = float(np.abs(gam - ref).max())
+        worst = max(worst, d)
+        print(f"  {name:4s} ({n}x{n})  worst |generated - binary p4| = {d:.2e}")
+    ok = worst < 1e-9
+    print(f"\n  overall worst = {worst:.2e}  {'PASS' if ok else 'FAIL'}")
+    return ok
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(0 if run() else 1)

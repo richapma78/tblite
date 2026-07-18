@@ -41,14 +41,22 @@ K1P, K2P = -0.5959929766, 0.2140456651        # DAT_03be6350, DAT_03be6358 (scre
 L_DIAG = 1.39                                 # atomic self-pair L factor
 PURE_S = {"h2"}                               # OFX = 0 (no onsite different-l)
 
-# per-element MFX atomic constants, gdb-extracted at Z offsets (com_mp_ipse_+0x198+Z*8;
-# T25 table 0x3be25c0 + Z*0x20 + l*8).  ONLY H populated; C/N/O/F await extraction.
+# per-element MFX atomic constants, gdb-extracted at Z offsets (ipse: com_mp_ipse_+0x198+Z*8;
+# T25 table 0x3be25c0 + Z*0x20 + l*8).  These live in gxtb_parameters (ASCII): T25 = the 4th
+# shell-row of each element block; a full-periodic-table parse supersedes this dict (TODO).
 ATOMIC = {
-    1: {"ipse": 0.4725928903, "T25": [3.6548180166]},          # H: s only
+    1: {"ipse": 0.4725928903, "T25": [3.6548180166]},                 # H : s
+    6: {"ipse": 0.4219541252, "T25": [3.1541670118, 2.3521912659]},   # C : s,p
+    7: {"ipse": 0.5043819547, "T25": [5.6891941778, 1.8783447306]},   # N : s,p
+    8: {"ipse": 0.5869186521, "T25": [8.6375010152, 1.8397908212]},   # O : s,p
+    9: {"ipse": 0.6693134904, "T25": [5.8665628795, 2.2071162860]},   # F : s,p
 }
-C_OFF = [0.0788775224]                         # c[l]; l=0 (s) extracted, l=1 (p) TODO
-# bond param B[Z][Z'] (0x3be6080 + Z*0x338 + Z'*8); hypothesis: == AES R0 table (H-H matches)
-BOND = {(1, 1): 2.1823}
+C_OFF = [0.0788775224, 1.7995847408]           # c[l] = G1[4+l] (0x3be6340+l*8); off-diagonal L
+# bond param B[Z][Z'] per ATOM-PAIR (0x3be6080 + Z*0x338 + Z'*8), ASYMMETRIC. HF uses B[1][9].
+# Only R=0-relevant / HF pairs here; full pairwise table + the ordering rule are the remaining
+# gap (a general molecule with atom-order != Z-order will pin the rule).
+BOND = {(1, 1): 2.1823, (1, 9): 2.0646, (9, 9): 2.7664,
+        (1, 8): 2.1768, (8, 8): 2.4817}       # O-H symmetric; H-F asymmetric (ordering TODO)
 
 
 def u_shell(z, l):
@@ -116,9 +124,9 @@ def gamma_matrix(zs, xyz, meta):
         ai, zi, li, _ = meta[i]
         for j in range(n):
             aj, zj, lj, _ = meta[j]
-            xi = max(li, lj) + 1
-            fa = favg(u_shell(zi, li), u_shell(zj, lj), xi)
-            L = L_DIAG if i == j else math.sqrt(C_OFF[li] * C_OFF[lj])
+            fa = favg(u_shell(zi, li), u_shell(zj, lj), 1)   # xi=1 (geom. mean) for s,p
+            same_shell = (ai == aj and li == lj)             # one diagonal shell block
+            L = L_DIAG if same_shell else math.sqrt(C_OFF[li] * C_OFF[lj])
             R = Rab[ai, aj]
             num = ALPHA + (1 - ALPHA) * erf(OMEGA * R)
             screen = math.exp(-R * (bond_param(zi, zj) * K2P + K1P))

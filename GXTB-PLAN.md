@@ -1710,3 +1710,29 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
 - Remaining for polyatomics: extract the per-element `T25/ipse/c` tables (C,N,O,F) + the
   bond table (confirm `B == AES R0`), implement **OFX** (Eq 155, onsite different-l), then
   gate the full energy on h2o/hf/f2/ch4/nh3.
+
+### 2026-07-17 (ninety-fourth push) — MFX γ lifted to polyatomics, bit-exact; the param file found
+
+- **The γ now reproduces the binary on real molecules with p-shells, bit-for-bit**:
+  HF 4.0e-11 (5×5), H₂O 1.2e-10 (6×6), via `prototype/mfx_gamma_poly_gate.py`. All the
+  different-l blocks H₂ couldn't exercise (onsite s–p, offsite s–p, same-shell different-AO)
+  now check out. Element tables (`ipse`, `T25` s/p) extracted for H, C, N, O, F — using the
+  new `/binprobe` tool, which dogfooded cleanly.
+- **Two pass-93 details were corrected by the HF per-pair trace** (the `uwe_av` args on all
+  six shell-pairs read ξ=1.0):
+  - **ξ = 1 for s,p** — *not* `max(lA,lB)+1`. favg is always the geometric mean.
+  - **c[l] = G1[4+l]**, so c₀=0.0788775224 (s), c₁=1.7995847408 (p) — the *same* G1 pair
+    that screens the H₂ kernel. The L-branch is by **shell** (`ai==aj and li==lj` → 1.39,
+    else `√(c_lA·c_lB)`); the same-atom s–p block (R=0) pinned c₁.
+  - Bond **B is per-atom-pair and asymmetric** (B[1][9]=2.0646 ≠ B[9][1]=2.3885; HF uses
+    B[1][9]; O–H is symmetric 2.1768). The ordering rule for asymmetric pairs is still open.
+- **The parameter file is the real source** (answering "aren't these in the SI?"): the SI PDF
+  carries the *method* (equations) but not the per-element values. Those live in
+  **`gxtb_parameters`** — plain ASCII (`~/.gxtb`, pinned in `param/gxtb/`, 73 KB) holding the
+  **whole periodic table**: globals on lines 1–2 (the G1 array incl. c₀/c₁/k1'/k2' and ω),
+  then a 10-line block per element (Z header; row0 col6 = Γ; 4th shell-row = T25; 5th = T32).
+  **Decoding this file's layout — now anchored by the gdb-extracted values — supersedes
+  per-element extraction and is the path to the metals.** It is the `gxtb_parameters` layout
+  decode the ChemRoutes TODO flagged as the largest unknown.
+- Remaining: **OFX** (Eq 155) for the full polyatomic *energy*; the bond-ordering rule; and
+  parsing the param file for all Z.
