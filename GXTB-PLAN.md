@@ -1800,3 +1800,15 @@ One FD round on the oxygen atom returned exact structure for every diagonal cont
   arg1), work out exactly how the two factors enter the `μ·q` potential (`set1espot_` fills the
   potential into param_14/15; ES1 energy = Tr(P·V)), wire it, and gate vs printed ES1
   (HF +0.047231, H₂O +0.060652, CH₄ +0.015301, NH₃ +0.045128).
+
+**Update (same day) — onsite formula resolved and validated.** The `set1espot_` tail
+(226802–226809) gives the exact onsite potential per shell:
+`μ_l·(1 + q_A·kq[Z])·(1 + 0.024·CN_struct)`, with **μ_l = paramfile shell[5]** (H −0.2477366636),
+**k1cn = 0.024 = (1.024−0.976)/2**, `CN_struct = 0.5·(erf(CN−2/3)+erf(CN+2/3))`. Wiring this
+onsite (extracted CN: HF 0.306, H₂O O 0.518 / H 0.366) **drops HF's ES1 miss 27.9 → 2.7 mEh**.
+H₂O then overcorrects to −26.6, which **localises the residual to the offsite term** — the
+current `Eq-86` stand-in (`−dr·gko·qa`) is not the binary's form; `set1espot_` builds the
+offsite as an **S-contraction** (`param_9 × param_10 → param_14`) whose error scales with bond
+count. So the onsite is *validated*; the remaining work is decoding that offsite S-contraction
+(+ a computed in-engine CN). The hardcoded-CN validation was reverted to keep `energy_parity.py`
+clean. (task #36)

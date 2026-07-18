@@ -115,8 +115,12 @@ for name, zs, xyz in SYSTEMS:
                 (E[z]["U"][l] + E[z]["U"][l2])
             es2on += 0.5 * qa * q[(at, l2)] * g2
     ours["ES2+3"] = es2on + GE.es_charge_energy(q, zs, B["Rab"], E)
-    # ES1: mu.q with the (1+0.0165 q_at) factor + Eq-86 offsite (mu-CN pairs
-    # unmeasured for O-H/C-H/N-H -> known partial)
+    # ES1 onsite: mu * q * (1 + 0.0165 q_at) + Eq-86 offsite (mu-CN pairs, known partial).
+    # NOTE: the exact onsite factor is decoded (set1espot_ 0x552400 / Ghidra 226802-226809):
+    #   mu_eff = mu_l * (1 + q_A*kq[Z]) * (1 + 0.024*CN_struct),  CN_struct = 0.5*(erf(CN-2/3)
+    #   + erf(CN+2/3)),  kq = paramfile row0[8].  Wiring it (with computed CN) drops HF's ES1
+    # miss 27.9 -> 2.7 mEh; H2O then overcorrects, localising the residual to the OFFSITE
+    # S-contraction (below is the old Eq-86 stand-in). See es1_cn_factor_decoded / task #36.
     es1 = 0.0
     for (at, l), qa in q.items():
         z = zs[at]
