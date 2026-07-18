@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, "/mnt/c/Projects/tblite-gxtb/prototype")
 import aes as AES  # noqa: E402
 import constants as K  # noqa: E402
+import dispersion as DISP  # noqa: E402
 import es2_energy  # noqa: E402
 import gxtb_engine as GE  # noqa: E402
 import mfx  # noqa: E402
@@ -192,6 +193,14 @@ for name, zs, xyz in SYSTEMS:
     # the accumulated ES defect (dominated by the missing ES3).
     ours["ES total"] = (ours["ES1 (charge SIE)"] + ours["ES2+3"]
                         + ours["ES multipole"])
+    # dispersion: STOCK dftd4 with the derived g-xTB damping (a1=g1[9], s8=g2[9]). This is
+    # the revD4 LOWER-BOUND -- it reproduces the binary to ~0.15-0.30 mEh (under grade), the
+    # residual being revD4's sigmoidal Mulliken-charge zeta (SI Eq 166-169), not yet ported.
+    # So the ledger's dispersion d is the ZETA gap, not an implementation error. See
+    # dispersion.py / d4_probe.py.
+    d4 = DISP.energy(zs, X)
+    if d4 is not None:
+        ours["dispersion"] = d4
     ours["atomic core increments"] = sum(INC[z] for z in zs)
     print(f"\n{name}: printed-vs-ours (mEh; + means ours is higher)")
     order = ["electronic", "Ex (Mulliken)", "ES1 (charge SIE)", "ES2+3",
