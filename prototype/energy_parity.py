@@ -127,6 +127,11 @@ for name, zs, xyz in SYSTEMS:
     #   printed ES2+3 (so ES3 is small). Earlier T32-only U2 and scanned k2x=0.6 were WRONG;
     #   the dropped ipse factor was the whole error. Productionise: wire E2 with the g-xTB CN
     #   (replacing es2on + the folded-KO), add the small ES3. See es2_gamma_blind_diagnosed.
+    # ES3 (SI Eq 129): E3 = (1/6) sum q_lA q_lB (q_A dgamma2/dq_A + q_B dgamma2/dq_B) -- the
+    #   CHARGE-derivative of the decoded gamma2. dgamma2/dq = dgamma2/dU2 * dU2/dq; the dU2/dq
+    #   kernel is NOT yet pinned (a physical guess dU2/dq=T32*ipse*Gamma gave the WRONG sign and
+    #   ~5x too small -- NOT fitted). Needs set3espot_'s charge-intermediates decoded. ES3 is
+    #   small (HF/F2 within grade on E2 alone; H2O ~-3 mEh). See es3_decoded_form.
     # ES1 onsite (SI Eq 83b, VERIFIED vs set1espot_ + the SI, validated to sub-mEh):
     #   E1,on = sum_l mu_l * (1 + CN_A*kcn[Z]) * f1(q_A) * q_l
     #   f1(q) = 1 + 0.012*(erf(q-2/3) + erf(q+2/3))    [charge switch; k_s=2/3, k_dis=0.012]
