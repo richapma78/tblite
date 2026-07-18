@@ -174,12 +174,14 @@ for name, zs, xyz in SYSTEMS:
     # OFX empirically zero. (Was: the H2-only scf_h2 path, +22 mEh on H2, MISSING elsewhere.)
     gam = mfx.gamma_matrix(zs, X, meta)
     ours["Ex (Mulliken)"] = 2.0 * mfx.ex_energy(P, S, gam)
-    # electronic: Tr((H0+A) P) + Ex. The H0 forward assembly is H2-grade only, so the
-    # ledger still measures this on H2 alone -- the d there IS the H0 gap, now that Ex
-    # no longer contaminates it.
-    if name == "H2":
-        tr_part = float(np.sum((B["H0"] + B["A"]) * P))
-        ours["electronic"] = tr_part + ours["Ex (Mulliken)"]
+    # electronic = Tr((H0+A) P) + Ex (E_EHT + E_ACP + exchange). GE.build carries a
+    # polyatomic H0 (Eq-64) + ACP, so with Ex now exact everywhere we measure this on ALL
+    # six -- turning the former "MISSING" into a per-molecule H0 defect. The H0 is v1
+    # (Eq-64 WITHOUT the shell polynomial Pi_lAlB and with a harmonic-mean kdiat sigma/pi
+    # approximation), so the d IS the core-Hamiltonian gap -- the #1 ledger work item, now
+    # ranked per molecule instead of hidden.
+    tr_part = float(np.sum((B["H0"] + B["A"]) * P))
+    ours["electronic"] = tr_part + ours["Ex (Mulliken)"]
     # ES multipole: the PORTED AES (aes.py -- SI Eq 116, gdb-extracted erf kernels).
     # CAMM moments from the same restart P; moment integrals in oracle AO order,
     # exactly as aes.run gates it.
