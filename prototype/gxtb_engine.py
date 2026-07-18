@@ -25,6 +25,7 @@ sys.path.insert(0, HERE)
 import adapt  # noqa: E402
 import basisq  # noqa: E402
 import constants as K  # noqa: E402
+import es2_energy  # noqa: E402
 import f2_stretch  # noqa: E402
 import oracle  # noqa: E402
 import overlap  # noqa: E402
@@ -254,9 +255,25 @@ def build(zs, xyz_bohr, charge=0):
                 meta.append((at, z, l, m))
     Sh = overlap.overlap(list(zs), xyz, shells=sh, ao_order="oracle")
     n = len(meta)
+    # --- H0 v2 EXPERIMENT (env GXTB_H0V2=1, default OFF -> shipped v1 untouched) ---
+    # SI Eq 65 CN-dependent level  H_lA = L2 - LEVCN*CN  (LEVCN=gp3_lev_cn_=shells[1],
+    #   CN = internal es2 CN; sign verified). SI Eq 67 shell polynomial with the per-shell
+    # factor taken from gp3_pln_ (=shells[2], the binary's per-element-per-shell "pln"
+    # column) instead of a g1/g2 global: pi_lA = 1 + gp3_poly[Z]*gp3_pln[Z][l]*(R/Rcov).
+    _h0v2 = os.environ.get("GXTB_H0V2") == "1"
+    if _h0v2:
+        _cn = es2_energy.coordination(list(zs), xyz)
+        _el = P_["element"]
+
+        def _hlev(at, z, l):
+            return E[z]["L2"][l] - _el[z]["shells"][1][l] * _cn[at]
+    else:
+        def _hlev(at, z, l):
+            return E[z]["L2"][l]
     H0 = np.zeros((n, n))
     for i in range(n):
-        H0[i, i] = -E[meta[i][1]]["L2"][meta[i][2]]
+        at, z, l, _m = meta[i]
+        H0[i, i] = -_hlev(at, z, l)
     for i in range(n):
         for j in range(n):
             ai, zi, li, _mi = meta[i]
@@ -274,8 +291,15 @@ def build(zs, xyz_bohr, charge=0):
                 kpi = 2 * E[zi]["kd_pi"] * E[zj]["kd_pi"] / (E[zi]["kd_pi"] + E[zj]["kd_pi"])
                 kdi = kpi if abs(Sh[i, j]) < 0.02 else kdi
             a = (KW[li] + KW[lj]) / 2 * kdi
-            h = -(E[zi]["L2"][li] + E[zj]["L2"][lj]) / 2
-            H0[i, j] = a * h * float(Sh[i, j])
+            h = -(_hlev(ai, zi, li) + _hlev(aj, zj, lj)) / 2
+            pi_pi = 1.0
+            if _h0v2:
+                Rij = float(np.linalg.norm(xyz[ai] - xyz[aj]))
+                rc = (_el[zi]["l1"][5] + _el[zj]["l1"][5]) / 2.0
+                pii = 1.0 + _el[zi]["l1"][7] * _el[zi]["shells"][2][li] * (Rij / rc)
+                pij = 1.0 + _el[zj]["l1"][7] * _el[zj]["shells"][2][lj] * (Rij / rc)
+                pi_pi = pii * pij
+            H0[i, j] = a * h * pi_pi * float(Sh[i, j])
     A = f2_stretch.acp_matrix(list(zs), xyz, charge=charge)
     nat = len(zs)
     Rab = np.zeros((nat, nat))
