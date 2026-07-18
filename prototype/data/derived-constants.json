@@ -1,6 +1,14 @@
 {
  "_what": "EVERY constant of the g-xTB v1.1 method that does NOT live in the official parameter files (gxtb_parameters / basisq / eeq) -- decoded from reference sources or MEASURED from the oracle, one table each, loaded once at start (constants.py). Nothing in the prototype may hardcode a method constant; this file is the single home. Provenance per entry.",
  "_rule": "If a value here disagrees with a new measurement, the MEASUREMENT wins and this file gets the update + a provenance note. Values marked 'measured' carry the experiment that produced them.",
+ "h0_electronic_gap_ROADMAP": {
+  "date": "2026-07-18",
+  "status": "The 'electronic' term (E_EHT + E_ACP + Ex) is now MEASURED on all six (energy_parity.py, was H2-only): d = H2 +47, F2 +16, HF -21, H2O +84, CH4 +295, NH3 +322 mEh -- the #1 ledger gap, and it GROWS with p-shells/atom count. Ex is bit-exact everywhere and ACP is validated, so the d IS the H0 (EHT core-Hamiltonian) v1 defect.",
+  "what_gxtb_engine_builds": "GE.build H0 = diag -L2_l (constant shell level); offdiag (kW_lA+kW_lB)/2 * kdiat * (-(L2_lA+L2_lB)/2) * S~_munu. kW=g1[0..1], kdiat=l8[0]/l8[1] harmonic. This is SI Eq-64 WITHOUT two pieces.",
+  "TWO_MISSING_PIECES": "(1) CN-DEPENDENT SHELL LEVELS (SI Eq 65): H_lA = h_lA - k^(H,CN)_lA * CN_A. GE uses L2_l as a CONSTANT level -- the -k^(H,CN)*CN term is dropped (both diagonal AND the offdiag level-mean). (2) THE SHELL POLYNOMIAL Pi (SI Eq 66-67): Pi_lAlB = pi_lA * pi_lB, pi_lA = 1 + k^shp_A * k^(shp,l)_lA * (R_AB / Rcov_AB), Rcov = arith. mean adapted-Pyykko radii. GE's offdiag has NO Pi factor (line ~278: a*h*S~, no Pi). scf_h2.py HAD this Pi for H2: (1+B_SHP*R)^2 with B_SHP=0.0315 = k^shp_H*k^(shp,s)/Rcov_HH -- the H2-grade lead; that Pi is exactly why scf_h2 got H2 eigenvalues right and GE (no Pi) is +47 mEh off on H2.",
+  "PARAMS_to_identify": "h_lA (base level -- likely = L2 or a row0/shell column), k^(H,CN)_lA (shell CN-dep), k^shp_A (element distance-dep, row0/l8/l9), k^(shp,l)_l (global per l=s,p,d,f -- 4 globals in g1/g2), Rcov (adapted Pyykko). 8 globals total (kW_l x4 + k^shp,l x4) per SI. DECODE PATH: extract the binary's H_EHT matrix (find the H0 builder routine, same gdb method as setgab/setespot), divide by GE's no-Pi H0 to READ Pi_lAlB(R) directly (no fit), sweep R to pin k^shp*k^shp,l/Rcov per l-pair; separately sweep CN to pin k^(H,CN) from the diagonal. Start with H2 (validate against B_SHP=0.0315) then HF (p-shell).",
+  "why_it_grows": "CH4/NH3 (+295/+322) >> HF/F2 because more atoms x more off-diagonal pairs x p-shells, each missing its Pi -- the defect is dominated by the dropped Pi on the many offdiagonal blocks. Fixing Pi should cut the polyatomic defects most."
+ },
  "basis_cn": {
   "_source": "grimme-lab/qvSZP src/chargscfcts.f90 ncoord_basq + app/main.f90 (kn); gate: adapt.py (CN(basis) <= 4e-5 vs oracle on 6 probes incl. PdCl2)",
   "kn": -3.75,
