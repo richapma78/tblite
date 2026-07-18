@@ -17,6 +17,7 @@ import oracle  # noqa: E402
 import repulsion  # noqa: E402
 import scf_h2  # noqa: E402
 import params  # noqa: E402
+import es2_energy  # noqa: E402
 
 BOHR = K.BOHR
 SYM = {1: "H", 6: "C", 7: "N", 8: "O", 9: "F"}
@@ -119,7 +120,10 @@ for name, zs, xyz in SYSTEMS:
     #   the exact offsite = printed +0.002576 EXACTLY. For HF/H2O the remainder (+0.019/+0.062)
     #   is ES3. The line below is the interim v2 (folded-KO offsite conflated with ES3); the
     #   clean close = es2on + Eq-101 offsite + a SEPARATED ES3. See es2_gamma_blind_diagnosed.
-    ours["ES2+3"] = es2on + GE.es_charge_energy(q, zs, B["Rab"], E)
+    # WIRED (was: es2on + GE.es_charge_energy interim, -12.5 mEh): the DECODED gamma2 E2
+    # (SI Eq 100-102) with the sqrt/L2 internal CN. Bit-exact vs the binary's own gamma2;
+    # computed-CN residual ~0.05 mEh. ES3 (small, +0.024 mEh HF) still to add (task #40).
+    ours["ES2+3"] = es2_energy.energy(zs, xyz, q)
     # ES2 gamma2 DECODED (not fitted -- es2_gamma_gate.py gates it bit-exact vs setespot_'s
     #   own matrix, 8e-11): gamma2 = 1/[R + 0.5(1/U2A+1/U2B) exp(-k2x R)] (Eq 101), with
     #   U2 = T32*ipse*(1+Gamma*CN) [= the MFX first-loop U] and k2x = g2[1] = 0.3300126723.
