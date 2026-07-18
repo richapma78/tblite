@@ -23,6 +23,22 @@ BOHR = K.BOHR
 SYM = {1: "H", 6: "C", 7: "N", 8: "O", 9: "F"}
 P_ = params.parse()
 
+
+def eeq_charges(raw, n):
+    """Parse the binary's printed EEQ(BC) charges (the 'q' column) -- what the repulsion
+    Zeff needs (NOT the Mulliken charge; Mulliken gave +3.9 mEh on HF)."""
+    lines = raw.split("\n")
+    for i, ln in enumerate(lines):
+        if "q_CN" in ln and "CN(basis)" in ln:
+            out = []
+            for ln2 in lines[i + 1:i + 1 + n]:
+                m = re.match(r"\s*\d+\s+[A-Za-z]+"
+                             r"\s+-?\d+\.\d+\s+-?\d+\.\d+\s+-?\d+\.\d+\s+(-?\d+\.\d+)", ln2)
+                if m:
+                    out.append(float(m.group(1)))
+            return out if len(out) == n else None
+    return None
+
 # ---- per-element atomic core increments (ground-state atom runs)
 UHF_ATOM = {1: 1, 6: 2, 7: 3, 8: 2, 9: 1}
 INC = {}
@@ -103,9 +119,11 @@ for name, zs, xyz in SYSTEMS:
     for (at, l), v in q.items():
         qat[at] = qat.get(at, 0.0) + v
     ours = {}
-    # nuclear repulsion
+    # nuclear repulsion -- Zeff needs the EEQ(BC) charge, NOT Mulliken qat (Mulliken -> +3.9
+    # mEh on HF; EEQ -> +0.001). Parse the binary's printed EEQ q; fall back to qat if absent.
+    eeq_q = eeq_charges(raw, len(zs)) or [qat[a] for a in range(len(zs))]
     ours["nuclear repulsion"] = repulsion.energy(
-        list(zs), np.array(xyz, float), [qat[a] for a in range(len(zs))], P_,
+        list(zs), np.array(xyz, float), eeq_q, P_,
         sign=+1, mean_rc=True, comb="harmonic")
     # ES2+3: analytic onsite ES2 + the charge-driven block (folded KO + ES3 + Q-term)
     es2on = 0.0
