@@ -1825,3 +1825,19 @@ now within substitution grade.** HF alone (q≈CN≈0.3) had hidden the swap; H�
 it. Remaining is within-grade polish: the g-xTB covalent CN is a different convention than
 `repulsion.cn_eq47` (HF 0.306 vs 0.735), so productionising needs that specific CN function,
 plus the small offsite S-contraction residual.
+
+### 2026-07-17 (ninety-ninth push) — ES2 "Γ-blind residual" diagnosed to root (SI Eq 101-102)
+
+- The next ledger gap, **ES2+3 (~18 mEh, ours low)**, scoped to root against the SI. The
+  current `es_charge_energy` uses a **plain Klopman-Ohno** kernel at **charge-folded** Hubbards
+  (`U + Γ·q_at`). The SI's exact second-order term (Eq 100-102) differs in two **Γ-independent**
+  ways — precisely the content the charge-fold cannot see:
+  1. **Exp-damped kernel**: `γ² = 1/[R + 0.5·(1/U²_lA + 1/U²_lB)·exp(−k2x·R)]` (Eq 101) — the
+     plain KO has no damping and "screens 1/R for too-large R".
+  2. **CN-dependent Hubbard**: `U²_lA = U²,0_lA·(1 + k2U_A·CN_A)` (Eq 102) — a CN term, not a
+     charge fold.
+- **Same pattern as the ES1 fix** — a CN-dependence the folding model omits. To close: extract
+  `k2x` (global) + `k2U` (element), confirm `U²,0 = T32` (param-file shell[4]), implement the
+  Eq-101 kernel with the CN-U, reconcile with the separately-decoded ES3 (no double-count),
+  gate vs printed ES2+3 (HF +0.045047 / H₂O +0.063066; ours −12.5 / −17.7 mEh). Routines:
+  `setespot_` 0x53ab60, `set3espot_` 0x53aef0. (task #36-adjacent; new focused push.)
