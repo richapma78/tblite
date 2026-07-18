@@ -274,11 +274,17 @@ def build(zs, xyz_bohr, charge=0):
     # column) instead of a g1/g2 global: pi_lA = 1 + gp3_poly[Z]*gp3_pln[Z][l]*(R/Rcov).
     _h0v2 = os.environ.get("GXTB_H0V2") == "1"
     if _h0v2:
-        _cn = es2_energy.coordination(list(zs), xyz)
+        # the level CN: es2 internal (default) or the q-vSZP basis CN (cns) -- the two-CN
+        # test (GXTB_LEVCN_SRC=basis). The isolated-H0 diagnosis found the heavy-atom p-level
+        # error correlates with CN, pointing at which CN the levels should use.
+        _cn = cns if os.environ.get("GXTB_LEVCN_SRC") == "basis" \
+            else es2_energy.coordination(list(zs), xyz)
         _el = P_["element"]
+        _lmax = 0 if os.environ.get("GXTB_LEVCN_L") == "s" else 3   # s-only diagnostic
 
         def _hlev(at, z, l):
-            return E[z]["L2"][l] - _el[z]["shells"][1][l] * _cn[at]
+            lc = _el[z]["shells"][1][l] if l <= _lmax else 0.0
+            return E[z]["L2"][l] - lc * _cn[at]
     else:
         def _hlev(at, z, l):
             return E[z]["L2"][l]

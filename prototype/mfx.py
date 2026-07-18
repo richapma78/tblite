@@ -106,6 +106,26 @@ def ex_energy(P, S, gam):
     return 2.0 * E
 
 
+def exchange_fock(P, S, gam):
+    """The VARIATIONAL exchange Fock F_x = dEx/dP for the total exchange
+    Ex = 2*ex_energy = -1/16 sum_mnlk P_mn S_ml P_lk S_kn (g_mk+g_mn+g_lk+g_ln):
+
+        F_x[a,b] = -1/8 sum_lk S_al P_lk S_kb (g_ab + g_ak + g_lb + g_lk)
+
+    VERIFIED by Euler (Ex is degree-2 in P): 0.5*Tr(F_x P) == Ex to machine precision on HF.
+    CAVEAT for H0 isolation: this is the EXACT variational derivative; the reference binary's
+    own exchange Fock is DELIBERATELY NON-VARIATIONAL (a shortcut potential, same energy,
+    different matrix -- see scf_h2.fock_x). So F_ao - ACP - this - F_ES gives H0 only up to the
+    (non-var - var) exchange-potential difference, which is small off-diagonally (~0.01 on HF)
+    but pollutes the diagonal. Energy-side uses (Ex, this) are exact; H0-diagonal readouts via
+    this carry that caveat."""
+    return -0.125 * (
+        np.einsum("ab,al,lk,kb->ab", gam, S, P, S)
+        + np.einsum("ak,al,lk,kb->ab", gam, S, P, S)
+        + np.einsum("lb,al,lk,kb->ab", gam, S, P, S)
+        + np.einsum("lk,al,lk,kb->ab", gam, S, P, S))
+
+
 def bond_param(za, zb):
     return aes.R0.get((min(za, zb), max(za, zb)))
 
