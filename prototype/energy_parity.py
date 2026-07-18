@@ -120,6 +120,13 @@ for name, zs, xyz in SYSTEMS:
     #   is ES3. The line below is the interim v2 (folded-KO offsite conflated with ES3); the
     #   clean close = es2on + Eq-101 offsite + a SEPARATED ES3. See es2_gamma_blind_diagnosed.
     ours["ES2+3"] = es2on + GE.es_charge_energy(q, zs, B["Rab"], E)
+    # ES2 gamma2 DECODED (not fitted -- es2_gamma_gate.py gates it bit-exact vs setespot_'s
+    #   own matrix, 8e-11): gamma2 = 1/[R + 0.5(1/U2A+1/U2B) exp(-k2x R)] (Eq 101), with
+    #   U2 = T32*ipse*(1+Gamma*CN) [= the MFX first-loop U] and k2x = g2[1] = 0.3300126723.
+    #   The full E2 = 0.5 sum q_lA q_lB gamma2 then gates HF +0.17, F2 +0.09, H2O +3.2 mEh vs
+    #   printed ES2+3 (so ES3 is small). Earlier T32-only U2 and scanned k2x=0.6 were WRONG;
+    #   the dropped ipse factor was the whole error. Productionise: wire E2 with the g-xTB CN
+    #   (replacing es2on + the folded-KO), add the small ES3. See es2_gamma_blind_diagnosed.
     # ES1 onsite (SI Eq 83b, VERIFIED vs set1espot_ + the SI, validated to sub-mEh):
     #   E1,on = sum_l mu_l * (1 + CN_A*kcn[Z]) * f1(q_A) * q_l
     #   f1(q) = 1 + 0.012*(erf(q-2/3) + erf(q+2/3))    [charge switch; k_s=2/3, k_dis=0.012]

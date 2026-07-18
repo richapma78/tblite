@@ -1841,3 +1841,19 @@ plus the small offsite S-contraction residual.
   Eq-101 kernel with the CN-U, reconcile with the separately-decoded ES3 (no double-count),
   gate vs printed ES2+3 (HF +0.045047 / H₂O +0.063066; ours −12.5 / −17.7 mEh). Routines:
   `setespot_` 0x53ab60, `set3espot_` 0x53aef0. (task #36-adjacent; new focused push.)
+
+### 2026-07-17 (hundredth push) — ES2 γ² decoded RIGOROUSLY (bit-exact), not fitted
+
+- Prompted that I was "fudging numbers at different ranges to fit," I held ES2 to the MFX/ES1
+  standard: **extracted the actual γ² matrix** (`setespot_` arg0) and **swept the geometry to
+  watch U² come in**. The scanned k2x=0.6 and U²=T32 were both wrong.
+- **The truth** (bit-exact vs the binary's own matrix, `es2_gamma_gate.py`, 8e-11):
+  `γ² = 1/[R + 0.5(1/U²A+1/U²B)·exp(−k2x·R)]`, `U² = T32·ipse·(1+Γ·CN)`, `k2x = g2[1] =
+  0.3300126723`. The dropped **ipse** factor was the whole error — U²,0 = T32·ipse (H:
+  1.00621×0.47259 = 0.47552 = extracted at CN=0), which is *exactly* the MFX first-loop U I
+  had mislabeled. k2x is a real global (not the fitted 0.6). k2U = Γ (CN-slope: H 0.814,
+  F 0.568).
+- **Energy**: full `E² = 0.5 Σ q q γ²` then gates HF +0.17, F₂ +0.09, H₂O +3.2 mEh vs printed
+  ES2+3 — so ES3 is *small* (my earlier "big ES3" was an artifact of the wrong onsite).
+- Lesson, reinforced: extract the real matrix and watch values change; never scan a parameter
+  to fit the final energy. Remaining: wire E² with the in-engine CN + the small ES3.
