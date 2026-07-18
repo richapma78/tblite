@@ -10,14 +10,17 @@ import sys
 import numpy as np
 
 sys.path.insert(0, "/mnt/c/Projects/tblite-gxtb/prototype")
+import aes as AES  # noqa: E402
 import constants as K  # noqa: E402
-import fock_recon  # noqa: E402
-import gxtb_engine as GE  # noqa: E402
-import oracle  # noqa: E402
-import repulsion  # noqa: E402
-import scf_h2  # noqa: E402
-import params  # noqa: E402
 import es2_energy  # noqa: E402
+import gxtb_engine as GE  # noqa: E402
+import mfx  # noqa: E402
+import multipole as MP  # noqa: E402
+import oracle  # noqa: E402
+import overlap as OV  # noqa: E402
+import params  # noqa: E402
+import repulsion  # noqa: E402
+import restart  # noqa: E402
 
 BOHR = K.BOHR
 SYM = {1: "H", 6: "C", 7: "N", 8: "O", 9: "F"}
@@ -76,37 +79,16 @@ defects = {}
 for name, zs, xyz in SYSTEMS:
     atoms = [(SYM[z], x / BOHR, y_ / BOHR, zc / BOHR)
              for z, (x, y_, zc) in zip(zs, xyz)]
-    try:
-        rec = fock_recon.fock_ao(atoms)
-        raw = rec["state"]["raw"]
-    except AssertionError:
-        # not fully invertible (window < nsao): printed terms only, plus the
-        # density-free terms at our own SCF charges (labeled)
-        rr = oracle.run(atoms)
-        T = {k.strip(): float(v) for k, v in
-             re.findall(r"^([A-Za-z0-9+() .]+?)\s*:\s*(-?\d+\.\d+)\s*$",
-                        rr["raw"], re.M)}
-        ours = {"atomic core increments": sum(INC[z] for z in zs)}
-        print(f"{chr(10)}{name}: printed-vs-ours (NOT invertible; printed + "
-              f"increments only)")
-        for t in ["electronic", "Ex (Mulliken)", "ES1 (charge SIE)", "ES2+3",
-                  "ES multipole", "ES total", "atomic core increments",
-                  "dispersion", "nuclear repulsion"]:
-            if t not in T:
-                continue
-            if t in ours:
-                d = (ours[t] - T[t]) * 1000
-                print(f"  {t:24s} printed {T[t]:+12.6f}  ours {ours[t]:+12.6f}  "
-                      f"d {d:+9.3f} mEh")
-                defects.setdefault(t, []).append(abs(d))
-            else:
-                print(f"  {t:24s} printed {T[t]:+12.6f}  ours     MISSING")
-                defects.setdefault(t + " [MISSING]", []).append(abs(T[t]) * 1000)
-        continue
+    # the CONVERGED state straight from the restart file (P + the printed terms).
+    # fock_recon (the old source) only ever supplied its ["state"] -- this same object --
+    # but its Fock-inversion assert blocked CH4/NH3 over a matrix the ledger never used.
+    st = restart.converged_state(atoms)
+    raw = st["raw"]
     T = {k.strip(): float(v) for k, v in
          re.findall(r"^([A-Za-z0-9+() .]+?)\s*:\s*(-?\d+\.\d+)\s*$", raw, re.M)}
-    P = rec["state"]["P"]
-    B = GE.build(zs, np.array(xyz, float))
+    P = st["P"]
+    X = np.array(xyz, float)
+    B = GE.build(zs, X)
     S, meta, E, n = B["S"], B["meta"], B["E"], B["n"]
     mv = np.diag((P / 2.0) @ S)
     q = {}
@@ -123,7 +105,7 @@ for name, zs, xyz in SYSTEMS:
     # mEh on HF; EEQ -> +0.001). Parse the binary's printed EEQ q; fall back to qat if absent.
     eeq_q = eeq_charges(raw, len(zs)) or [qat[a] for a in range(len(zs))]
     ours["nuclear repulsion"] = repulsion.energy(
-        list(zs), np.array(xyz, float), eeq_q, P_,
+        list(zs), X, eeq_q, P_,
         sign=+1, mean_rc=True, comb="harmonic")
     # ES2+3: analytic onsite ES2 + the charge-driven block (folded KO + ES3 + Q-term)
     es2on = 0.0
@@ -186,14 +168,30 @@ for name, zs, xyz in SYSTEMS:
                              * math.exp(-es2_energy.K2X * R))
                 es1 -= dr * gko * qa
     ours["ES1 (charge SIE)"] = es1
-    # EHT+ACP electronic piece (no Ex): Tr((H0+A) P)
-    tr_part = float(np.sum((B["H0"] + B["A"]) * P))
-    # Ex: only H2's gam construction is validated
+    # Ex: the DECODED MFX exchange (mfx.py, pass 88) -- setgab_lrao_'s gamma + the 4-index
+    # Mulliken energy, x2 closed-shell spin sum; closed to ~1e-8 Eh on all six H..F systems,
+    # OFX empirically zero. (Was: the H2-only scf_h2 path, +22 mEh on H2, MISSING elsewhere.)
+    gam = mfx.gamma_matrix(zs, X, meta)
+    ours["Ex (Mulliken)"] = 2.0 * mfx.ex_energy(P, S, gam)
+    # electronic: Tr((H0+A) P) + Ex. The H0 forward assembly is H2-grade only, so the
+    # ledger still measures this on H2 alone -- the d there IS the H0 gap, now that Ex
+    # no longer contaminates it.
     if name == "H2":
-        gon = 2 * E[1]["cx"] * E[1]["L5"][0]
-        gam = np.full((n, n), gon)
-        ours["Ex (Mulliken)"] = scf_h2.ex_energy(P, S, gam)
+        tr_part = float(np.sum((B["H0"] + B["A"]) * P))
         ours["electronic"] = tr_part + ours["Ex (Mulliken)"]
+    # ES multipole: the PORTED AES (aes.py -- SI Eq 116, gdb-extracted erf kernels).
+    # CAMM moments from the same restart P; moment integrals in oracle AO order,
+    # exactly as aes.run gates it.
+    shells_o, _ = OV.build_shells(zs, X, charge=0)
+    S_o, D_o, Q_o = MP.moment_matrices(zs, X, shells=shells_o, ao_order="oracle")
+    ao_at = np.array([sh["at"] for sh in shells_o for _ in range(2 * sh["l"] + 1)])
+    qat_c, dpat, Theta = AES.camm(zs, X, P, S_o, D_o, Q_o, ao_at)
+    ours["ES multipole"] = AES.energy(zs, X, qat_c, dpat, Theta)
+    # ES total is exactly the sum of the three ES rows (verified against the printout:
+    # HF 0.047231+0.045047+0.000011 = 0.092289 = printed) -- a derived row, so its d is
+    # the accumulated ES defect (dominated by the missing ES3).
+    ours["ES total"] = (ours["ES1 (charge SIE)"] + ours["ES2+3"]
+                        + ours["ES multipole"])
     ours["atomic core increments"] = sum(INC[z] for z in zs)
     print(f"\n{name}: printed-vs-ours (mEh; + means ours is higher)")
     order = ["electronic", "Ex (Mulliken)", "ES1 (charge SIE)", "ES2+3",

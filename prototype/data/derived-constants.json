@@ -1057,5 +1057,12 @@
    "gate": "prototype/mfx.py + scratchpad verify_h2.py: generated gamma reproduces the extracted p4(R) over 7 bond lengths + onsite to WORST 5e-11; end-to-end 2*ex_energy(P,S,gamma) = printed Ex(H2) to <1e-6.",
    "remaining": "extract T25[Z][l]/ipse[Z]/c[l] for C,N,O,F + bond B for all pairs (same gdb method, correct Z offsets); confirm B == AES R0 table; implement OFX (Eq 155, onsite different-l); gate full energy on h2o(-1.52762)/hf/f2/ch4/nh3."
   }
+ },
+ "dispersion_revd4_slots_DERIVED": {
+  "date": "2026-07-18",
+  "model": "SI Sec 1.17: g-xTB dispersion = revD4, a MODIFIED D4: HG smoothed version; sigmoidal zeta (Eq 167-169, element params A/B/C/D from TD-DFT alpha of the neutral/cation/anion atom, s=1) driven by the CONVERGED MULLIKEN g-xTB charges (Eq 166, NOT EEQ); BJ two-body damping with a2 ELIMINATED (Eq 170, R0=sqrt(C8/C6)); Chai-Head-Gordon zero-damping ATM (Eq 171, charge-independent C9); four globals s6/s8/s9/a1.",
+  "slots": "DERIVED, falsifiable: a1 = g1[9] = 1.2154627292, s8 = g2[9] = 0.304294728 (s6=1 presumed, a2=0). Evidence: stock dftd4(d4) under this assignment lands within 0.30 mEh of printed on all five refs (F2 +0.193 / HF -0.153 / H2O -0.182 / CH4 -0.299 / NH3 +0.188); the REVERSED assignment (first guess) misses by -100..-2540 mEh. s9 nearly irrelevant at this size (ATM ~0.003 mEh on CH4).",
+  "stock_does_not_close": "d4 residuals 0.15-0.30 mEh, d4s 0.10-0.51 mEh (CH4 worse), MIXED SIGNS -> a real model difference, not a scale factor. Prime suspect: the sigmoidal Mulliken-q zeta (HF Mulliken +-0.412 vs EEQ +-0.117 is a large zeta shift). Declared wire bar 0.01 mEh NOT met -> the ledger keeps dispersion MISSING; no stand-in was smuggled in (would be 0.3-grade, under the 1 mEh substitution bar, but a different model).",
+  "next": "implement zeta Eqs 166-169 on top of the stock CP machinery with the derived damping. The alpha+/alpha0/alpha- reference polarizabilities: gdb-extract from the binary, or better -- Richard's synthetic-input probing: break where the Mulliken q vector feeds D4, INJECT synthetic charges (0, +-1, unit vectors), read the C6/energy response, and map zeta(q) directly point by point."
  }
 }
