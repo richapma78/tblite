@@ -33,6 +33,18 @@ import params  # noqa: E402
 
 P_ = params.parse()
 KW = [P_["globals"]["g1"][0], P_["globals"]["g1"][1]]
+
+
+def _KSHPL(l, _el, z):
+    """The H0 shell-polynomial per-shell factor k^(shp,l) (SI Eq 67). Two hypotheses under
+    test: env GXTB_KSHP='ks,kp' -> a GLOBAL per-l value (same for all elements); otherwise
+    the per-element gp3_pln_ (=shells[2]) column. H2/F2 anchor the global; the heteronuclear
+    molecules then VALIDATE which hypothesis the binary uses."""
+    g = os.environ.get("GXTB_KSHP")
+    if g:
+        vals = [float(x) for x in g.split(",")] + [0.0, 0.0, 0.0, 0.0]
+        return vals[l]
+    return _el[z]["shells"][2][l]
 try:
     with open(os.path.join(HERE, "data", "grand-short.json")) as _f:
         _G = __import__("json").load(_f)
@@ -296,8 +308,8 @@ def build(zs, xyz_bohr, charge=0):
             if _h0v2:
                 Rij = float(np.linalg.norm(xyz[ai] - xyz[aj]))
                 rc = (_el[zi]["l1"][5] + _el[zj]["l1"][5]) / 2.0
-                pii = 1.0 + _el[zi]["l1"][7] * _el[zi]["shells"][2][li] * (Rij / rc)
-                pij = 1.0 + _el[zj]["l1"][7] * _el[zj]["shells"][2][lj] * (Rij / rc)
+                pii = 1.0 + _el[zi]["l1"][7] * _KSHPL(li, _el, zi) * (Rij / rc)
+                pij = 1.0 + _el[zj]["l1"][7] * _KSHPL(lj, _el, zj) * (Rij / rc)
                 pi_pi = pii * pij
             H0[i, j] = a * h * pi_pi * float(Sh[i, j])
     A = f2_stretch.acp_matrix(list(zs), xyz, charge=charge)
