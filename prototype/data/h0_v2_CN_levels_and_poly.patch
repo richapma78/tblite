@@ -1,0 +1,77 @@
+diff --git a/prototype/gxtb_engine.py b/prototype/gxtb_engine.py
+index 9b56864..b954304 100644
+--- a/prototype/gxtb_engine.py
++++ b/prototype/gxtb_engine.py
+@@ -25,6 +25,7 @@ sys.path.insert(0, HERE)
+ import adapt  # noqa: E402
+ import basisq  # noqa: E402
+ import constants as K  # noqa: E402
++import es2_energy  # noqa: E402
+ import f2_stretch  # noqa: E402
+ import oracle  # noqa: E402
+ import overlap  # noqa: E402
+@@ -32,6 +33,10 @@ import params  # noqa: E402
+ 
+ P_ = params.parse()
+ KW = [P_["globals"]["g1"][0], P_["globals"]["g1"][1]]
++# k^(shp,l): the global angular-momentum mapping of the shell polynomial (SI Eq 67). Being
++# pinned this session -- H2 (scf_h2's working slope B_SHP=0.0315) implies k^(shp,s) ~ 1.485.
++# Override via GXTB_KSHPL="s,p" env for the sweep that pins it against the ledger.
++KSHPL = [float(x) for x in os.environ.get("GXTB_KSHPL", "1.485,1.485").split(",")] + [0.0, 0.0]
+ try:
+     with open(os.path.join(HERE, "data", "grand-short.json")) as _f:
+         _G = __import__("json").load(_f)
+@@ -207,6 +212,13 @@ def elem(z):
+             "U": e["shells"][4][:nsh], "L5": e["shells"][3][:nsh],
+             "cx": SRULE[z] / 9.59, "k": [e["shells"][2][l] for l in range(nsh)],
+             "kb": 0.4223 * e["l8"][3], "kd_sg": e["l8"][0], "kd_pi": e["l8"][1],
++            # LEVCN = shells[1] = the H0 shell-level CN dependence k^(H,CN) (SI Eq 65).
++            # Named by the binary's parcom_mp_gp3_lev_cn_ symbol (H_s value -0.01708 matches
++            # this column exactly). gp3_lev_ = shells[0] = L2 = the base level h_lA.
++            "LEVCN": e["shells"][1][:nsh],
++            # SHP = l1[7] = the element shell-polynomial coefficient k^shp_A (gp3_poly_);
++            # RAD = l1[5] = rcov_cn = the polynomial's covalent radius R^cov (gp3_rad_). SI Eq 67.
++            "SHP": e["l1"][7], "RAD": e["l1"][5],
+             "ref": K.REFOCC[z], "nsh": nsh}
+ 
+ 
+@@ -254,9 +266,18 @@ def build(zs, xyz_bohr, charge=0):
+                 meta.append((at, z, l, m))
+     Sh = overlap.overlap(list(zs), xyz, shells=sh, ao_order="oracle")
+     n = len(meta)
++    # SI Eq 65: the shell energy levels are CN-DEPENDENT -- H_lA = h_lA - k^(H,CN)_lA * CN_A,
++    # h_lA = L2 (gp3_lev_), k^(H,CN) = LEVCN (gp3_lev_cn_). The CN is the INTERNAL covalent CN
++    # (es2_energy.coordination, the sqrt/erf-count one used by ES/repulsion/MFX) -- NOT
++    # adapt.basis_cn (that is the SEPARATE q-vSZP basis CN; two distinct CNs, per the binary).
++    cn_int = es2_energy.coordination(list(zs), xyz)
++
++    def hlev(at, z, l):
++        return E[z]["L2"][l] - E[z]["LEVCN"][l] * cn_int[at]
+     H0 = np.zeros((n, n))
+     for i in range(n):
+-        H0[i, i] = -E[meta[i][1]]["L2"][meta[i][2]]
++        at, z, l, _m = meta[i]
++        H0[i, i] = -hlev(at, z, l)
+     for i in range(n):
+         for j in range(n):
+             ai, zi, li, _mi = meta[i]
+@@ -274,8 +295,17 @@ def build(zs, xyz_bohr, charge=0):
+                 kpi = 2 * E[zi]["kd_pi"] * E[zj]["kd_pi"] / (E[zi]["kd_pi"] + E[zj]["kd_pi"])
+                 kdi = kpi if abs(Sh[i, j]) < 0.02 else kdi
+             a = (KW[li] + KW[lj]) / 2 * kdi
+-            h = -(E[zi]["L2"][li] + E[zj]["L2"][lj]) / 2
+-            H0[i, j] = a * h * float(Sh[i, j])
++            h = -(hlev(ai, zi, li) + hlev(aj, zj, lj)) / 2   # CN-dependent level mean
++            # SI Eq 66-67: shell polynomial Pi = pi_lA * pi_lB, each the first-order distance
++            # change of the shell level: pi_lA = 1 + k^shp_A * k^(shp,l)_l * (R_AB / Rcov_AB),
++            # Rcov_AB = arithmetic mean of the RAD (=rcov_cn) radii. k^(shp,l) = KSHPL (global
++            # per l). Was absent (H0 = a*h*S~); its lack is the H2 +47 mEh and most of the
++            # offdiagonal-dominated polar defect.
++            Rij = float(np.linalg.norm(xyz[ai] - xyz[aj]))
++            rc = (E[zi]["RAD"] + E[zj]["RAD"]) / 2.0
++            pii = 1.0 + E[zi]["SHP"] * KSHPL[li] * (Rij / rc)
++            pij = 1.0 + E[zj]["SHP"] * KSHPL[lj] * (Rij / rc)
++            H0[i, j] = a * h * pii * pij * float(Sh[i, j])
+     A = f2_stretch.acp_matrix(list(zs), xyz, charge=charge)
+     nat = len(zs)
+     Rab = np.zeros((nat, nat))

@@ -1,0 +1,8 @@
+# prototype (the g-xTB python port + parity ledger). Runs in the gpudft conda env
+# (/opt/miniforge/envs/gpudft). Install: pip install -r requirements.txt
+numpy
+scipy
+# dftd4 -- the stock D4 dispersion library, called by dispersion.py with the derived g-xTB
+# damping (a1=g1[9], s8=g2[9]). Provides the ledger's dispersion term (~0.3 mEh, under grade;
+# the revD4 Mulliken-charge zeta is the remaining gap). The 4.2.0 wheel bundles libdftd4.
+dftd4>=4.2.0
